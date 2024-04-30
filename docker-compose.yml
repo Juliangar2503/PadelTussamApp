@@ -9,7 +9,7 @@ services:
       DATABASE_HOST : 127.0.0.1
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: julian
-      POSTGRES_BD : bdPadelTussam
+      POSTGRES_BD : bdpadeltussam
      
     volumes:
       - postgres:/var/lib/postgresql/data

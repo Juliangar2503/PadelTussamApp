@@ -1,5 +1,6 @@
 package com.backtussam
 
+import com.backtussam.db.DatabaseFactory
 import com.backtussam.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -11,5 +12,6 @@ fun main() {
 }
 
 fun Application.module() {
+    DatabaseFactory.init()
     configureRouting()
 }
