@@ -12,6 +12,7 @@ object PlayerTable: Table("players") {
     val password = text("password")
     val userName = varchar("user_name", 256)
     val avatar = text("avatar")
+    val points = integer("points")
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val leagueId = integer("league_id").references(LeagueTable.id)
     val roleId = integer("role_id").references(RoleTable.id)

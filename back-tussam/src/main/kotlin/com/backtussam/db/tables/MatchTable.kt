@@ -15,5 +15,6 @@ object MatchTable : Table("matches"){
     val date = varchar("date", 256)
     val open = bool("open")
     val chat = integer("chat").references(ChatTable.id)
+    val court = integer("court").references(CourtTable.id)
     override val primaryKey = PrimaryKey(id)
 }

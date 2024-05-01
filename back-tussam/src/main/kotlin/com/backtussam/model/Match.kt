@@ -12,5 +12,6 @@ data class Match (
     val matchResult: String,
     val date: String,
     val open: Boolean,
-    val chat: Int
+    val chat: Int,
+    val court: Int
 )
