@@ -1,5 +1,6 @@
 package com.backtussam.db
 
+import com.backtussam.db.tables.*
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
@@ -10,6 +11,20 @@ object DatabaseFactory {
 
     fun init(){
         Database.connect(hikari())
+        transaction {
+            SchemaUtils.create(
+                ChatTable,
+                CourtTable,
+                LeagueTable,
+                MatchTable,
+                NotificationTable,
+                PlayerLeagueHistoricalTable,
+                PlayerMatchesHistoricalTable,
+                PlayerNotificationTable,
+                PlayerTable,
+                RoleTable
+            )
+        }
     }
     private fun hikari(): HikariDataSource {
         //Crear un objeto HijariConfig
