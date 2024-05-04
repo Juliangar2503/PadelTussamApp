@@ -3,11 +3,12 @@ package com.backtussam.services
 import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.db.tables.PlayerTable
 import com.backtussam.model.Player
+import com.backtussam.security.hash
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
-import java.util.Objects.hash
+
 
 class PlayerServiceImpl : PlayerService {
     override suspend fun registerPlayer(params: CreatePlayerParams): Player? {
@@ -16,7 +17,7 @@ class PlayerServiceImpl : PlayerService {
         dbQuery {
             statement = PlayerTable.insert {
                 it[email] = params.email
-                it[password] = params.password
+                it[password] = hash(params.password)
                 it[name] = params.name
                 it[lastName] = params.lastName
                 it[userName] = params.userName

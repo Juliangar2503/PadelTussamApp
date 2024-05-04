@@ -5,6 +5,7 @@ import com.backtussam.plugins.*
 import com.backtussam.repositories.PlayerRepository
 import com.backtussam.repositories.PlayerRepositoryImpl
 import com.backtussam.routes.authRoutes
+import com.backtussam.security.configureSecurity
 import com.backtussam.services.PlayerService
 import com.backtussam.services.PlayerServiceImpl
 import io.ktor.server.application.*
@@ -23,21 +24,18 @@ fun main() {
         install(ContentNegotiation){
             jackson()
         }
-
-        //configureSecurity()
-
+        configureSecurity()
         val service:PlayerService = PlayerServiceImpl()
         val repository:PlayerRepository = PlayerRepositoryImpl(service)
 
         authRoutes(repository)
-
-//        routing {
-//            authenticate {
-//                get("/testUrl"){
-//                    call.respondText("Hello World")
-//                }
-//            }
-//        }
+        routing {
+            authenticate {
+                get("/testUrl"){
+                    call.respondText("Hello World")
+                }
+            }
+        }
 
     }.start(wait = true)
 }

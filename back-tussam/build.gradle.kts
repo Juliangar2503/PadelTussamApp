@@ -32,8 +32,18 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
-    //PostgreSQL
-    implementation("org.postgresql:postgresql:$postgresql_version")
+    //Serialization
+    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-cbor:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-protobuf:$ktor_version")
+
+    // Auth JWT
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
 
     // DB
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
@@ -42,24 +52,15 @@ dependencies {
     //DataTime
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
 
+
+    //PostgreSQL
+    implementation("org.postgresql:postgresql:$postgresql_version")
+
     //Hikari
     implementation("com.zaxxer:HikariCP:$hikaricp_version")
     implementation("org.ehcache:ehcache:$ehcache_version")
 
-    // Auth JWT
-    implementation("io.ktor:ktor-server-auth:$ktor_version")
-    implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
-
     //Jackson
     implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
-
-    //Serialization
-    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-cbor:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-protobuf:$ktor_version")
 
 }
