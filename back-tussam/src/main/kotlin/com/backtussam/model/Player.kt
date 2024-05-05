@@ -5,11 +5,11 @@ data class Player(
     val name: String,
     val lastName: String,
     val email: String,
-    val password: String,
-    val userName: String,
-    val avatar: String,
+    val userName: String = "",
+    val avatar: String = "",
+    val points: Int = 0,
     val createdAt: String,
-    val leagueId: Int,
-    val roleId: Int,
+    val leagueId: Int? = null,
+    val roleId: Int? = null,
     var authToken: String? = null
 )

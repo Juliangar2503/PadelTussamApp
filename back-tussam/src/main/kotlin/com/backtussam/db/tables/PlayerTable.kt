@@ -11,10 +11,10 @@ object PlayerTable: Table("players") {
     val email = varchar("email", 256)
     val password = text("password")
     val userName = varchar("user_name", 256)
-    val avatar = text("avatar")
-    val points = integer("points")
+    val avatar = text("avatar").nullable()
+    val points = integer("points").default(0)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
-    val leagueId = integer("league_id").references(LeagueTable.id)
-    val roleId = integer("role_id").references(RoleTable.id)
+    val leagueId = integer("league_id").references(LeagueTable.id).nullable()
+    val roleId = integer("role_id").references(RoleTable.id).nullable()
     override val primaryKey = PrimaryKey(id)
 }
