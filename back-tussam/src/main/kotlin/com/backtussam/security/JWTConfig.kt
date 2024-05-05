@@ -14,7 +14,7 @@ class JWTConfig private constructor(secret: String){
         .withAudience(AUDIENCE)
         .build()
 
-    fun createToken(id: Int): String = JWT
+    fun createToken(id: String): String = JWT
         .create()
         .withIssuer(ISSUER)
         .withAudience(AUDIENCE)

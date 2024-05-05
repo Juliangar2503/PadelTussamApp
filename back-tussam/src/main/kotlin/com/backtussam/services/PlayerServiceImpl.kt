@@ -34,6 +34,15 @@ class PlayerServiceImpl : PlayerService {
         return player
     }
 
+    //Find pswd by email
+    override suspend fun findPasswordByEmail(email: String): String? {
+        val password = dbQuery {
+            PlayerTable.select{ PlayerTable.email.eq(email) }
+                .map { it[PlayerTable.password] }.singleOrNull()
+        }
+        return password
+    }
+
     private fun rowToPlayer(row: ResultRow?): Player? {
         return if (row == null) null
         else Player(

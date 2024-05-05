@@ -1,7 +1,6 @@
 package com.backtussam
 
 import com.backtussam.db.DatabaseFactory
-import com.backtussam.plugins.*
 import com.backtussam.repositories.PlayerRepository
 import com.backtussam.repositories.PlayerRepositoryImpl
 import com.backtussam.routes.authRoutes
@@ -20,22 +19,26 @@ import io.ktor.server.plugins.contentnegotiation.*
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "127.0.0.1"){
-        DatabaseFactory.init()
-        install(ContentNegotiation){
-            jackson()
-        }
-        configureSecurity()
-        val service:PlayerService = PlayerServiceImpl()
-        val repository:PlayerRepository = PlayerRepositoryImpl(service)
-
-        authRoutes(repository)
-        routing {
-            authenticate {
-                get("/testUrl"){
-                    call.respondText("Hello World")
-                }
-            }
-        }
+        myApplicationModule()
 
     }.start(wait = true)
+}
+
+fun Application.myApplicationModule() {
+    DatabaseFactory.init()
+    install(ContentNegotiation) {
+        jackson()
+    }
+    configureSecurity()
+    val service: PlayerService = PlayerServiceImpl()
+    val repository: PlayerRepository = PlayerRepositoryImpl(service)
+
+    authRoutes(repository)
+    routing {
+        authenticate {
+            get("/testUrl") {
+                call.respondText("Hello World")
+            }
+        }
+    }
 }
