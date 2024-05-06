@@ -1,4 +1,4 @@
-package com.backtussam.services
+package com.backtussam.utils.params
 
 data class CreatePlayerParams(
     val name: String,

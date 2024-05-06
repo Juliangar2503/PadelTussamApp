@@ -8,12 +8,14 @@ class JWTConfig private constructor(secret: String){
 
     private val algorithm = Algorithm.HMAC256(secret)
 
+    // Verificar token
     val verifier: JWTVerifier = JWT
         .require(algorithm)
         .withIssuer(ISSUER)
         .withAudience(AUDIENCE)
         .build()
 
+    // Crear token
     fun createToken(id: String): String = JWT
         .create()
         .withIssuer(ISSUER)
@@ -30,6 +32,7 @@ class JWTConfig private constructor(secret: String){
         lateinit var instance: JWTConfig
             private set
 
+        // Inicializar JWTConfig
         fun initialize(secret: String){
             synchronized(this){
                 if(!this::instance.isInitialized){

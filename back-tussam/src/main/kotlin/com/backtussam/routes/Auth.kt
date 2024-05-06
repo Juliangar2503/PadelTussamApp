@@ -1,8 +1,8 @@
 package com.backtussam.routes
 
 import com.backtussam.repositories.PlayerRepository
-import com.backtussam.services.CreatePlayerParams
-import com.backtussam.services.LoginPlayerParams
+import com.backtussam.utils.params.CreatePlayerParams
+import com.backtussam.utils.params.LoginPlayerParams
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -10,6 +10,7 @@ import io.ktor.server.routing.*
 
 fun Application.authRoutes(repository: PlayerRepository){
     routing {
+        // http://localhost:8080/auth/register
         route("/auth"){
             post("/register") {
                 val params = call.receive<CreatePlayerParams>()
@@ -21,7 +22,6 @@ fun Application.authRoutes(repository: PlayerRepository){
                 val result = repository.loginPlayer(params)
                 call.respond(result.statusCode, result)
             }
-
         }
     }
 }
