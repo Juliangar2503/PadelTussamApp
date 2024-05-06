@@ -6,10 +6,12 @@ import io.ktor.server.auth.jwt.*
 
 fun Application.configureSecurity() {
 
+    // JWTConfig
     JWTConfig.initialize("root")
 
     install(Authentication) {
         jwt {
+            realm ="com.backtussam"
             verifier(JWTConfig.instance.verifier)
             validate {
                 println("All claims: ${it.payload.claims}")
