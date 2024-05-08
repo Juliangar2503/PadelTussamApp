@@ -1,6 +1,5 @@
 package com.backtussam.repositories
 
-import com.auth0.jwt.JWT
 import com.backtussam.security.JWTConfig
 import com.backtussam.security.hash
 import com.backtussam.utils.params.CreatePlayerParams
@@ -19,16 +18,11 @@ class PlayerRepositoryImpl(
             // Registrar jugador
             val player = playerService.registerPlayer(params)
             if (player != null){
+                // Crear token
                 val token = JWTConfig.instance.createToken(player.id.toString())
                 player.authToken = token
 
-                // Imprimir el token y las reclamaciones
-                println("Created token: $token")
-                val decodedJWT = JWT.decode(token)
-                println("Issuer: ${decodedJWT.issuer}")
-                println("Audience: ${decodedJWT.audience}")
-                println("Claim 'id': ${decodedJWT.getClaim(JWTConfig.CLAIM).asString()}")
-
+                // Responder con el jugador y el token creado
                 BaseResponse.SuccessResponse(data = player)
             }else{
                 BaseResponse.ErrorResponse(message = "Error creating player")
@@ -44,16 +38,10 @@ class PlayerRepositoryImpl(
         // Comprobar si el jugador existe y la contraseña es correcta
         return if (player != null){
             if (encryptedPassword == hash(params.password)){
+                // Crear token
                 val token = JWTConfig.instance.createToken(player.id.toString())
                 player.authToken = token
-
-                // Imprimir el token y las reclamaciones
-                println("Created token: $token")
-                val decodedJWT = JWT.decode(token)
-                println("Issuer: ${decodedJWT.issuer}")
-                println("Audience: ${decodedJWT.audience}")
-                println("Claim 'id': ${decodedJWT.getClaim(JWTConfig.CLAIM).asString()}")
-
+                // Jugador encontrado y contraseña correcta
                 BaseResponse.SuccessResponse(data = player)
             }else{
                 // Contraseña incorrecta

@@ -11,15 +11,17 @@ fun Application.configureSecurity() {
 
     install(Authentication) {
         jwt {
+            // Configurar realm
             realm ="com.backtussam"
+            // Verificar token
             verifier(JWTConfig.instance.verifier)
+            // Validar token
             validate {
-                println("All claims: ${it.payload.claims}")
-                //val claim = it.payload.getClaim("id").asString()
+                // Obtener claim
                 val claim = it.payload.getClaim(JWTConfig.CLAIM).asString()
-                println("JWT token: ${it.payload}")
-                println("Claim 'id': $claim")
+                // Si claim no es nulo crear principal
                 if(claim != null){
+                    // Crear principal
                     UserIdPrincipalForPlayer(claim)
                 } else {
                     null
