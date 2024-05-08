@@ -1,0 +1,54 @@
+.login-body{
+  background: url("../../../assets/img/BackgroundLogin.jpg") no-repeat center center fixed;
+  //background-color: rgba(0, 0, 0, 0.87);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+}
+
+.position-login {
+  color: darkorange;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  min-width: 350px;
+  height: auto;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 44, 119, 0.68);
+}
+
+
+.icon-enter {
+  margin-top: -50px;
+  margin-bottom: 35px;
+}
+
+.validators {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.forgot-password {
+  text-align: right;
+  color: #3880ff;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+ion-button {
+  --background: #3880ff;
+  --color: white;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --border-radius: 10px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
