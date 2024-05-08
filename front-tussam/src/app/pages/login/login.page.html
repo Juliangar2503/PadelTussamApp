@@ -5,11 +5,16 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid></ion-grid>
   <div class="login-body">
+    <div class="position-img">
+      <!-- LOGO DE LA APP -->
+      <img src="../../../assets/icon/iconoPrueba3.png" alt="PadelTussam" class="icon-enter">
+    </div>
     <div class="position-login">
+      <!--FORMULARIO DE LOGIN-->
       <form [formGroup]="form" (ngSubmit)="submit()">
-        <!-- LOGO DE LA APP -->
-        <ion-icon class="icon-enter" name="person-circle-sharp" color="primary" class="icon-enter"></ion-icon>
+        <!-- TITULO DE LA APP -->
         <ion-text>
           <h1><Strong>PadelTussam </Strong>app</h1>
         </ion-text>

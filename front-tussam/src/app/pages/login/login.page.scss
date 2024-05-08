@@ -1,11 +1,16 @@
 .login-body{
-  background: url("../../../assets/img/BackgroundLogin.jpg") no-repeat center center fixed;
-  //background-color: rgba(0, 0, 0, 0.87);
+  background-color: rgba(103, 20, 66, 0.67);
+
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #FFFFFF;
+}
+
+.position-img{
+  margin-top: 5%;
 }
 
 .position-login {
@@ -17,16 +22,16 @@
   width: 40%;
   min-width: 350px;
   height: auto;
-  margin: auto;
+  // Reducir el margen superior
+  margin: 10px auto auto;
   padding: 20px;
   border-radius: 10px;
-  background-color: rgba(0, 44, 119, 0.68);
+  background-color: rgba(168, 2, 89, 0.45);
 }
 
-
 .icon-enter {
-  margin-top: -50px;
-  margin-bottom: 35px;
+  font-size: 300px;
+  height: 150px;
 }
 
 .validators {
@@ -36,7 +41,7 @@
 
 .forgot-password {
   text-align: right;
-  color: #3880ff;
+  color: #2f89ff;
   text-decoration: underline;
   cursor: pointer;
   margin-bottom: 20px;
