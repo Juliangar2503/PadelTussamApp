@@ -24,8 +24,10 @@ fun main() {
     }.start(wait = true)
 }
 
+
 fun Application.myApplicationModule() {
     DatabaseFactory.init()
+
     install(ContentNegotiation) {
         jackson()
     }
