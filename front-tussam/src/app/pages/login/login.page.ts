@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { BackTussamService } from 'src/app/services/back-tussam.service';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +15,35 @@ export class LoginPage implements OnInit {
     password: new FormControl('', [Validators.required]),
   })
 
-  constructor() { }
+  constructor(
+    private backSvc:BackTussamService
+  ) { }
 
   ngOnInit() {
   }
 
-  submit(){
-    //Si el formulario es valido, mostramos los datos por consola
-    if(this.form.valid){
-      console.log(this.form.value);
-      console.log('holita guapa')
+  submit() {
+    // Si el formulario es válido, mostramos los datos por consola
+    if (this.form.valid) {
+      const email = this.form.value.email;
+      const password = this.form.value.password;
+      console.log(email,password)
+  
+      if (email && password) {
+        this.backSvc.login(email, password).subscribe(
+          response => {
+            // Manejar la respuesta del servidor aquí (éxito o error)
+            console.log(response);
+          },
+          error => {
+            // Manejar el error de la suscripción
+            console.error(error);
+          }
+        );
+      }
     }
   }
+  
 
   forgotPassword() {
     //Mostramos un mensaje en consola

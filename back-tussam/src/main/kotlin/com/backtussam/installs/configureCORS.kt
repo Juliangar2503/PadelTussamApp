@@ -1,20 +1,23 @@
 package com.backtussam.installs
 
-import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpHeaders
 
 fun Application.configureCORS() {
     install(CORS) {
-        HttpMethod.Options
-        HttpMethod.Put
-        HttpMethod.Delete
-        HttpMethod.Patch
-        HttpHeaders.Authorization
-        HttpHeaders.ContentType
-        HttpHeaders.AccessControlAllowOrigin
-        HttpHeaders.AccessControlAllowHeaders
-        HttpHeaders.AccessControlAllowMethods
+        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Patch)
+        allowMethod(HttpMethod.Delete)
+
+        allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.Authorization)
+        allowHeader(HttpHeaders.AccessControlAllowOrigin)
+        allowHeader(HttpHeaders.AccessControlAllowHeaders)
+        allowHeader(HttpHeaders.AccessControlAllowMethods)
+
         anyHost()
     }
 }
