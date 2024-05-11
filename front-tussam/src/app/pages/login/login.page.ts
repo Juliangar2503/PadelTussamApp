@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
     //Si el formulario es valido, mostramos los datos por consola
     if(this.form.valid){
       console.log(this.form.value);
+      console.log('holita guapa')
     }
   }
 
