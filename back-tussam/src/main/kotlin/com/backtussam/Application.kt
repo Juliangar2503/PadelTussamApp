@@ -1,6 +1,8 @@
 package com.backtussam
 
 import com.backtussam.db.DatabaseFactory
+import com.backtussam.installs.configureCORS
+import com.backtussam.installs.configureContentNegotiation
 import com.backtussam.repositories.PlayerRepository
 import com.backtussam.repositories.PlayerRepositoryImpl
 import com.backtussam.routes.authRoutes
@@ -28,24 +30,10 @@ fun main() {
 
 fun Application.myApplicationModule() {
     DatabaseFactory.init()
-    install(ContentNegotiation) {
-        jackson()
-    }
-
-    install(CORS) {
-        HttpMethod.Options
-        HttpMethod.Put
-        HttpMethod.Delete
-        HttpMethod.Patch
-        HttpHeaders.Authorization
-        HttpHeaders.ContentType
-        HttpHeaders.AccessControlAllowOrigin
-        HttpHeaders.AccessControlAllowHeaders
-        HttpHeaders.AccessControlAllowMethods
-        anyHost()
-    }
-
+    configureContentNegotiation()
+    configureCORS()
     configureSecurity()
+
     val service: PlayerService = PlayerServiceImpl()
     val repository: PlayerRepository = PlayerRepositoryImpl(service)
 
