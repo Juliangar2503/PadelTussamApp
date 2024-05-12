@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HomePageRoutingModule } from './home-routing.module';
+import { WatchOpenMatchPageRoutingModule } from './watch-open-match-routing.module';
 
-import { HomePage } from './home.page';
+import { WatchOpenMatchPage } from './watch-open-match.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    WatchOpenMatchPageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [WatchOpenMatchPage]
 })
-export class HomePageModule {}
+export class WatchOpenMatchPageModule {}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginPage implements OnInit {
   })
 
   constructor(
-    private backSvc:BackTussamService
+    private backSvc:BackTussamService,
+    private utilSvc:UtilsService
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,14 @@ export class LoginPage implements OnInit {
           response => {
             // Manejar la respuesta del servidor aquí (éxito o error)
             console.log(response);
+            //Éxito en el login
+            if (!response.message){
+              this.utilSvc.saveInLocalStorage('Player',response.data)
+              this.utilSvc.goToPage("competition")
+            }else{
+              //Mostrar error por consola 
+              console.log(response.message)
+            }                    
           },
           error => {
             // Manejar el error de la suscripción
@@ -44,7 +54,6 @@ export class LoginPage implements OnInit {
     }
   }
   
-
   forgotPassword() {
     //Mostramos un mensaje en consola
     console.log('Forgot password');

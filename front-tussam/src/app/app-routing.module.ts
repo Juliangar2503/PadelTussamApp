@@ -8,13 +8,22 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'competition',
+    loadChildren: () => import('./pages/competition/competition.module').then( m => m.CompetitionPageModule)
+  },
+  {
+    path: 'comunity',
+    loadChildren: () => import('./pages/comunity/comunity.module').then( m => m.ComunityPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+
 ];
 
 @NgModule({
