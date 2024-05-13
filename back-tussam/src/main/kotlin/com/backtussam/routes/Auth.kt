@@ -1,8 +1,8 @@
 package com.backtussam.routes
 
-import com.backtussam.repositories.PlayerRepository
-import com.backtussam.utils.params.CreatePlayerParams
-import com.backtussam.utils.params.LoginPlayerParams
+import com.backtussam.repositories.player.PlayerRepository
+import com.backtussam.utils.params.player.CreatePlayerParams
+import com.backtussam.utils.params.player.LoginPlayerParams
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PadelTussamApp.iml" filepath="$PROJECT_DIR$/.idea/PadelTussamApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/back-tussam.iml" filepath="$PROJECT_DIR$/.idea/modules/back-tussam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/back-tussam.main.iml" filepath="$PROJECT_DIR$/.idea/modules/back-tussam.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/back-tussam.test.iml" filepath="$PROJECT_DIR$/.idea/modules/back-tussam.test.iml" />
     </modules>
   </component>
 </project>
