@@ -1,10 +1,10 @@
-package com.backtussam.services
+package com.backtussam.services.player
 
 import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.db.tables.PlayerTable
 import com.backtussam.model.Player
 import com.backtussam.security.hash
-import com.backtussam.utils.params.CreatePlayerParams
+import com.backtussam.utils.params.player.CreatePlayerParams
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select

@@ -1,10 +1,10 @@
-package com.backtussam.repositories
+package com.backtussam.repositories.player
 
 import com.backtussam.security.JWTConfig
 import com.backtussam.security.hash
-import com.backtussam.utils.params.CreatePlayerParams
-import com.backtussam.utils.params.LoginPlayerParams
-import com.backtussam.services.PlayerService
+import com.backtussam.utils.params.player.CreatePlayerParams
+import com.backtussam.utils.params.player.LoginPlayerParams
+import com.backtussam.services.player.PlayerService
 import com.backtussam.utils.BaseResponse
 
 class PlayerRepositoryImpl(

@@ -7,9 +7,9 @@ import java.time.LocalDateTime
 object LeagueTable: Table("leagues"){
     val id = integer("id").autoIncrement()
     val name = varchar("name", 256)
-    val duration = integer("duration")
-    val ascent = integer("ascent")
-    val descent = integer("descent")
+    val duration = integer("duration").default(4)
+    val ascent = integer("ascent").default(6)
+    val descent = integer("descent").default(6)
     val startDate = datetime("created_at").clientDefault { LocalDateTime.now() }
     override val primaryKey = PrimaryKey(id)
 }

@@ -1,7 +1,7 @@
-package com.backtussam.repositories
+package com.backtussam.repositories.player
 
-import com.backtussam.utils.params.CreatePlayerParams
-import com.backtussam.utils.params.LoginPlayerParams
+import com.backtussam.utils.params.player.CreatePlayerParams
+import com.backtussam.utils.params.player.LoginPlayerParams
 import com.backtussam.utils.BaseResponse
 
 

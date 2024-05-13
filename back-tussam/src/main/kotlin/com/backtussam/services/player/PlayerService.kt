@@ -1,7 +1,7 @@
-package com.backtussam.services
+package com.backtussam.services.player
 
 import com.backtussam.model.Player
-import com.backtussam.utils.params.CreatePlayerParams
+import com.backtussam.utils.params.player.CreatePlayerParams
 
 interface PlayerService {
     suspend fun registerPlayer(params: CreatePlayerParams): Player?
