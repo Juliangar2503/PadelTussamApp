@@ -1,7 +1,6 @@
-package com.backtussam.model
+package com.backtussam.utils.params.match
 
-data class Match (
-    val id: Int,
+data class CreateMatchParams(
     val id_player1: Int? = null,
     val id_player2:  Int? = null,
     val id_player3:  Int? = null,

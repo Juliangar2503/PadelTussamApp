@@ -17,12 +17,12 @@ class CourtServiceImpl : CourtService {
         }
     }
 
-    override suspend fun getCourtByName(name: String): Court {
+    override suspend fun getCourtByName(name: String): Court? {
         return dbQuery {
             CourtTable.select {
                 CourtTable.name eq name
             }.mapNotNull { rowToCourt(it) }
-                .singleOrNull()!!
+                .singleOrNull()
         }
     }
 
@@ -31,9 +31,9 @@ class CourtServiceImpl : CourtService {
         dbQuery {
             statement = CourtTable.insert {
                 it[CourtTable.name] = params.name
-                it[CourtTable.address] = params.address
-                it[CourtTable.latitude] = params.latitude
-                it[CourtTable.longitude] = params.longitude
+                it[CourtTable.address] = params.address ?: ""
+                it[CourtTable.latitude] = params.latitude ?: 0.0
+                it[CourtTable.longitude] = params.longitude ?: 0.0
             }
         }
         return rowToCourt(statement?.resultedValues?.get(0))
@@ -43,9 +43,9 @@ class CourtServiceImpl : CourtService {
         return dbQuery {
             CourtTable.update({ CourtTable.name eq name }) {
                 it[CourtTable.name] = params.name
-                it[CourtTable.address] = params.address
-                it[CourtTable.latitude] = params.latitude
-                it[CourtTable.longitude] = params.longitude
+                it[CourtTable.address] = params.address ?: ""
+                it[CourtTable.latitude] = params.latitude  ?: 0.0
+                it[CourtTable.longitude] = params.longitude ?: 0.0
             }
             CourtTable.select {
                 CourtTable.name eq params.name

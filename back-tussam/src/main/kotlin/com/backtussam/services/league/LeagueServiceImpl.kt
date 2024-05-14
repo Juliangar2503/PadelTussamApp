@@ -52,12 +52,6 @@ class LeagueServiceImpl : LeagueService {
         return rowToLeague(statement?.resultedValues?.get(0))
     }
 
-    override suspend fun deleteLeague(name: String): Boolean {
-        return dbQuery {
-            LeagueTable.deleteWhere { LeagueTable.name eq name } > 0
-        }
-    }
-
     override suspend fun updateLeague(name: String, params: CreateLeagueParams): League? {
         val league = getLeague(name)
         if (league != null) {
@@ -72,6 +66,13 @@ class LeagueServiceImpl : LeagueService {
             }
         }
         return getLeague(params.name)
+    }
+
+
+    override suspend fun deleteLeague(name: String): Boolean {
+        return dbQuery {
+            LeagueTable.deleteWhere { LeagueTable.name eq name } > 0
+        }
     }
 
     //Función utilizada para mapear los datos de la base de datos a un objeto League
