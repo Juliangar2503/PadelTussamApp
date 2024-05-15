@@ -94,7 +94,7 @@ class LeagueRepositoryImpl (
         }
     }
 
-    //Primero comprobar si el jugador existe
+    //Primero comprobar si la liga existe
     private suspend fun isLeagueExist(email: String): Boolean {
         return leagueService.getLeague(email) != null
     }
