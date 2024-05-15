@@ -22,7 +22,6 @@ class PlayerServiceImpl : PlayerService {
                 it[password] = hash(params.password)
                 it[name] = params.name
                 it[lastName] = params.lastName
-                it[userName] = params.userName
             }
         }
         return rowToPlayer(statement?.resultedValues?.get(0))
@@ -54,8 +53,7 @@ class PlayerServiceImpl : PlayerService {
             name = row[PlayerTable.name],
             lastName = row[PlayerTable.lastName],
             email = row[PlayerTable.email],
-            createdAt = row[PlayerTable.createdAt].toString(),
-            userName = row[PlayerTable.userName],
+            createdAt = row[PlayerTable.createdAt].toString()
         )
     }
 }

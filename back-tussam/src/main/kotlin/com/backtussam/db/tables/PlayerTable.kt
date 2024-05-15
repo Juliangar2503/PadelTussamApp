@@ -10,7 +10,8 @@ object PlayerTable: Table("players") {
     val lastName = varchar("last_name", 256)
     val email = varchar("email", 256)
     val password = text("password")
-    val userName = varchar("user_name", 256)
+    val location = varchar("location", 256).nullable()
+    val nickname = varchar("nikename", 256).nullable()
     val avatar = text("avatar").nullable()
     val points = integer("points").default(0)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
