@@ -47,6 +47,8 @@ class LeagueServiceImpl : LeagueService {
                 it[LeagueTable.ascent] = params.ascent
                 it[LeagueTable.descent] = params.descent
                 it[LeagueTable.startDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME)
+                //Calcular la duracion en meses y sumarla a la fecha de inicio
+                it[LeagueTable.endDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME).plusMonths(params.duration.toLong())
             }
         }
         return rowToLeague(statement?.resultedValues?.get(0))
@@ -62,6 +64,7 @@ class LeagueServiceImpl : LeagueService {
                     it[LeagueTable.ascent] = params.ascent
                     it[LeagueTable.descent] = params.descent
                     it[LeagueTable.startDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME)
+                    it[LeagueTable.endDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME).plusMonths(params.duration.toLong())
                 }
             }
         }
@@ -85,6 +88,7 @@ class LeagueServiceImpl : LeagueService {
             startDate = row[LeagueTable.startDate].toString(),
             ascent = row[LeagueTable.ascent],
             descent = row[LeagueTable.descent],
+            endDate = row[LeagueTable.endDate].toString()
         )
     }
 }

@@ -5,6 +5,6 @@ data class League (
     var duration: Int = 4,
     var ascent: Int = 6,
     var descent: Int = 6,
-    var startDate: String
-
+    var startDate: String,
+    var endDate: String
 )

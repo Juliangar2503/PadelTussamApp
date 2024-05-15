@@ -11,5 +11,6 @@ object LeagueTable: Table("leagues"){
     val ascent = integer("ascent").default(6)
     val descent = integer("descent").default(6)
     val startDate = datetime("created_at").clientDefault { LocalDateTime.now() }
+    val endDate = datetime("end_date").clientDefault { LocalDateTime.now() }
     override val primaryKey = PrimaryKey(id)
 }

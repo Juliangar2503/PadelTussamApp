@@ -12,6 +12,7 @@ object MatchTable : Table("matches"){
     val scoreSet2 = integer("scoreSet2").nullable()
     val scoreSet3 = integer("scoreSet3").nullable()
     val matchResult = varchar("matchResult", 256).nullable()
+    val type = varchar("type", 256).nullable()
     val date = varchar("date", 256).default("")
     val open = bool("open").default(false)
     val chat = integer("chat").references(ChatTable.id).nullable()

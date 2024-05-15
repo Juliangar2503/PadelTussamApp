@@ -12,6 +12,7 @@ data class Match (
     val matchResult: String? = null,
     val date: String? = null,
     val open: Boolean = false,
+    val type: String? = null,
     val chat:  Int? = null,
     val court:  Int? = null
 )

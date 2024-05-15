@@ -32,8 +32,6 @@ class CourtServiceImpl : CourtService {
             statement = CourtTable.insert {
                 it[CourtTable.name] = params.name
                 it[CourtTable.address] = params.address ?: ""
-                it[CourtTable.latitude] = params.latitude ?: 0.0
-                it[CourtTable.longitude] = params.longitude ?: 0.0
             }
         }
         return rowToCourt(statement?.resultedValues?.get(0))
@@ -44,8 +42,6 @@ class CourtServiceImpl : CourtService {
             CourtTable.update({ CourtTable.name eq name }) {
                 it[CourtTable.name] = params.name
                 it[CourtTable.address] = params.address ?: ""
-                it[CourtTable.latitude] = params.latitude  ?: 0.0
-                it[CourtTable.longitude] = params.longitude ?: 0.0
             }
             CourtTable.select {
                 CourtTable.name eq params.name
@@ -67,8 +63,6 @@ class CourtServiceImpl : CourtService {
             id = row[CourtTable.id],
             name = row[CourtTable.name],
             address = row[CourtTable.address],
-            latitude = row[CourtTable.latitude],
-            longitude = row[CourtTable.longitude],
         )
     }
 }
