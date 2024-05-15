@@ -45,11 +45,13 @@ fun Application.myApplicationModule() {
     configureCORS()
     configureSecurity()
 
-    val service: PlayerService = PlayerServiceImpl()
-    val repository: PlayerRepository = PlayerRepositoryImpl(service)
+
 
     val serviceLeague: LeagueService = LeagueServiceImpl()
     val repositoryLeague: LeagueRepository = LeagueRepositoryImpl(serviceLeague)
+
+    val servicePlayer: PlayerService = PlayerServiceImpl()
+    val repositoryPlayer: PlayerRepository = PlayerRepositoryImpl(servicePlayer, serviceLeague)
 
     val serviceCourt: CourtService = CourtServiceImpl()
     val repositoryCourt: CourtRepository = CourtRepositoryImpl(serviceCourt)
@@ -57,7 +59,7 @@ fun Application.myApplicationModule() {
     val serviceMatch: MatchService = MatchServiceImpl()
     val repositoryMatch: MatchRepository = MatchRepositoryImpl(serviceMatch)
 
-    authRoutes(repository)
+    authRoutes(repositoryPlayer)
 
     leagueRoutes(repositoryLeague)
 

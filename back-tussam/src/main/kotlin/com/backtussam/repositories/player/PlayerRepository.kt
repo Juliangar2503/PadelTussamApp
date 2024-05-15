@@ -3,9 +3,18 @@ package com.backtussam.repositories.player
 import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.LoginPlayerParams
 import com.backtussam.utils.BaseResponse
+import com.backtussam.utils.params.player.UpdatePlayerParams
 
 
 interface PlayerRepository {
     suspend fun registerPlayer(params: CreatePlayerParams): BaseResponse<Any>
     suspend fun loginPlayer(params: LoginPlayerParams): BaseResponse<Any>
+    suspend fun addPlayerToLeague(playerId: Int, leagueId: Int): BaseResponse<Any>
+    suspend fun getPlayerByEmail(email: String): BaseResponse<Any>
+    suspend fun getPlayerById(id: Int): BaseResponse<Any>
+    suspend fun getPlayers(): BaseResponse<Any>
+    suspend fun getPlayersByLeague(leagueId: Int): BaseResponse<Any>
+    suspend fun getPlayersByName(name: String): BaseResponse<Any>
+    suspend fun updatePlayer(email:String, params: UpdatePlayerParams): BaseResponse<Any>
+    suspend fun deletePlayer(id: Int): BaseResponse<Any>
 }

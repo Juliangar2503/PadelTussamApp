@@ -5,6 +5,7 @@ import com.backtussam.utils.params.league.CreateLeagueParams
 
 interface LeagueService {
     suspend fun getLeague(name:String): League?
+    suspend fun getLeagueById(id:Int): League?
     suspend fun getLeagues(): List<League>
     suspend fun updateLeague(name:String, params:CreateLeagueParams): League?
     suspend fun registerLeagueByName(name:String): League?
