@@ -15,8 +15,8 @@ fun Application.matchesRoutes(repository: MatchRepository) {
                 val result = repository.getMatches()
                 call.respond(result.statusCode, result)
             }
-            // http://localhost:8080/matches/find/{id}
-            get("/find/{id}") {
+            // http://localhost:8080/matches/{id}
+            get("/{id}") {
                 val id = call.parameters["id"]?.toIntOrNull() ?: 0
                 val result = repository.getMatchById(id)
                 call.respond(result.statusCode, result)
@@ -40,6 +40,21 @@ fun Application.matchesRoutes(repository: MatchRepository) {
                 val result = repository.deleteMatch(id)
                 call.respond(result.statusCode, result)
             }
+
+            // http://localhost:8080/matches/league/{leagueId}
+            get("/league/{leagueId}") {
+                val leagueId = call.parameters["leagueId"]?.toIntOrNull() ?: 0
+                val result = repository.getMatchesByLeague(leagueId)
+                call.respond(result.statusCode, result)
+            }
+
+            // http://localhost:8080/matches/type/{type}
+            get("/type/{type}") {
+                val type = call.parameters["type"] ?: ""
+                val result = repository.getMatchesByType(type)
+                call.respond(result.statusCode, result)
+            }
+
         }
     }
 }

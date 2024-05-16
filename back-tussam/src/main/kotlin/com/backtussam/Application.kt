@@ -50,14 +50,14 @@ fun Application.myApplicationModule() {
     val serviceLeague: LeagueService = LeagueServiceImpl()
     val repositoryLeague: LeagueRepository = LeagueRepositoryImpl(serviceLeague)
 
-    val servicePlayer: PlayerService = PlayerServiceImpl()
-    val repositoryPlayer: PlayerRepository = PlayerRepositoryImpl(servicePlayer, serviceLeague)
-
     val serviceCourt: CourtService = CourtServiceImpl()
     val repositoryCourt: CourtRepository = CourtRepositoryImpl(serviceCourt)
 
     val serviceMatch: MatchService = MatchServiceImpl()
     val repositoryMatch: MatchRepository = MatchRepositoryImpl(serviceMatch)
+
+    val servicePlayer: PlayerService = PlayerServiceImpl()
+    val repositoryPlayer: PlayerRepository = PlayerRepositoryImpl(servicePlayer, serviceLeague, serviceMatch)
 
     authRoutes(repositoryPlayer)
 

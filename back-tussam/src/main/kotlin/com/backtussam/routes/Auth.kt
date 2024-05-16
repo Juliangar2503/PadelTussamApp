@@ -77,6 +77,53 @@ fun Application.authRoutes(repository: PlayerRepository){
                 val result = repository.deletePlayer(id)
                 call.respond(result.statusCode, result)
             }
+
+            // http://localhost:8080/player/{playerId}/openMatch/{type}
+            post ("openMatch/{playerId}/{type}"){
+                val playerId = call.parameters["playerId"]?.toInt() ?: 0
+                val type = call.parameters["type"] ?: ""
+                val result = repository.openMatch(playerId, type)
+                call.respond(result.statusCode, result)
+            }
+
+            // http://localhost:8080/player/{playerId}/addMatch/{matchId}
+            put("/{playerId}/addMatch/{matchId}"){
+                val playerId = call.parameters["playerId"]?.toInt() ?: 0
+                val matchId = call.parameters["matchId"]?.toInt() ?: 0
+                val result = repository.addPlayerToMatch(playerId, matchId)
+                call.respond(result.statusCode, result)
+            }
+
+            // http://localhost:8080/player/{playerId}/removeMatch/{matchId}
+            put("/{playerId}/removeMatch/{matchId}"){
+                val playerId = call.parameters["playerId"]?.toInt() ?: 0
+                val matchId = call.parameters["matchId"]?.toInt() ?: 0
+                val result = repository.removePlayerFromMatch(playerId, matchId)
+                call.respond(result.statusCode, result)
+            }
+
+            // http://localhost:8080/player/{matchId}/players
+            put ("/loadResults/{matchId}"){
+                val matchId = call.parameters["matchId"]?.toInt() ?: 0
+                val result = repository.uploadResultMatch(matchId, call.receive())
+                call.respond(result.statusCode, result)
+            }
+
+            // http://localhost:8080/player/{matchId}/players
+            put ("/confirmResultTeamA/{matchId}/{playerId}"){
+                val matchId = call.parameters["matchId"]?.toInt() ?: 0
+                val playerId = call.parameters["playerId"]?.toInt() ?: 0
+                val result = repository.confirmResultMatchTeamA(matchId, playerId)
+                call.respond(result.statusCode, result)
+            }
+
+            // http://localhost:8080/player/confirmResultTeamB/{matchId}/{playerId}
+            put ("/confirmResultTeamB/{matchId}/{playerId}"){
+                val matchId = call.parameters["matchId"]?.toInt() ?: 0
+                val playerId = call.parameters["playerId"]?.toInt() ?: 0
+                val result = repository.confirmResultMatchTeamB(matchId, playerId)
+                call.respond(result.statusCode, result)
+            }
         }
     }
 

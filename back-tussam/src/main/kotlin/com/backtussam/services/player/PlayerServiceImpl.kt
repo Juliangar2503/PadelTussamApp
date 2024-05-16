@@ -12,13 +12,13 @@ import org.jetbrains.exposed.sql.statements.InsertStatement
 
 
 class PlayerServiceImpl : PlayerService {
+    /*** OBTENER JUGADORES ***/
     override suspend fun getPlayers(): List<Player> {
         return dbQuery {
             PlayerTable.selectAll().mapNotNull { rowToPlayer(it) }
         }
     }
 
-    //Comprobar en el repositorio si la liga está registrada
     override suspend fun getPlayersByLeague(leagueId: Int): List<Player> {
         return dbQuery {
             PlayerTable.select { PlayerTable.leagueId eq leagueId }
@@ -41,6 +41,7 @@ class PlayerServiceImpl : PlayerService {
         }
     }
 
+    /*** REGISTRAR JUGADOR ***/
     override suspend fun registerPlayer(params: CreatePlayerParams): Player? {
         var statement: InsertStatement<Number>? = null
         dbQuery {
@@ -62,22 +63,7 @@ class PlayerServiceImpl : PlayerService {
         }
     }
 
-    override suspend fun findPlayerByEmail(email: String): Player? {
-        val player = dbQuery {
-            PlayerTable.select{ PlayerTable.email.eq(email) }
-                .map { rowToPlayer(it) }.singleOrNull()
-        }
-        return player
-    }
-
-    override suspend fun findPasswordByEmail(email: String): String? {
-        val password = dbQuery {
-            PlayerTable.select{ PlayerTable.email.eq(email) }
-                .map { it[PlayerTable.password] }.singleOrNull()
-        }
-        return password
-    }
-
+    /*** ACTUALIZAR Y ELIMINAR JUGADOR ***/
     override suspend fun updatePlayer(email: String, params: UpdatePlayerParams): Player? {
         dbQuery {
             PlayerTable.update({ PlayerTable.email eq email }) {
@@ -100,6 +86,23 @@ class PlayerServiceImpl : PlayerService {
         return dbQuery {
             PlayerTable.deleteWhere { PlayerTable.id eq id } > 0
         }
+    }
+
+    /*** BUSCAR JUGADORES POR EMAIL Y PASSWORD ***/
+    override suspend fun findPlayerByEmail(email: String): Player? {
+        val player = dbQuery {
+            PlayerTable.select{ PlayerTable.email.eq(email) }
+                .map { rowToPlayer(it) }.singleOrNull()
+        }
+        return player
+    }
+
+    override suspend fun findPasswordByEmail(email: String): String? {
+        val password = dbQuery {
+            PlayerTable.select{ PlayerTable.email.eq(email) }
+                .map { it[PlayerTable.password] }.singleOrNull()
+        }
+        return password
     }
 
     private fun rowToPlayer(row: ResultRow?): Player? {

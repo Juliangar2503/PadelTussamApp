@@ -3,6 +3,8 @@ package com.backtussam.repositories.player
 import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.LoginPlayerParams
 import com.backtussam.utils.BaseResponse
+import com.backtussam.utils.params.match.CreateMatchParams
+import com.backtussam.utils.params.match.ResultMatchParams
 import com.backtussam.utils.params.player.UpdatePlayerParams
 
 
@@ -17,4 +19,12 @@ interface PlayerRepository {
     suspend fun getPlayersByName(name: String): BaseResponse<Any>
     suspend fun updatePlayer(email:String, params: UpdatePlayerParams): BaseResponse<Any>
     suspend fun deletePlayer(id: Int): BaseResponse<Any>
+    suspend fun addPlayerToMatch(playerId: Int, matchId: Int): BaseResponse<Any>
+    suspend fun removePlayerFromMatch(playerId: Int, matchId: Int): BaseResponse<Any>
+    suspend fun getPlayersByMatch(matchId: Int): BaseResponse<Any>
+    suspend fun openMatch(playerId:Int, type:String): BaseResponse<Any>
+    suspend fun uploadResultMatch(matchId: Int, params: ResultMatchParams): BaseResponse<Any>
+    suspend fun confirmResultMatchTeamA(matchId: Int, playerId: Int): BaseResponse<Any>
+    suspend fun confirmResultMatchTeamB(matchId: Int, playerId: Int): BaseResponse<Any>
+    suspend fun choosePlacesToPlay(matchId: Int, playerId: Int): Int
 }
