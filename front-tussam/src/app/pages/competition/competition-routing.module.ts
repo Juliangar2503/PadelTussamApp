@@ -7,19 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: CompetitionPage
+  },  {
+    path: 'competitive-matches',
+    loadChildren: () => import('./competitive-matches/competitive-matches.module').then( m => m.CompetitiveMatchesPageModule)
   },
-  {
-    path: 'view-league',
-    loadChildren: () => import('./view-league/view-league.module').then( m => m.ViewLeaguePageModule)
-  },
-  {
-    path: 'open-match',
-    loadChildren: () => import('./open-match/open-match.module').then( m => m.OpenMatchPageModule)
-  },
-  {
-    path: 'watch-open-match',
-    loadChildren: () => import('./watch-open-match/watch-open-match.module').then( m => m.WatchOpenMatchPageModule)
-  }
 
 ];
 

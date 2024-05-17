@@ -8,7 +8,7 @@ data class Player(
     val location: String? = null,
     val nickname: String? = null,
     val avatar: String = "",
-    val points: Int = 0,
+    var points: Int = 0,
     val createdAt: String,
     val leagueId: Int? = null,
     val roleId: Int? = null,

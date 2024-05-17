@@ -22,6 +22,15 @@ class LeagueServiceImpl : LeagueService {
         }
     }
 
+    override suspend fun getLeagueById(id: Int): League? {
+        return dbQuery {
+            LeagueTable.select {
+                LeagueTable.id eq id
+            }.mapNotNull { rowToLeague(it) }
+                .singleOrNull()
+        }
+    }
+
     override suspend fun getLeagues(): List<League> {
         return dbQuery {
             LeagueTable.selectAll().mapNotNull { rowToLeague(it) }
@@ -46,6 +55,7 @@ class LeagueServiceImpl : LeagueService {
                 it[LeagueTable.duration] = params.duration
                 it[LeagueTable.ascent] = params.ascent
                 it[LeagueTable.descent] = params.descent
+                // Formato fecha "2024-05-15T10:12:55.205120600"
                 it[LeagueTable.startDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME)
                 //Calcular la duracion en meses y sumarla a la fecha de inicio
                 it[LeagueTable.endDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME).plusMonths(params.duration.toLong())

@@ -5,5 +5,5 @@ data class CreateLeagueParams(
     val duration: Int,
     val ascent: Int,
     val descent: Int,
-    val startDate: String
+    val startDate: String?
 )
