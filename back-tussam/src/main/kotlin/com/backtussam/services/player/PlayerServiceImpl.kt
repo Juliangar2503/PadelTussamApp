@@ -1,6 +1,7 @@
 package com.backtussam.services.player
 
 import com.backtussam.db.DatabaseFactory.dbQuery
+import com.backtussam.db.tables.MatchTable
 import com.backtussam.db.tables.PlayerTable
 import com.backtussam.model.Player
 import com.backtussam.security.hash
@@ -67,24 +68,32 @@ class PlayerServiceImpl : PlayerService {
     override suspend fun updatePlayer(email: String, params: UpdatePlayerParams): Player? {
         dbQuery {
             PlayerTable.update({ PlayerTable.email eq email }) {
-                it[name] = params.name
-                it[lastName] = params.lastName
-                it[PlayerTable.email] = params.email
-                it[password] = hash(params.password)
-                it[PlayerTable.location] = params.location
-                it[PlayerTable.nickname] = params.nickname
-                it[PlayerTable.avatar] = params.avatar
-                it[PlayerTable.points] = params.points
-                it[PlayerTable.leagueId] = params.leagueId
-                it[PlayerTable.roleId] = params.roleId
+                if (params.name != null) it[name] = params.name
+                if (params.lastName != null) it[lastName] = params.lastName
+                if (params.email != null) it[PlayerTable.email] = params.email
+                if (params.password != null) it[password] = hash(params.password)
+                if (params.location != null) it[PlayerTable.location] = params.location
+                if (params.nickname != null) it[PlayerTable.nickname] = params.nickname
+                if (params.avatar != null) it[PlayerTable.avatar] = params.avatar
+                if (params.points != null) it[PlayerTable.points] = params.points
+                if (params.leagueId != null) it[PlayerTable.leagueId] = params.leagueId
+                if (params.roleId != null) it[PlayerTable.roleId] = params.roleId
             }
         }
-        return findPlayerByEmail(params.email)
+        return params.email?.let { findPlayerByEmail(it) }
     }
 
     override suspend fun deletePlayer(id: Int): Boolean {
         return dbQuery {
             PlayerTable.deleteWhere { PlayerTable.id eq id } > 0
+        }
+    }
+
+    override suspend fun earnPoints(playerId: Int,point: Int): Boolean {
+        return dbQuery {
+            PlayerTable.update({ PlayerTable.id eq playerId }) {
+                it[PlayerTable.points] = point
+            } > 0
         }
     }
 

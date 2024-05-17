@@ -18,6 +18,7 @@ interface PlayerService {
     /*** ACTUALIZAR Y ELIMINAR JUGADOR ***/
     suspend fun updatePlayer(email: String, params: UpdatePlayerParams): Player?
     suspend fun deletePlayer(id: Int): Boolean
+    suspend fun earnPoints(playerId: Int, point: Int): Boolean
 
     /*** BUSCAR JUGADORES POR EMAIL Y PASSWORD ***/
     suspend fun findPlayerByEmail(email: String): Player?

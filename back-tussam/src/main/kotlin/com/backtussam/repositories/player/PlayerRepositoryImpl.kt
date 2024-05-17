@@ -266,6 +266,8 @@ class PlayerRepositoryImpl(
         } else {
             if(match.id_player1 == playerId || match.id_player2 == playerId){
                 matchService.confirmOneResults(matchId)
+                //Si ambos equipos han confirmado el resultado, se actualizan los puntos
+                earnPointsAfterCheckMatch(matchId)
                 return BaseResponse.SuccessResponse(data = "Match updated")
             }
             else{
@@ -281,7 +283,9 @@ class PlayerRepositoryImpl(
             return BaseResponse.ErrorResponse(message = "Match not found")
         } else {
             if(match.id_player3 == playerId || match.id_player4 == playerId){
-                matchService.confirmOneResults(matchId)
+                matchService.confirmSecondResults(matchId)
+                //Si ambos equipos han confirmado el resultado, se actualizan los puntos
+                earnPointsAfterCheckMatch(matchId)
                 return BaseResponse.SuccessResponse(data = "Match updated")
             }
             else{
@@ -317,6 +321,47 @@ class PlayerRepositoryImpl(
             }
         }
     }
+
+    override suspend fun earnPointsAfterCheckMatch(matchId: Int): BaseResponse<Any> {
+        val match = matchService.getMatchById(matchId)
+        if (match == null) {
+            return BaseResponse.ErrorResponse(message = "Match not found")
+        } else {
+            if (match.confirmResult1 && match.confirmResult2){
+                val player1 = playerService.getPlayerById(match.id_player1!!)
+                val player2 = playerService.getPlayerById(match.id_player2!!)
+                val player3 = playerService.getPlayerById(match.id_player3!!)
+                val player4 = playerService.getPlayerById(match.id_player4!!)
+                val pointsWiner = 5
+                val pointsLouser = 2
+                if(player1 == null || player2 == null || player3 == null || player4 == null){
+                    return BaseResponse.ErrorResponse(message = "Players not found")
+                }else{
+                    if(match.matchResult!!.count { it == 'A' } > match.matchResult.count { it == 'B' }){
+                        player1.points += pointsWiner
+                        player2.points += pointsWiner
+                        player3.points += pointsLouser
+                        player4.points += pointsLouser
+                    }else{
+                        player1.points += pointsLouser
+                        player2.points += pointsLouser
+                        player3.points += pointsWiner
+                        player4.points += pointsWiner
+                    }
+                    println("Puntos de los jugadores: ${player1.points}, ${player2.points}, ${player3.points}, ${player4.points}")
+
+                    playerService.earnPoints(player1.id, player1.points)
+                    playerService.earnPoints(player2.id, player2.points)
+                    playerService.earnPoints(player3.id, player3.points)
+                    playerService.earnPoints(player4.id, player4.points)
+
+                }
+
+            }
+            return BaseResponse.SuccessResponse(data = "Points earned")
+        }
+    }
+
 
 
     //Primero comprobar si el jugador existe
