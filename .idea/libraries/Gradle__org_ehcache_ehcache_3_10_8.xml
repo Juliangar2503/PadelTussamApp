@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: org.ehcache:ehcache:3.10.8" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.ehcache" artifactId="ehcache" version="3.10.8" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ehcache/ehcache/3.10.8/f0d50ede46609db78413ca7f4250d348a597b101/ehcache-3.10.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
