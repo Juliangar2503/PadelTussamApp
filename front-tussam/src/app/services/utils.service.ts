@@ -28,9 +28,10 @@ export class UtilsService {
   saveInLocalStorage(key:string, value:any){
     return localStorage.setItem(key,JSON.stringify(value))
   }
-  // getFromLocalStorage(key:string){
-  //   return JSON.parse(localStorage.getItem(key))
-  // }
+  getFromLocalStorage(key: string) {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  }
 
 
 

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: io.ktor:ktor-server-auto-head-response-jvm:2.3.10" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.ktor" artifactId="ktor-server-auto-head-response-jvm" version="2.3.10" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-auto-head-response-jvm/2.3.10/f6ca27ec379a27f0b9cacd8ff05cbe000ceb1379/ktor-server-auto-head-response-jvm-2.3.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
