@@ -14,6 +14,7 @@ object PlayerTable: Table("players") {
     val nickname = varchar("nikename", 256).nullable()
     val avatar = text("avatar").nullable()
     val points = integer("points").default(0)
+    val active = bool("active").default(false)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val leagueId = integer("league_id").references(LeagueTable.id).nullable()
     val roleId = integer("role_id").references(RoleTable.id).nullable()

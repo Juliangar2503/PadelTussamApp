@@ -126,6 +126,7 @@ class PlayerServiceImpl : PlayerService {
             nickname = row[PlayerTable.nickname],
             avatar = row[PlayerTable.avatar].toString(),
             points = row[PlayerTable.points],
+            active = row[PlayerTable.active],
             leagueId = row[PlayerTable.leagueId],
             roleId = row[PlayerTable.roleId]
         )
