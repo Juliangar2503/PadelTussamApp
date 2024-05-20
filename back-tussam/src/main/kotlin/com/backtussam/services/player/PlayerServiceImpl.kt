@@ -1,7 +1,6 @@
 package com.backtussam.services.player
 
 import com.backtussam.db.DatabaseFactory.dbQuery
-import com.backtussam.db.tables.MatchTable
 import com.backtussam.db.tables.PlayerTable
 import com.backtussam.model.Player
 import com.backtussam.security.hash
@@ -76,6 +75,7 @@ class PlayerServiceImpl : PlayerService {
                 if (params.nickname != null) it[PlayerTable.nickname] = params.nickname
                 if (params.avatar != null) it[PlayerTable.avatar] = params.avatar
                 if (params.points != null) it[PlayerTable.points] = params.points
+                if (params.active != null) it[PlayerTable.active] = params.active
                 if (params.leagueId != null) it[PlayerTable.leagueId] = params.leagueId
                 if (params.roleId != null) it[PlayerTable.roleId] = params.roleId
             }
@@ -126,6 +126,7 @@ class PlayerServiceImpl : PlayerService {
             nickname = row[PlayerTable.nickname],
             avatar = row[PlayerTable.avatar].toString(),
             points = row[PlayerTable.points],
+            active = row[PlayerTable.active],
             leagueId = row[PlayerTable.leagueId],
             roleId = row[PlayerTable.roleId]
         )

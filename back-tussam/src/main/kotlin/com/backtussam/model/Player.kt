@@ -10,6 +10,7 @@ data class Player(
     val avatar: String = "",
     var points: Int = 0,
     val createdAt: String,
+    val active: Boolean = false,
     val leagueId: Int? = null,
     val roleId: Int? = null,
     var authToken: String? = null

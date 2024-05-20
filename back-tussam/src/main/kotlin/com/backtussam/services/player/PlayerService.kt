@@ -15,6 +15,7 @@ interface PlayerService {
     suspend fun registerPlayer(params: CreatePlayerParams): Player?
     suspend fun addPlayerToLeague(playerId: Int, leagueId: Int): Boolean
 
+
     /*** ACTUALIZAR Y ELIMINAR JUGADOR ***/
     suspend fun updatePlayer(email: String, params: UpdatePlayerParams): Player?
     suspend fun deletePlayer(id: Int): Boolean

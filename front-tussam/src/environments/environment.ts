@@ -4,6 +4,8 @@ export const environment = {
   baseUrl: 'http://localhost:8080/',
   login: 'auth/login',
   register: 'auth/register',
+  player: 'player/',
   Ranking: '/player/league/',
+  GlobalQuery: 'player/all/',
 };
 

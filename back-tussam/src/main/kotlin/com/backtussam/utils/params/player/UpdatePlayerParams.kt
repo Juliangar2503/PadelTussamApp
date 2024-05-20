@@ -9,7 +9,10 @@ data class UpdatePlayerParams (
     val location: String?,
     val nickname: String?,
     val avatar: String?,
+    val createdAt: String?,
+    val authToken: String?,
     val points: Int?,
+    val active: Boolean?,
     val leagueId: Int?,
     val roleId: Int?
 )
