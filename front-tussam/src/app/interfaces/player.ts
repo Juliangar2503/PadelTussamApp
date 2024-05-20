@@ -3,9 +3,11 @@ export interface Player {
     name: string;
     lastName: string;
     email: string;
-    userName?: string;
+    location?: string;
+    nickname: string;
     avatar?: string;
     points?: number;
+    active: boolean;
     createdAt: string;
     leagueId?: number;
     roleId?: number;

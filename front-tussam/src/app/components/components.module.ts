@@ -6,6 +6,9 @@ import {CustomFormComponent} from "./custom-form/custom-form.component";
 import { CustomCardComponent } from './custom-card/custom-card.component';
 import { CustomTabsComponent } from './custom-tabs/custom-tabs.component';
 import { CustomSegmentButtonComponent } from './custom-segment-button/custom-segment-button.component';
+import { CustomSlidingAdminComponent } from './custom-sliding-admin/custom-sliding-admin.component';
+import { RegisterPlayerComponent } from './register-player/register-player.component';
+import { EditPlayerComponent } from './edit-player/edit-player.component';
 
 
 
@@ -15,14 +18,20 @@ import { CustomSegmentButtonComponent } from './custom-segment-button/custom-seg
     CustomFormComponent,
     CustomCardComponent,
     CustomTabsComponent,
-    CustomSegmentButtonComponent
+    CustomSegmentButtonComponent,
+    CustomSlidingAdminComponent,
+    RegisterPlayerComponent,
+    EditPlayerComponent
   ],
   exports:[
     //Exportar los componentes que se van a utilizar
     CustomFormComponent,
     CustomCardComponent,
     CustomTabsComponent,
-    CustomSegmentButtonComponent
+    CustomSegmentButtonComponent,
+    CustomSlidingAdminComponent,
+    RegisterPlayerComponent,
+    EditPlayerComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes

@@ -124,6 +124,15 @@ fun Application.authRoutes(repository: PlayerRepository){
                 val result = repository.confirmResultMatchTeamB(matchId, playerId)
                 call.respond(result.statusCode, result)
             }
+
+            // http://localhost:8080/player/all/{orderField}/{filterField}/{filterValor}
+            get("/all/{orderField}/{filterField}/{filterValor}"){
+                val orderField = call.parameters["orderField"] ?: ""
+                val filterField = call.parameters["filterField"] ?: ""
+                val filterValor = call.parameters["filterValor"] ?: ""
+                val result = repository.getGlobalQueryPlayer(orderField, filterField, filterValor)
+                call.respond(result.statusCode, result)
+            }
         }
     }
 

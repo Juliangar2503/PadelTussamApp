@@ -140,6 +140,42 @@ class PlayerRepositoryImpl(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getGlobalQueryPlayer(orderField: String, filterField: String, filterValor: String): BaseResponse<Any> {
+        val players = playerService.getPlayers()
+        if (players.isNotEmpty()){
+            val filteredPlayers = when(filterField){
+                "name" -> players.filter { it.name == filterValor }
+                "lastName" -> players.filter { it.lastName == filterValor }
+                "email" -> players.filter { it.email == filterValor }
+                "location" -> players.filter { it.location == filterValor }
+                "nickname" -> players.filter { it.nickname == filterValor }
+                "active" -> players.filter { it.active.toString() == filterValor }
+                "leagueId" -> players.filter { it.leagueId.toString() == filterValor }
+                "roleId" -> players.filter { it.roleId.toString() == filterValor }
+                "points" -> players.filter { it.points.toString() == filterValor }
+                "createdAt" -> players.filter { it.createdAt == filterValor }
+                else -> players
+            }
+            val sortedPlayers = when(orderField){
+                "name" -> filteredPlayers.sortedBy { it.name }
+                "lastName" -> filteredPlayers.sortedBy { it.lastName }
+                "email" -> filteredPlayers.sortedBy { it.email }
+                "location" -> filteredPlayers.sortedBy { it.location }
+                "nickname" -> filteredPlayers.sortedBy { it.nickname }
+                "active" -> filteredPlayers.sortedBy { it.active }
+                "leagueId" -> filteredPlayers.sortedBy { it.leagueId }
+                "roleId" -> filteredPlayers.sortedBy { it.roleId }
+                "points" -> filteredPlayers.sortedBy { it.points }
+                "createdAt" -> filteredPlayers.sortedBy { it.createdAt }
+                else -> filteredPlayers
+            }
+            return BaseResponse.SuccessResponse(data = sortedPlayers)
+        }else{
+            return BaseResponse.ErrorResponse(message = "No players found")
+        }
+    }
+
+
     /**** ACCIONES DE JUGADORES ****/
 
     override suspend fun loginPlayer(params: LoginPlayerParams): BaseResponse<Any> {

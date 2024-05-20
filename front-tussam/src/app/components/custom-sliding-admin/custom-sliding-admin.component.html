@@ -1,0 +1,25 @@
+<ion-item-sliding>
+  <ion-item>
+    <ion-avatar slot="start">
+      <img *ngIf="player.avatar && player.avatar !== 'null'; else defaultImage" [src]="player.avatar">
+      <ng-template #defaultImage>
+        <img src="../../../assets/img/defaultAvatar.webp">
+      </ng-template>
+    </ion-avatar>
+    <ion-label>
+      <h2>{{player.name}} {{player.lastName}}</h2>
+      <p>{{player.email}}</p>
+    </ion-label>
+
+    <!-- Mostrar icono para ver si está activo o no -->
+    <ion-icon slot="end" *ngIf="player.active; else inactiveIcon" name="checkmark-circle" color="success"></ion-icon>
+    <ng-template #inactiveIcon>
+      <ion-icon slot="end" name="close-circle" color="dark"></ion-icon>
+    </ng-template>
+  </ion-item>
+
+  <ion-item-options>
+    <ion-item-option color="primary" (click)="openEditModal(player); $event.stopPropagation();">Edit</ion-item-option>
+    <ion-item-option color="danger" (click)="deleteCharacter(); $event.stopPropagation();">Delete</ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
