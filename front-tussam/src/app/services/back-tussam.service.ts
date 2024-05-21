@@ -16,9 +16,13 @@ export class BackTussamService {
 
   constructor(private http: HttpClient) { }
 
+  // ******  AUTH  ******
+
   login(email: string, password: string): Observable<ApiResponse> {
     return this.http.post<any>(environment.baseUrl + environment.login, { email, password });
   }
+
+  // ***************** PLAYERS *****************
 
   getRanking(idLeague: Number):Observable<ApiResponsePlayers>{
     return this.http.get<any>(environment.baseUrl + environment.Ranking + idLeague);
@@ -35,6 +39,10 @@ export class BackTussamService {
 
   editPlayer(email:String, player: EditPlayerParams | null):Observable<ApiResponse>{
     return this.http.put<any>(environment.baseUrl + environment.player + email, player);
+  }
+
+  deletePlayer(id:Number):Observable<ApiResponse>{
+    return this.http.delete<any>(environment.baseUrl + environment.player + id);
   }
 
   // ***************** LEAGUES *****************
