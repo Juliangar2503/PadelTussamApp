@@ -38,4 +38,8 @@ export class RegisterPlayerComponent {
     this.modalController.dismiss();
   }
 
+  closeModal() {
+    this.modalController.dismiss();
+  }
+
 }
