@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { League } from 'src/app/interfaces/league';
 import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
 
@@ -11,11 +12,22 @@ import { BackTussamService } from 'src/app/services/back-tussam.service';
 export class EditPlayerComponent{
 
   @Input() player: Player = {} as Player;
+  leagues: League[] = [];
 
   constructor(
     private modalController: ModalController,
     private backSvc: BackTussamService
-  ) { }
+  ) {
+    this.getLeagues();
+   }
+
+   getLeagues() {
+    this.backSvc.getLeagues().subscribe(
+      (response) => {
+        this.leagues = response.data;
+      }
+    );
+  }
 
   dismissModal() {
     this.modalController.dismiss();

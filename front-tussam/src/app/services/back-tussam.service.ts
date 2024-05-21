@@ -8,6 +8,7 @@ import { RegisterParams } from '../interfaces/register-params';
 import { EditPlayerParams } from '../interfaces/edit-player-params';
 import { ApiResponseLeagues } from '../interfaces/api-response-leagues';
 import { League } from '../interfaces/league';
+import { ApiResponseLeague } from '../interfaces/api-response-league';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,10 @@ export class BackTussamService {
 
   // ***************** LEAGUES *****************
 
+  getLeague(nameLeague:string):Observable<ApiResponseLeague>{
+    return this.http.get<any>(environment.baseUrl + environment.oneLeague + nameLeague);
+  }
+
   getLeagues():Observable<ApiResponseLeagues>{
     return this.http.get<any>(environment.baseUrl + environment.leagues);
   }
@@ -62,5 +67,9 @@ export class BackTussamService {
   deleteLeague(nameLeague:string):Observable<ApiResponse>{
     return this.http.delete<any>(environment.baseUrl + environment.deleteLeague + nameLeague);
   }
+
+  // ***************** MATCHES *****************
+
+
 
 }

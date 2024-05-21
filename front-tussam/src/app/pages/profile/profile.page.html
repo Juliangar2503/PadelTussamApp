@@ -1,13 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Player Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card>
+    <ion-avatar slot="start">
+      <img *ngIf="player.avatar && player.avatar !== 'null'; else defaultImage" [src]="player.avatar">
+      <ng-template #defaultImage>
+        <img src="../../../assets/img/defaultAvatar.webp">
+      </ng-template>
+    </ion-avatar>
+
+    <ion-card-header>
+      <ion-card-title>{{ player.name }} {{ player.lastName }}</ion-card-title>
+      <ion-card-subtitle>Nickname: {{ player.nickname }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Email: {{ player.email }}</p>
+      <p>Location: {{ player.location || 'N/A' }}</p>
+      <p>Points: {{ player.points || 0 }}</p>
+      <p>Status: {{ player.active ? 'Active' : 'Inactive' }}</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-button (click)="logout()">Edit Profile</ion-button>
 </ion-content>

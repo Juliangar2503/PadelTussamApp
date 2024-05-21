@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-admin-configure',
   templateUrl: './admin-configure.page.html',
   styleUrls: ['./admin-configure.page.scss'],
 })
-export class AdminConfigurePage implements OnInit {
+export class AdminConfigurePage  {
 
   table: string = "player";
 
@@ -13,10 +13,6 @@ export class AdminConfigurePage implements OnInit {
    constructor(
    ) {}
  
-   ngOnInit() {
-   }
- 
-  
   onTableChange(event: any) {
     this.table = event.detail.value;
   }
