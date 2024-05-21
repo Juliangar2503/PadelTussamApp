@@ -5,16 +5,24 @@
 </ion-header>
 <ion-content>
   <div>
+
+    <ion-item>
+      <ion-select justify="start" label="Gestionar" placeholder="jugadores/liga" (ionChange)="onOrderChange($event)">
+        <ion-select-option value="player">Jugador</ion-select-option>
+        <ion-select-option value="league">Liga</ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <!-- SELECCION DE ORDEN Y FILTRO DE LOS JUGADORES -->
     <ion-item>
-      <ion-select justify="start" label="Order" placeholder="Ordenar jugadores" (ionChange)="onOrderChange($event)">
+      <ion-select justify="start" label="Order" label-placement="floating" (ionChange)="onOrderChange($event)">
         <ion-select-option value="Default">Default</ion-select-option>
         <ion-select-option value="createdAt">Inscrito</ion-select-option>
         <ion-select-option value="active">Activo</ion-select-option>
         <ion-select-option value="name">Alfabetico</ion-select-option>
       </ion-select>
 
-      <ion-select justify="end" label="Filter" placeholder="Filtrar jugadores" (ionChange)="onFilterChange($event)">
+      <ion-select justify="end" label="Filter" label-placement="floating" (ionChange)="onFilterChange($event)">
         <ion-select-option value="Default/Default">Default</ion-select-option>
         <ion-select-option value="roleId/1">Admin</ion-select-option>
         <ion-select-option value="active/true">Active</ion-select-option>
@@ -25,7 +33,6 @@
     <!-- MOSTRAR LISTA DE JUGADORES -->
     <ion-item>
       <ion-label>
-        <h1>Lista de jugadores</h1>
         <ion-list *ngIf="players != undefined">
           <app-custom-sliding-admin *ngFor="let player of players" [player]="player"></app-custom-sliding-admin>
         </ion-list>

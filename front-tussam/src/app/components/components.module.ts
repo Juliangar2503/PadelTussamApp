@@ -9,6 +9,8 @@ import { CustomSegmentButtonComponent } from './custom-segment-button/custom-seg
 import { CustomSlidingAdminComponent } from './custom-sliding-admin/custom-sliding-admin.component';
 import { RegisterPlayerComponent } from './register-player/register-player.component';
 import { EditPlayerComponent } from './edit-player/edit-player.component';
+import { PlayerManagementComponent } from './player-management/player-management.component';
+import { LeagueManagementComponent } from './league-management/league-management.component';
 
 
 
@@ -21,7 +23,9 @@ import { EditPlayerComponent } from './edit-player/edit-player.component';
     CustomSegmentButtonComponent,
     CustomSlidingAdminComponent,
     RegisterPlayerComponent,
-    EditPlayerComponent
+    EditPlayerComponent,
+    PlayerManagementComponent,
+    LeagueManagementComponent
   ],
   exports:[
     //Exportar los componentes que se van a utilizar
@@ -31,7 +35,9 @@ import { EditPlayerComponent } from './edit-player/edit-player.component';
     CustomSegmentButtonComponent,
     CustomSlidingAdminComponent,
     RegisterPlayerComponent,
-    EditPlayerComponent
+    EditPlayerComponent,
+    PlayerManagementComponent,
+    LeagueManagementComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes
