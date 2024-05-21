@@ -7,42 +7,15 @@
   <div>
 
     <ion-item>
-      <ion-select justify="start" label="Gestionar" placeholder="jugadores/liga" (ionChange)="onOrderChange($event)">
+      <ion-select justify="start" label="Gestionar" placeholder="Jugador" (ionChange)="onTableChange($event)">
         <ion-select-option value="player">Jugador</ion-select-option>
         <ion-select-option value="league">Liga</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <!-- SELECCION DE ORDEN Y FILTRO DE LOS JUGADORES -->
-    <ion-item>
-      <ion-select justify="start" label="Order" label-placement="floating" (ionChange)="onOrderChange($event)">
-        <ion-select-option value="Default">Default</ion-select-option>
-        <ion-select-option value="createdAt">Inscrito</ion-select-option>
-        <ion-select-option value="active">Activo</ion-select-option>
-        <ion-select-option value="name">Alfabetico</ion-select-option>
-      </ion-select>
+    <app-player-management *ngIf="table === 'player'"></app-player-management>
+    <app-league-management *ngIf="table === 'league'"></app-league-management>
 
-      <ion-select justify="end" label="Filter" label-placement="floating" (ionChange)="onFilterChange($event)">
-        <ion-select-option value="Default/Default">Default</ion-select-option>
-        <ion-select-option value="roleId/1">Admin</ion-select-option>
-        <ion-select-option value="active/true">Active</ion-select-option>
-        <ion-select-option value="active/false">Inactivo</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <!-- MOSTRAR LISTA DE JUGADORES -->
-    <ion-item>
-      <ion-label>
-        <ion-list *ngIf="players != undefined">
-          <app-custom-sliding-admin *ngFor="let player of players" [player]="player"></app-custom-sliding-admin>
-        </ion-list>
-    </ion-label>
-    </ion-item>
- 
-    <!-- BOTON PARA ABRIR MODAL DEL REGISTRO DE JUGADORES -->
-    <ion-item>
-      <ion-button (click)="openModal()">Registrar jugador</ion-button>
-    </ion-item>
   </div>
 
 

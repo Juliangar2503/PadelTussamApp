@@ -11,6 +11,7 @@ import { RegisterPlayerComponent } from './register-player/register-player.compo
 import { EditPlayerComponent } from './edit-player/edit-player.component';
 import { PlayerManagementComponent } from './player-management/player-management.component';
 import { LeagueManagementComponent } from './league-management/league-management.component';
+import { RegisterLeagueComponent } from './register-league/register-league.component';
 
 
 
@@ -25,7 +26,8 @@ import { LeagueManagementComponent } from './league-management/league-management
     RegisterPlayerComponent,
     EditPlayerComponent,
     PlayerManagementComponent,
-    LeagueManagementComponent
+    LeagueManagementComponent,
+    RegisterLeagueComponent
   ],
   exports:[
     //Exportar los componentes que se van a utilizar
@@ -37,7 +39,8 @@ import { LeagueManagementComponent } from './league-management/league-management
     RegisterPlayerComponent,
     EditPlayerComponent,
     PlayerManagementComponent,
-    LeagueManagementComponent
+    LeagueManagementComponent,
+    RegisterLeagueComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes

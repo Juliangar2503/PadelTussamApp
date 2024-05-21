@@ -7,5 +7,7 @@ export const environment = {
   player: 'player/',
   Ranking: '/player/league/',
   GlobalQuery: 'player/all/',
+  leagues: 'league/all',
+  createLeague: 'league/createByName/'
 };
 
