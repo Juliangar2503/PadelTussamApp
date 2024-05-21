@@ -31,6 +31,10 @@ export class UtilsService {
   }
   getFromLocalStorage(key: string) {
     const item = localStorage.getItem(key);
+    console.log(item);
     return item ? JSON.parse(item) : null;
+  }
+  clearLocalStorage() {
+    localStorage.clear();
   }
 }
