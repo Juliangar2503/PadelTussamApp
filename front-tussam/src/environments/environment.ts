@@ -8,6 +8,8 @@ export const environment = {
   Ranking: '/player/league/',
   GlobalQuery: 'player/all/',
   leagues: 'league/all',
-  createLeague: 'league/createByName/'
+  createLeague: 'league/createByName/',
+  editleague: 'league/update/',
+  deleteLeague: 'league/deleteByName/',
 };
 

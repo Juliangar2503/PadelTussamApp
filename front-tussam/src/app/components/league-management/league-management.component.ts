@@ -38,8 +38,14 @@ export class LeagueManagementComponent  implements OnInit {
     modal.onDidDismiss().then(() => {
       this.getLeagues();
     });
+
+    
   
     return await modal.present();
+  }
+
+  onLeagueDeleted() {
+    this.getLeagues();
   }
 
 }

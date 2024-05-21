@@ -5,3 +5,13 @@
     <ion-icon slot="end" name="add-circle"></ion-icon>
   </ion-button>
 </ion-item>
+
+<!-- MOSTRAR LISTA DE JUGADORES -->
+<ion-item>
+  <ion-label>
+    <ion-list *ngIf="leagues != undefined">
+      <app-sliding-league-list *ngFor="let league of leagues" [league]="league" (leagueDeleted)="onLeagueDeleted()"></app-sliding-league-list>
+    </ion-list>
+</ion-label>
+</ion-item>
+
