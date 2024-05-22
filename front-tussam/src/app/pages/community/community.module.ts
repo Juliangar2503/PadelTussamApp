@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilePageRoutingModule } from './profile-routing.module';
+import { CommunityPageRoutingModule } from './community-routing.module';
 
-import { ProfilePage } from './profile.page';
+import { CommunityPage } from './community.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule,
+    CommunityPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [ProfilePage]
+  declarations: [CommunityPage]
 })
-export class ProfilePageModule {}
+export class CommunityPageModule {}

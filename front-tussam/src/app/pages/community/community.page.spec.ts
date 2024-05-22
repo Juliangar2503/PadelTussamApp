@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ComunityPage } from './comunity.page';
+import { CommunityPage } from './community.page';
 
-describe('ComunityPage', () => {
-  let component: ComunityPage;
-  let fixture: ComponentFixture<ComunityPage>;
+describe('CommunityPage', () => {
+  let component: CommunityPage;
+  let fixture: ComponentFixture<CommunityPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ComunityPage);
+    fixture = TestBed.createComponent(CommunityPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
