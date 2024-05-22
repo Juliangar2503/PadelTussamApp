@@ -22,11 +22,8 @@ const routes: Routes = [
   
   },
   {
-    path: 'comunity',
-    loadChildren: () => import('./pages/comunity/comunity.module').then( m => m.ComunityPageModule),
-    canActivate: [LoginGuard], // Agrega tu guardia aquí
-    //data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
-  
+    path: 'community',
+    loadChildren: () => import('./pages/community/community.module').then( m => m.CommunityPageModule)
   },
   {
     path: 'profile',
@@ -34,12 +31,11 @@ const routes: Routes = [
     canActivate: [LoginGuard], // Agrega tu guardia aquí
     //data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
   
-  },  {
+  },
+  {
     path: 'admin-configure',
     loadChildren: () => import('./pages/admin-configure/admin-configure.module').then( m => m.AdminConfigurePageModule)
   },
-
-
 ];
 
 @NgModule({
