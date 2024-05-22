@@ -1,24 +1,27 @@
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button (click)="changePage('competition')" tab="competition">
-      <ion-icon name="trophy"></ion-icon>
-      <ion-label>Competition</ion-label>
-    </ion-tab-button>
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button (click)="changePage('competition')" tab="competition">
+          <ion-icon name="trophy"></ion-icon>
+          <ion-label>Competition</ion-label>
+        </ion-tab-button>
 
-    <ion-tab-button (click)="changePage('community')" tab="community">
-      <ion-icon name="people"></ion-icon>
-      <ion-label>Community</ion-label>
-    </ion-tab-button>
+        <ion-tab-button (click)="changePage('community')" tab="community">
+          <ion-icon name="people"></ion-icon>
+          <ion-label>Community</ion-label>
+        </ion-tab-button>
 
-    <ion-tab-button (click)="changePage('profile')" tab="profile">
-      <ion-icon name="person"></ion-icon>
-      <ion-label>Profile</ion-label>
-    </ion-tab-button>
+        <ion-tab-button (click)="changePage('profile')" tab="profile">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-tab-button>
 
-    <ion-tab-button (click)="changePage('admin-configure')" tab="admin">
-      <ion-icon name="settings"></ion-icon>
-      <ion-label>Admin</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
-
+        <ion-tab-button (click)="changePage('admin-configure')" tab="admin">
+          <ion-icon name="settings"></ion-icon>
+          <ion-label>Admin</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

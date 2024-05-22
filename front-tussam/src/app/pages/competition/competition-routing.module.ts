@@ -7,9 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: CompetitionPage
-  },  {
-    path: 'competitive-matches',
-    loadChildren: () => import('./competitive-matches/competitive-matches.module').then( m => m.CompetitiveMatchesPageModule)
   },
 
 ];

@@ -3,29 +3,95 @@
     <ion-title>Player Profile</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-card>
-    <ion-avatar slot="start">
-      <img *ngIf="player.avatar && player.avatar !== 'null'; else defaultImage" [src]="player.avatar">
-      <ng-template #defaultImage>
-        <img src="../../../assets/img/defaultAvatar.webp">
-      </ng-template>
-    </ion-avatar>
+  <ion-grid>
+    <!-- Datos usuario -->
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img *ngIf="player.avatar && player.avatar !== 'null'; else defaultImage" [src]="player.avatar">
+            <ng-template #defaultImage>
+              <img src="../../../assets/img/defaultAvatar.webp">
+            </ng-template>
+          </ion-avatar>
+          <ion-label>
+            <h2>{{player.name}} {{player.lastName}}</h2>
+            <p>{{player.location}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" class="ion-text-center">
+        <ion-item>
+          <ion-label>
+            <p>Inscrito desde: {{player.createdAt}} </p>
+            <p>Email: {{player.email}}</p>
+            <p>Liga: {{player.leagueId}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <!-- Estadísticas del usuario -->
+      <ion-col size="4">
+        <ion-card class="ion-text-center">
+          <ion-card-header>
+            <ion-icon name="tennisball"></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            0
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            0
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-icon name="close-circle" color="danger"></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            0
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
 
-    <ion-card-header>
-      <ion-card-title>{{ player.name }} {{ player.lastName }}</ion-card-title>
-      <ion-card-subtitle>Nickname: {{ player.nickname }}</ion-card-subtitle>
-    </ion-card-header>
+    <ion-row>
+      <!-- Acciones del usuario -->
+      <ion-col size="6">
+        <ion-button expand="full" color="primary" (click)="editProfile()">Editar Perfil</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="full" fill="outline" (click)="logout()">Cerrrar sesión</ion-button>
+      </ion-col>
 
-    <ion-card-content>
-      <p>Email: {{ player.email }}</p>
-      <p>Location: {{ player.location || 'N/A' }}</p>
-      <p>Points: {{ player.points || 0 }}</p>
-      <p>Status: {{ player.active ? 'Active' : 'Inactive' }}</p>
-    </ion-card-content>
-  </ion-card>
-  <ion-button (click)="logout()">Edit Profile</ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-segment>
+            <ion-segment-button value="openMatches">
+              <ion-label>Partidos abiertos</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="playedMatches">
+              <ion-label>Histórico de partidos</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+  
 </ion-content>
-
 <app-custom-tabs></app-custom-tabs>

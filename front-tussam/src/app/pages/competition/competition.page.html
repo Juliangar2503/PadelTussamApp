@@ -1,26 +1,11 @@
-
-
-<app-custom-segment-button></app-custom-segment-button>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Ranking</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content [fullscreen]="true">
-
- 
-  <!-- Crear una lista de jugadores en la que aparezcan su avatar, nombre, apellido, puntos  -->
-  <ion-list>
-    <ion-item *ngFor="let player of ranking">
-      <ion-avatar slot="start">
-        <img *ngIf="player.avatar && player.avatar !== 'null'; else defaultImage" [src]="player.avatar">
-        <ng-template #defaultImage>
-          <img src="../../../assets/img/defaultAvatar.webp">
-        </ng-template>
-      </ion-avatar>
-      <ion-label>
-        <h2>{{player.name}} {{player.lastName}}</h2>
-        <p>{{player.points}} points</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
+  <app-ranking-item [player]="player" [ranking]="ranking" [league]="league"></app-ranking-item>
 </ion-content>
 
 <app-custom-tabs></app-custom-tabs>

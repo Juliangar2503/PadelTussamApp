@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { EditProfileComponent } from 'src/app/components/edit-profile/edit-profile.component';
 import { Player } from 'src/app/interfaces/player';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -11,7 +13,10 @@ export class ProfilePage implements OnInit {
 
   player: Player = {} as Player;
 
-  constructor(private utilsSvc: UtilsService) {
+  constructor(
+    private utilSvc: UtilsService,
+    private modalController: ModalController
+  ) {
     
   }
 
@@ -21,19 +26,24 @@ export class ProfilePage implements OnInit {
   }
 
   getPlayer() {
-    this.player = this.utilsSvc.getFromLocalStorage('Player');
+    this.player = this.utilSvc.getFromLocalStorage('Player');
     console.log(this.player);
     console.log('player id: ' + this.player.id);
   }
 
-  editProfile() {
-    //ABRIR MODAL PARA EDITAR PERFIL, HARÁ FALTA UN COMPONENTE PARA EDITAR PERFIL
-    
+  async editProfile() {
+    const modal = await this.modalController.create({
+      component: EditProfileComponent,
+      componentProps: {
+        player: this.player
+      }
+    });
+    return await modal.present();
   }
 
   logout() {
     localStorage.clear();
-    this.utilsSvc.goToPage('login');
+    this.utilSvc.goToPage('login');
   }
 
 }

@@ -12,5 +12,6 @@ export const environment = {
   editleague: 'league/update/',
   deleteLeague: 'league/deleteByName/',
   oneLeague: 'league/find/',
+  oneLeagueById: 'league/findById/',
 };
 
