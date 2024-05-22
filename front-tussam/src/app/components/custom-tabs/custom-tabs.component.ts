@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-custom-tabs',
@@ -7,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomTabsComponent  implements OnInit {
 
-  constructor() { }
+  constructor(
+    private utilSvc: UtilsService    
+  ) { }
 
   ngOnInit() {}
+
+  changePage(pageName: string) {
+    this.utilSvc.goToPage(pageName);
+  }
 
 }
