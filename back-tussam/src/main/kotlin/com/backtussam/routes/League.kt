@@ -21,6 +21,12 @@ fun Application.leagueRoutes(repository: LeagueRepository){
                 val result = repository.getLeague(name)
                 call.respond(result.statusCode, result)
             }
+            get("/findById/{id}"){
+                val id = call.parameters["id"]?.toInt() ?: 0
+                val result = repository.getLeagueById(id)
+                call.respond(result.statusCode, result)
+            }
+
             // http://localhost:8080/league/create
             post("/create") {
                 val params = call.receive<CreateLeagueParams>()

@@ -25,10 +25,6 @@ export class BackTussamService {
 
   // ***************** PLAYERS *****************
 
-  getRanking(idLeague: Number):Observable<ApiResponsePlayers>{
-    return this.http.get<any>(environment.baseUrl + environment.Ranking + idLeague);
-  }
-
   //http://localhost:8080/player/all/{orderField}/{filterField}/{filterValor}
   getAllPlayers(orderField:string, filterField:string):Observable<ApiResponsePlayers>{
     return this.http.get<any>(environment.baseUrl + environment.GlobalQuery +  `${orderField}/${filterField}`);
@@ -50,6 +46,10 @@ export class BackTussamService {
 
   getLeague(nameLeague:string):Observable<ApiResponseLeague>{
     return this.http.get<any>(environment.baseUrl + environment.oneLeague + nameLeague);
+  }
+
+  getLeagueById(idLeague:Number | null):Observable<ApiResponseLeague>{
+    return this.http.get<any>(environment.baseUrl + environment.oneLeagueById + idLeague);
   }
 
   getLeagues():Observable<ApiResponseLeagues>{

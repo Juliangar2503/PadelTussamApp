@@ -30,6 +30,19 @@ class LeagueRepositoryImpl (
             BaseResponse.ErrorResponse(message = "No leagues found")
         }
     }
+
+    override suspend fun getLeagueById(id: Int): BaseResponse<Any> {
+        // Comprobar si la liga existe
+        val league = leagueService.getLeagueById(id)
+        return if (league != null){
+            // Liga encontrada
+            BaseResponse.SuccessResponse(data = league)
+        }else{
+            // Liga no encontrada
+            BaseResponse.ErrorResponse(message = "League not found")
+        }
+    }
+
     override suspend fun registerLeagueByName(name: String): BaseResponse<Any> {
         return if (isLeagueExist(name)){
             BaseResponse.ErrorResponse(message = "League already registered")

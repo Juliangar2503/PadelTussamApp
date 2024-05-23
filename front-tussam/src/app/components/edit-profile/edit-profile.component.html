@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Player</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Name: 
+        <ion-input [(ngModel)]="player.name"></ion-input>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Last Name: 
+        <ion-input [(ngModel)]="player.lastName"></ion-input>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email
+        <ion-input [(ngModel)]="player.email"></ion-input>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Nickname: 
+        <ion-input [(ngModel)]="player.nickname"></ion-input>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Location: 
+        <ion-input [(ngModel)]="player.location"></ion-input>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+
+  <ion-button expand="full" (click)="savePlayer()">Save</ion-button>
+</ion-content>
+

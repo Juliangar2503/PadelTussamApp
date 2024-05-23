@@ -14,6 +14,9 @@ import { LeagueManagementComponent } from './league-management/league-management
 import { RegisterLeagueComponent } from './register-league/register-league.component';
 import { SlidingLeagueListComponent } from './sliding-league-list/sliding-league-list.component';
 import { EditLeagueComponent } from './edit-league/edit-league.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { RankingItemComponent } from './ranking-item/ranking-item.component';
+import { MatchesItemComponent } from './matches-item/matches-item.component';
 
 
 
@@ -31,7 +34,10 @@ import { EditLeagueComponent } from './edit-league/edit-league.component';
     LeagueManagementComponent,
     RegisterLeagueComponent,
     SlidingLeagueListComponent,
-    EditLeagueComponent
+    EditLeagueComponent,
+    EditProfileComponent,
+    RankingItemComponent,
+    MatchesItemComponent
   ],
   exports:[
     //Exportar los componentes que se van a utilizar
@@ -46,7 +52,10 @@ import { EditLeagueComponent } from './edit-league/edit-league.component';
     LeagueManagementComponent,
     RegisterLeagueComponent,
     SlidingLeagueListComponent,
-    EditLeagueComponent
+    EditLeagueComponent,
+    EditProfileComponent,
+    RankingItemComponent,
+    MatchesItemComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes
