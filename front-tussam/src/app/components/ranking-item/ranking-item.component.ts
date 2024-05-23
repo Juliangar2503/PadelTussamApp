@@ -15,6 +15,8 @@ export class RankingItemComponent  implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(`ranking-item: ranking: ${this.ranking.length}, player: ${this.player.id}, league: ${this.league.name}`);
+  }
 
 }

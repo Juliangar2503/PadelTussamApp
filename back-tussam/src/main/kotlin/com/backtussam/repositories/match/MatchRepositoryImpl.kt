@@ -9,6 +9,7 @@ class MatchRepositoryImpl(
 ) : MatchRepository {
     override suspend fun getMatches(): BaseResponse<Any> {
         val matches = matchService.getMatches()
+        println("MatchRepository -> getMatches -> matches: $matches")
         return if (matches.isNotEmpty()) {
             BaseResponse.SuccessResponse(data = matches)
         } else {
@@ -28,6 +29,7 @@ class MatchRepositoryImpl(
 
     override suspend fun getMatchesByLeague(leagueId: Int): BaseResponse<Any> {
         val matchesCompetitives = matchService.getMatchesByType("Competitive")
+        println("MatchRepository -> getMatchesByLeague -> matchesCompetitives: $matchesCompetitives")
         val matchesByLeague = matchesCompetitives.filter { it?.level == leagueId }
         return if (matchesByLeague.isNotEmpty()) {
             BaseResponse.SuccessResponse(data = matchesByLeague)

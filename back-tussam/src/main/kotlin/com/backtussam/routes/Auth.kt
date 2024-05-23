@@ -78,7 +78,7 @@ fun Application.authRoutes(repository: PlayerRepository){
                 call.respond(result.statusCode, result)
             }
 
-            // http://localhost:8080/player/{playerId}/openMatch/{type}
+            // http://localhost:8080/player/openMatch/{playerId}/{type}
             post ("openMatch/{playerId}/{type}"){
                 val playerId = call.parameters["playerId"]?.toInt() ?: 0
                 val type = call.parameters["type"] ?: ""

@@ -9,6 +9,7 @@ import { EditPlayerParams } from '../interfaces/edit-player-params';
 import { ApiResponseLeagues } from '../interfaces/api-response-leagues';
 import { League } from '../interfaces/league';
 import { ApiResponseLeague } from '../interfaces/api-response-league';
+import { ApiReponseMatches } from '../interfaces/api-reponse-matches';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +71,15 @@ export class BackTussamService {
 
   // ***************** MATCHES *****************
 
+  openMatch(playerId: Number, type:string):Observable<ApiResponse>{
+    return this.http.post<any>(environment.baseUrl + `player/openMatch/${playerId}/${type}` , null);
+  }
+
+  getMatchesByLeague(leagueId: Number):Observable<ApiReponseMatches>{
+    return this.http.get<any>(environment.baseUrl + `matches/league/${leagueId}`);
+  }
+
+  
 
 
 }
