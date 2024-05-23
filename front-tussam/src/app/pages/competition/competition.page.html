@@ -5,7 +5,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <app-ranking-item [player]="player" [ranking]="ranking" [league]="league"></app-ranking-item>
+  <app-custom-segment-button (segmentChanged)="onSegmentChanged($event)"></app-custom-segment-button>
+  <app-ranking-item *ngIf="segmentValue === 'Ranking'" [player]="player" [ranking]="ranking" [league]="league"></app-ranking-item>
+  <app-matches-item *ngIf="segmentValue === 'Partidos'"></app-matches-item>
 </ion-content>
 
 <app-custom-tabs></app-custom-tabs>

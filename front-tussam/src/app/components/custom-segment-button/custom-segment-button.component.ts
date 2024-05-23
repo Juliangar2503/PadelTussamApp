@@ -1,26 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilsService } from 'src/app/services/utils.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-custom-segment-button',
   templateUrl: './custom-segment-button.component.html',
   styleUrls: ['./custom-segment-button.component.scss'],
 })
-export class CustomSegmentButtonComponent  implements OnInit {
+export class CustomSegmentButtonComponent{
 
-  constructor(
-    private utilSvc: UtilsService
-  ) { }
+  @Output() segmentChanged = new EventEmitter<string>();
 
-  ngOnInit() {}
-
-  goRanking(){
-    this.utilSvc.goToPage("/competition")
+  goRanking() {
+    this.segmentChanged.emit('Ranking');
   }
 
-  goMatches(){
-    this.utilSvc.goToPage("/competitive-matches")
+  goMatches() {
+    this.segmentChanged.emit('Partidos');
   }
-
 
 }

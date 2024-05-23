@@ -15,6 +15,7 @@ export class CompetitionPage implements OnInit {
   ranking: Player[] = [];
   player: Player = {} as Player;
   league: League = {} as League;
+  segmentValue: string = 'Ranking';
 
   constructor(
     private utilSvc: UtilsService,
@@ -24,6 +25,11 @@ export class CompetitionPage implements OnInit {
   ngOnInit() {
     this.getRanking();
     this.getLeague();
+  }
+
+  onSegmentChanged(segmentValue: string) {
+    console.log(segmentValue);
+    this.segmentValue = segmentValue;
   }
 
   getPlayer() {
