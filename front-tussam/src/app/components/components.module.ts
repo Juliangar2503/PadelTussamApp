@@ -19,6 +19,7 @@ import { RankingItemComponent } from './ranking-item/ranking-item.component';
 import { MatchesItemComponent } from './matches-item/matches-item.component';
 import { MatchItemComponent } from './match-item/match-item.component';
 import { ResultModalComponent } from './result-modal/result-modal.component';
+import { SearchPlayerComponent } from './search-player/search-player.component';
 
 
 
@@ -41,7 +42,8 @@ import { ResultModalComponent } from './result-modal/result-modal.component';
     RankingItemComponent,
     MatchesItemComponent,
     MatchItemComponent,
-    ResultModalComponent
+    ResultModalComponent,
+    SearchPlayerComponent
   ],
   exports:[
     //Exportar los componentes que se van a utilizar
@@ -61,7 +63,8 @@ import { ResultModalComponent } from './result-modal/result-modal.component';
     RankingItemComponent,
     MatchesItemComponent,
     MatchItemComponent,
-    ResultModalComponent
+    ResultModalComponent,
+    SearchPlayerComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes

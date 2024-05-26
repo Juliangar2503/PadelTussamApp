@@ -148,7 +148,7 @@ class PlayerRepositoryImpl(
         val players = playerService.getPlayers()
         if (players.isNotEmpty()) {
             val filteredPlayers = when (filterField) {
-                "name" -> players.filter { it.name == filterValor }
+                "name" -> players.filter { it.name.startsWith(filterValor) }
                 "lastName" -> players.filter { it.lastName == filterValor }
                 "email" -> players.filter { it.email == filterValor }
                 "location" -> players.filter { it.location == filterValor }

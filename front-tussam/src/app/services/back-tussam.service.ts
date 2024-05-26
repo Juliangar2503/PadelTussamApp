@@ -80,27 +80,22 @@ export class BackTussamService {
     return this.http.post<any>(environment.baseUrl + `player/openMatch/${playerId}/${type}` , null);
   }
 
-  //http://localhost:8080/player/{playerId}/addMatch/{matchId}
   joinMatch(playerId: Number, matchId: Number):Observable<ApiResponse>{
     return this.http.put<any>(environment.baseUrl + `player/${playerId}/addMatch/${matchId}` , null);
   }
 
-  // http://localhost:8080/player/{playerId}/removeMatch/{matchId}
   leaveMatch(playerId: Number, matchId: Number):Observable<ApiResponse>{
     return this.http.put<any>(environment.baseUrl + `player/${playerId}/removeMatch/${matchId}`, null);
   }
 
-  // http://localhost:8080/player/loadResults/{matchId}
   loadResults(matchId: Number, resultsListInt: GameResults):Observable<ApiResponse>{
     return this.http.put<any>(environment.baseUrl + `player/loadResults/${matchId}`, resultsListInt);
   }
 
-  //http://localhost:8080/player/confirmResultTeamA/{matchId}/{playerId}
   confirmResultTeamA(matchId: Number, playerId: Number):Observable<ApiResponse>{
     return this.http.put<any>(environment.baseUrl + `player/confirmResultTeamA/${matchId}/${playerId}`, null);
   }
 
-  // http://localhost:8080/player/confirmResultTeamB/{matchId}/{playerId}
   confirmResultTeamB(matchId: Number, playerId: Number):Observable<ApiResponse>{
     return this.http.put<any>(environment.baseUrl + `player/confirmResultTeamB/${matchId}/${playerId}`, null);
   }
