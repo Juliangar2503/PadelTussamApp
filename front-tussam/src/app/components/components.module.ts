@@ -17,6 +17,8 @@ import { EditLeagueComponent } from './edit-league/edit-league.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { RankingItemComponent } from './ranking-item/ranking-item.component';
 import { MatchesItemComponent } from './matches-item/matches-item.component';
+import { MatchItemComponent } from './match-item/match-item.component';
+import { ResultModalComponent } from './result-modal/result-modal.component';
 
 
 
@@ -37,7 +39,9 @@ import { MatchesItemComponent } from './matches-item/matches-item.component';
     EditLeagueComponent,
     EditProfileComponent,
     RankingItemComponent,
-    MatchesItemComponent
+    MatchesItemComponent,
+    MatchItemComponent,
+    ResultModalComponent
   ],
   exports:[
     //Exportar los componentes que se van a utilizar
@@ -55,7 +59,9 @@ import { MatchesItemComponent } from './matches-item/matches-item.component';
     EditLeagueComponent,
     EditProfileComponent,
     RankingItemComponent,
-    MatchesItemComponent
+    MatchesItemComponent,
+    MatchItemComponent,
+    ResultModalComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes

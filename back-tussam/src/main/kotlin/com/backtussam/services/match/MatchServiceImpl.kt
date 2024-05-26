@@ -15,9 +15,11 @@ class MatchServiceImpl : MatchService {
     /****** OBTENER PARTIDOS ******/
 
     override suspend fun getMatches(): List<Match> {
-        return dbQuery {
+        val query  =  dbQuery {
             MatchTable.selectAll().mapNotNull { rowToMatch(it) }
         }
+        println("MatchService -> getMatches -> matches: $query")
+        return query
     }
 
     override suspend fun getMatchById(id: Int): Match? {
@@ -159,6 +161,15 @@ class MatchServiceImpl : MatchService {
 
     /**** OPERACIONES CON RESULTADOS DE PARTIDOS *****/
 
+    override suspend fun changeOpenState(idMatch: Int, open:Boolean): Match? {
+        dbQuery {
+            MatchTable.update({ MatchTable.id eq idMatch }) {
+                it[MatchTable.open] = open
+            }
+        }
+        return getMatchById(idMatch)
+    }
+
     override suspend fun loadResults(idMatch: Int, params: ResultMatchParams): Match? {
         dbQuery {
             MatchTable.update({ MatchTable.id eq idMatch }) {
@@ -221,7 +232,7 @@ class MatchServiceImpl : MatchService {
     /*** FUNCIONES UTILS ***/
 
     private fun UpdateBuilder<*>.setMatchParams(params: CreateMatchParams) {
-        println("paramsMatchService: ${params}")
+        println("paramsMatchService: $params")
         if (params.id_player1 != null) this[MatchTable.id_player1] = params.id_player1
         if (params.id_player2 != null) this[MatchTable.id_player2] = params.id_player2
         if (params.id_player3 != null) this[MatchTable.id_player3] = params.id_player3
@@ -234,7 +245,7 @@ class MatchServiceImpl : MatchService {
         if (params.scoreSet3B != null) this[MatchTable.scoreSet3B] = params.scoreSet3B
         if (params.matchResult != null) this[MatchTable.matchResult] = params.matchResult
         if (params.date != null) this[MatchTable.date] = params.date
-        if (params.open != null) this[MatchTable.open] = params.open
+        this[MatchTable.open] = params.open
         if (params.type != null) this[MatchTable.type] = params.type
         if (params.level != null) this[MatchTable.level] = params.level
         if (params.chat != null) this[MatchTable.chat] = params.chat
@@ -257,7 +268,10 @@ class MatchServiceImpl : MatchService {
             scoreSet3B = row[MatchTable.scoreSet3B],
             matchResult = row[MatchTable.matchResult],
             date = row[MatchTable.date].toString(),
+            level = row[MatchTable.level],
             open = row[MatchTable.open],
+            confirmResult1 = row[MatchTable.confirmResult1],
+            confirmResult2 = row[MatchTable.confirmResult2],
             chat = row[MatchTable.chat],
             court = row[MatchTable.court]
         )

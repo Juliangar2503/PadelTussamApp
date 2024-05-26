@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Enter Results</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Result 1A</ion-label>
+    <ion-input [(ngModel)]="results.scoreSet1A" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Result 1B</ion-label>
+    <ion-input [(ngModel)]="results.scoreSet1B" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Result 2A</ion-label>
+    <ion-input [(ngModel)]="results.scoreSet2A" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Result 2B</ion-label>
+    <ion-input [(ngModel)]="results.scoreSet2B" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Result 3A</ion-label>
+    <ion-input [(ngModel)]="results.scoreSet3A" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Result 3B</ion-label>
+    <ion-input [(ngModel)]="results.scoreSet3B" type="number"></ion-input>
+  </ion-item>
+  <ion-button expand="full" (click)="saveResult()">Submit Results</ion-button>
+</ion-content>

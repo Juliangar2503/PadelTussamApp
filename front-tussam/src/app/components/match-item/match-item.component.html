@@ -1,0 +1,63 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>25/03/24 | tarde/mañana/todo</ion-card-subtitle>
+    <ion-card-title>IMD Pinomontano</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <!-- fila PADRE -->
+    <ion-row>
+      <!-- columna de los participantes -->
+      <ion-col size="8">
+        <!-- fila equipoA -->
+        <ion-row>
+          <ion-col>{{ jugador1.name }}</ion-col>
+          <ion-col>{{ jugador2.name }}</ion-col>
+        </ion-row>
+        <!-- fila equipoAB-->
+        <ion-row>
+          <ion-col>{{ jugador3.name }}</ion-col>
+          <ion-col>{{ jugador4.name }}</ion-col>
+        </ion-row>
+      </ion-col>
+      <!-- columna de los resultados -->
+      <ion-col size="4">
+        <!-- fila resultadoA-->
+        <ion-row>
+          <ion-col>{{ match.scoreSet1A }}</ion-col>
+          <ion-col>{{ match.scoreSet2A }}</ion-col>
+          <ion-col>{{ match.scoreSet3A }}</ion-col>
+        </ion-row>
+        <!-- fila resultadoA-->
+        <ion-row>
+          <ion-col>{{ match.scoreSet1B }}</ion-col>
+          <ion-col>{{ match.scoreSet2B }}</ion-col>
+          <ion-col>{{ match.scoreSet3B }}</ion-col>
+        </ion-row>
+      </ion-col>
+      
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" (click)="joinMatch(match.id)">Unirse al partido</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" (click)="submitResult(match.id)">Subir el resultado</ion-button>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button expand="full" (click)="confirmResultTeamA()">Confirmar resultado equipo A</ion-button>
+      </ion-col >
+      <ion-col size="12">
+        <ion-button expand="full" (click)="confirmResultTeamB()">Confirmar resultado equipo B</ion-button>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button expand="full" (click)="leaveGame()">Salir del partido</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row>
+      
+    </ion-row> -->
+  </ion-card-content>
+</ion-card>

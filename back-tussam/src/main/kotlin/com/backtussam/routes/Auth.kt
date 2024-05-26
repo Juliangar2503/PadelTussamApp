@@ -34,7 +34,7 @@ fun Application.authRoutes(repository: PlayerRepository){
                 call.respond(result.statusCode, result)
             }
             // http://localhost:8080/player/{id}
-            get ("/{id}"){
+            get ("/findById/{id}"){
                 val id = call.parameters["id"]?.toInt() ?: 0
                 val result = repository.getPlayerById(id)
                 call.respond(result.statusCode, result)
@@ -78,7 +78,7 @@ fun Application.authRoutes(repository: PlayerRepository){
                 call.respond(result.statusCode, result)
             }
 
-            // http://localhost:8080/player/{playerId}/openMatch/{type}
+            // http://localhost:8080/player/openMatch/{playerId}/{type}
             post ("openMatch/{playerId}/{type}"){
                 val playerId = call.parameters["playerId"]?.toInt() ?: 0
                 val type = call.parameters["type"] ?: ""
@@ -102,14 +102,16 @@ fun Application.authRoutes(repository: PlayerRepository){
                 call.respond(result.statusCode, result)
             }
 
-            // http://localhost:8080/player/{matchId}/players
+            // http://localhost:8080/player/loadResults/{matchId}
             put ("/loadResults/{matchId}"){
                 val matchId = call.parameters["matchId"]?.toInt() ?: 0
                 val result = repository.uploadResultMatch(matchId, call.receive())
+                //Actualizar puntos
+
                 call.respond(result.statusCode, result)
             }
 
-            // http://localhost:8080/player/{matchId}/players
+            // http://localhost:8080/player/confirmResultTeamA/{matchId}/{playerId}
             put ("/confirmResultTeamA/{matchId}/{playerId}"){
                 val matchId = call.parameters["matchId"]?.toInt() ?: 0
                 val playerId = call.parameters["playerId"]?.toInt() ?: 0

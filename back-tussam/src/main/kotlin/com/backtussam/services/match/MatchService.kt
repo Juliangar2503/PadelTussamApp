@@ -16,6 +16,7 @@ interface MatchService {
     suspend fun updateMatch(id: Int, params:CreateMatchParams): Match?
     suspend fun deleteMatch(id: Int): Boolean
     /**** OPERACIONES CON JUGADORES EN PARTIDOS *****/
+    suspend fun changeOpenState(idMatch: Int, open: Boolean): Match?
     suspend fun isPlayerInMatch(playerId: Int, matchId: Int): Boolean
     suspend fun getIdPlayersInMatch(matchId: Int): List<Int>
     suspend fun addPlayerInMatch(idPlayer: Int, idMatch: Int, position: Int) : Match?

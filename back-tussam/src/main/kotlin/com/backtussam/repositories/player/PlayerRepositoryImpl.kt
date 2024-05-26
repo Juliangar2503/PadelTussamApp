@@ -20,19 +20,19 @@ class PlayerRepositoryImpl(
 ) : PlayerRepository {
     /*** ALTA Y BAJA DE JUGADORES ***/
     override suspend fun registerPlayer(params: CreatePlayerParams): BaseResponse<Any> {
-        return if (isEmailExist(params.email)){
+        return if (isEmailExist(params.email)) {
             BaseResponse.ErrorResponse(message = "Email already registered")
-        }else{
+        } else {
             // Registrar jugador
             val player = playerService.registerPlayer(params)
-            if (player != null){
+            if (player != null) {
                 // Crear token
                 val token = JWTConfig.instance.createToken(player.id.toString())
                 player.authToken = token
 
                 // Responder con el jugador y el token creado
                 BaseResponse.SuccessResponse(data = player)
-            }else{
+            } else {
                 BaseResponse.ErrorResponse(message = "Error creating player")
             }
         }
@@ -41,15 +41,15 @@ class PlayerRepositoryImpl(
     override suspend fun deletePlayer(id: Int): BaseResponse<Any> {
         //Comprobar si el jugador existe
         val player = playerService.getPlayerById(id)
-        return if (player != null){
+        return if (player != null) {
             //Eliminar jugador
             val deleted = playerService.deletePlayer(id)
-            if (deleted){
+            if (deleted) {
                 BaseResponse.SuccessResponse(data = "Player deleted")
-            }else{
+            } else {
                 BaseResponse.ErrorResponse(message = "Error deleting player")
             }
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
@@ -57,21 +57,21 @@ class PlayerRepositoryImpl(
     override suspend fun addPlayerToLeague(playerId: Int, leagueId: Int): BaseResponse<Any> {
         // Comprobar si el jugador existe
         val player = playerService.getPlayerById(playerId)
-        return if (player != null){
+        return if (player != null) {
             // Comprobar si la liga está registrada
             val league = leagueService.getLeagueById(leagueId)
-            if (league != null){
+            if (league != null) {
                 // Añadir jugador a la liga
-                val added = playerService.addPlayerToLeague(playerId,leagueId)
-                if (added){
+                val added = playerService.addPlayerToLeague(playerId, leagueId)
+                if (added) {
                     BaseResponse.SuccessResponse(data = "Player added to league")
-                }else{
+                } else {
                     BaseResponse.ErrorResponse(message = "Error adding player to league")
                 }
-            }else{
+            } else {
                 BaseResponse.ErrorResponse(message = "League not found")
             }
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
@@ -81,18 +81,18 @@ class PlayerRepositoryImpl(
 
     override suspend fun getPlayerByEmail(email: String): BaseResponse<Any> {
         val player = playerService.findPlayerByEmail(email)
-        return if (player != null){
+        return if (player != null) {
             BaseResponse.SuccessResponse(data = player)
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
 
     override suspend fun getPlayerById(id: Int): BaseResponse<Any> {
         val player = playerService.getPlayerById(id)
-        return if (player != null){
+        return if (player != null) {
             BaseResponse.SuccessResponse(data = player)
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
@@ -100,9 +100,9 @@ class PlayerRepositoryImpl(
     override suspend fun getPlayers(): BaseResponse<Any> {
         //Comprobar si hay jugadores registrados
         val players = playerService.getPlayers()
-        return if (players.isNotEmpty()){
+        return if (players.isNotEmpty()) {
             BaseResponse.SuccessResponse(data = players)
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "No players found")
         }
     }
@@ -110,15 +110,15 @@ class PlayerRepositoryImpl(
     override suspend fun getPlayersByLeague(leagueId: Int): BaseResponse<Any> {
         //Comprobar si la liga está registrada
         val league = leagueService.getLeagueById(leagueId)
-        return if (league != null){
+        return if (league != null) {
             //Comprobar si hay jugadores registrados en la liga
             val players = playerService.getPlayersByLeague(leagueId)
-            if (players.isNotEmpty()){
+            if (players.isNotEmpty()) {
                 BaseResponse.SuccessResponse(data = players)
-            }else{
+            } else {
                 BaseResponse.ErrorResponse(message = "No players found in league")
             }
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "League not found")
         }
     }
@@ -126,9 +126,9 @@ class PlayerRepositoryImpl(
     override suspend fun getPlayersByName(name: String): BaseResponse<Any> {
         //Comprobar si hay jugadores registrados con ese nombre
         val players = playerService.getPlayersByName(name)
-        return if (players.isNotEmpty()){
+        return if (players.isNotEmpty()) {
             BaseResponse.SuccessResponse(data = players)
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "No players found with that name")
         }
     }
@@ -140,10 +140,14 @@ class PlayerRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getGlobalQueryPlayer(orderField: String, filterField: String, filterValor: String): BaseResponse<Any> {
+    override suspend fun getGlobalQueryPlayer(
+        orderField: String,
+        filterField: String,
+        filterValor: String
+    ): BaseResponse<Any> {
         val players = playerService.getPlayers()
-        if (players.isNotEmpty()){
-            val filteredPlayers = when(filterField){
+        if (players.isNotEmpty()) {
+            val filteredPlayers = when (filterField) {
                 "name" -> players.filter { it.name == filterValor }
                 "lastName" -> players.filter { it.lastName == filterValor }
                 "email" -> players.filter { it.email == filterValor }
@@ -156,7 +160,7 @@ class PlayerRepositoryImpl(
                 "createdAt" -> players.filter { it.createdAt == filterValor }
                 else -> players
             }
-            val sortedPlayers = when(orderField){
+            val sortedPlayers = when (orderField) {
                 "name" -> filteredPlayers.sortedBy { it.name }
                 "lastName" -> filteredPlayers.sortedBy { it.lastName }
                 "email" -> filteredPlayers.sortedBy { it.email }
@@ -165,12 +169,12 @@ class PlayerRepositoryImpl(
                 "active" -> filteredPlayers.sortedBy { it.active }
                 "leagueId" -> filteredPlayers.sortedBy { it.leagueId }
                 "roleId" -> filteredPlayers.sortedBy { it.roleId }
-                "points" -> filteredPlayers.sortedBy { it.points }
+                "points" -> filteredPlayers.sortedByDescending { it.points }
                 "createdAt" -> filteredPlayers.sortedBy { it.createdAt }
                 else -> filteredPlayers
             }
             return BaseResponse.SuccessResponse(data = sortedPlayers)
-        }else{
+        } else {
             return BaseResponse.ErrorResponse(message = "No players found")
         }
     }
@@ -184,34 +188,35 @@ class PlayerRepositoryImpl(
         // Comprobar si la contraseña es correcta
         val encryptedPassword = playerService.findPasswordByEmail(params.email)
         // Comprobar si el jugador existe y la contraseña es correcta
-        return if (player != null){
-            if (encryptedPassword == hash(params.password)){
+        return if (player != null) {
+            if (encryptedPassword == hash(params.password)) {
                 // Crear token
                 val token = JWTConfig.instance.createToken(player.id.toString())
                 player.authToken = token
                 // Jugador encontrado y contraseña correcta
                 BaseResponse.SuccessResponse(data = player)
-            }else{
+            } else {
                 // Contraseña incorrecta
                 BaseResponse.ErrorResponse(message = "Invalid password")
             }
-        }else{
+        } else {
             // Jugador no encontrado
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
 
-    override suspend fun openMatch(playerId:Int, type:String): BaseResponse<Any> {
+    override suspend fun openMatch(playerId: Int, type: String): BaseResponse<Any> {
         //Comprobar si el jugador está registrado
         if (playerService.getPlayerById(playerId) == null) {
             return BaseResponse.ErrorResponse(message = "Player not found")
         } else {
             val player = playerService.getPlayerById(playerId)
             //Crear partido con el jugador como primer jugador
-            val params = CreateMatchParams(id_player1 = playerId, open = true, type = "Competitive", level = player?.leagueId)
+            val params =
+                CreateMatchParams(id_player1 = playerId, open = true, type = "Competitive", level = player?.leagueId)
             println("params: ${params}")
             matchService.createMatch(params)
-            return  BaseResponse.SuccessResponse(data = "Match created")
+            return BaseResponse.SuccessResponse(data = "Match created")
         }
     }
 
@@ -221,9 +226,14 @@ class PlayerRepositoryImpl(
             return BaseResponse.ErrorResponse(message = "Match not found")
         } else {
             //Actualizar resultado del partido
-            matchService.loadResults(matchId, params)
-            matchService.calculateResults(matchId)
-            return BaseResponse.SuccessResponse(data = "Match updated")
+            if (matchService.getIdPlayersInMatch(matchId).size != 4) {
+                return BaseResponse.ErrorResponse(message = "Match is not full")
+            } else {
+                matchService.loadResults(matchId, params)
+
+                matchService.calculateResults(matchId)
+                return BaseResponse.SuccessResponse(data = "Match updated")
+            }
         }
     }
 
@@ -234,20 +244,20 @@ class PlayerRepositoryImpl(
             if (matchService.getMatchById(matchId) == null) {
                 return BaseResponse.ErrorResponse(message = "Match not found")
             } else {
-                if (matchService.isPlayerInMatch(playerId, matchId)) {
-                    return BaseResponse.ErrorResponse(message = "Player already in match")
+                var payersId = matchService.getIdPlayersInMatch(matchId)
+                if (payersId.isNotEmpty() && payersId.contains(playerId)) {
+                    return BaseResponse.ErrorResponse(message = "Player already in match2")
                 } else {
-                    val payersId = matchService.getIdPlayersInMatch(matchId)
-                    if (payersId.isNotEmpty() && payersId.contains(playerId)) {
-                        return BaseResponse.ErrorResponse(message = "Player already in match")
+                    val position = choosePlacesToPlay(matchId, playerId)
+                    if (position == -1) {
+                        return BaseResponse.ErrorResponse(message = "Match is full")
                     } else {
-                        val position = choosePlacesToPlay(matchId, playerId)
-                        if (position == -1) {
-                            return BaseResponse.ErrorResponse(message = "Match is full")
-                        }else{
-                            matchService.addPlayerInMatch(playerId, matchId, position)
-                            return BaseResponse.SuccessResponse(data = "Player added to match")
+                        matchService.addPlayerInMatch(playerId, matchId, position)
+                        payersId = matchService.getIdPlayersInMatch(matchId)
+                        if (payersId.size == 4) {
+                            matchService.changeOpenState(matchId, false)
                         }
+                        return BaseResponse.SuccessResponse(data = "Player added to match")
                     }
                 }
             }
@@ -261,35 +271,36 @@ class PlayerRepositoryImpl(
             if (matchService.getMatchById(matchId) == null) {
                 return BaseResponse.ErrorResponse(message = "Match not found")
             } else {
-                if (!matchService.isPlayerInMatch(playerId, matchId)) {
+                val payersId = matchService.getIdPlayersInMatch(matchId)
+                if (payersId.isNotEmpty() && !payersId.contains(playerId)) {
                     return BaseResponse.ErrorResponse(message = "Player not in match")
                 } else {
-                    val payersId = matchService.getIdPlayersInMatch(matchId)
-                    if (payersId.isNotEmpty() && !payersId.contains(playerId)) {
-                        return BaseResponse.ErrorResponse(message = "Player not in match")
-                    } else {
-                        val position = matchService.getPlaceOfPlayerInMatch(matchId, playerId)
-                        println("La posicion del jugador a borrar es " + position)
-                        matchService.removePlayerInMatch(playerId, matchId, position)
-                        return BaseResponse.SuccessResponse(data = "Player removed from match")
+                    val position = matchService.getPlaceOfPlayerInMatch(matchId, playerId)
+                    println("La posicion del jugador a borrar es " + position)
+                    matchService.removePlayerInMatch(playerId, matchId, position)
+                    matchService.changeOpenState(matchId, true)
+                    if (matchService.getIdPlayersInMatch(matchId).isEmpty()) {
+                        matchService.deleteMatch(matchId)
                     }
+                    return BaseResponse.SuccessResponse(data = "Player removed from match")
                 }
             }
         }
+
     }
 
     override suspend fun updatePlayer(email: String, params: UpdatePlayerParams): BaseResponse<Any> {
         //Comprobar si el jugador existe
         val player = playerService.findPlayerByEmail(email)
-        return if (player != null){
+        return if (player != null) {
             //Actualizar jugador
-            val updatedPlayer = playerService.updatePlayer(email,params)
-            if (updatedPlayer != null){
+            val updatedPlayer = playerService.updatePlayer(email, params)
+            if (updatedPlayer != null) {
                 BaseResponse.SuccessResponse(data = updatedPlayer)
-            }else{
+            } else {
                 BaseResponse.ErrorResponse(message = "Error updating player")
             }
-        }else{
+        } else {
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
@@ -300,13 +311,12 @@ class PlayerRepositoryImpl(
         if (match == null || match.open || player == null) {
             return BaseResponse.ErrorResponse(message = "Match not found")
         } else {
-            if(match.id_player1 == playerId || match.id_player2 == playerId){
+            if (match.id_player1 == playerId || match.id_player2 == playerId) {
                 matchService.confirmOneResults(matchId)
                 //Si ambos equipos han confirmado el resultado, se actualizan los puntos
                 earnPointsAfterCheckMatch(matchId)
                 return BaseResponse.SuccessResponse(data = "Match updated")
-            }
-            else{
+            } else {
                 return BaseResponse.ErrorResponse(message = "Player not eligible to confirm")
             }
         }
@@ -318,13 +328,12 @@ class PlayerRepositoryImpl(
         if (match == null || match.open || player == null) {
             return BaseResponse.ErrorResponse(message = "Match not found")
         } else {
-            if(match.id_player3 == playerId || match.id_player4 == playerId){
+            if (match.id_player3 == playerId || match.id_player4 == playerId) {
                 matchService.confirmSecondResults(matchId)
                 //Si ambos equipos han confirmado el resultado, se actualizan los puntos
                 earnPointsAfterCheckMatch(matchId)
                 return BaseResponse.SuccessResponse(data = "Match updated")
-            }
-            else{
+            } else {
                 return BaseResponse.ErrorResponse(message = "Player not eligible to confirm")
             }
         }
@@ -338,19 +347,19 @@ class PlayerRepositoryImpl(
             return -1
         } else {
             val emptyPositions = mutableListOf<Int>()
-            if(match.id_player1 == null){
+            if (match.id_player1 == null) {
                 emptyPositions.add(1)
             }
-            if(match.id_player2 == null){
+            if (match.id_player2 == null) {
                 emptyPositions.add(2)
             }
-            if(match.id_player3 == null){
+            if (match.id_player3 == null) {
                 emptyPositions.add(3)
             }
-            if(match.id_player4 == null){
+            if (match.id_player4 == null) {
                 emptyPositions.add(4)
             }
-            return if(emptyPositions.isNotEmpty()) {
+            return if (emptyPositions.isNotEmpty()) {
                 emptyPositions[Random.nextInt(emptyPositions.size)]
             } else {
                 -1
@@ -363,22 +372,22 @@ class PlayerRepositoryImpl(
         if (match == null) {
             return BaseResponse.ErrorResponse(message = "Match not found")
         } else {
-            if (match.confirmResult1 && match.confirmResult2){
+            if (match.confirmResult1 && match.confirmResult2) {
                 val player1 = playerService.getPlayerById(match.id_player1!!)
                 val player2 = playerService.getPlayerById(match.id_player2!!)
                 val player3 = playerService.getPlayerById(match.id_player3!!)
                 val player4 = playerService.getPlayerById(match.id_player4!!)
                 val pointsWiner = 5
                 val pointsLouser = 2
-                if(player1 == null || player2 == null || player3 == null || player4 == null){
+                if (player1 == null || player2 == null || player3 == null || player4 == null) {
                     return BaseResponse.ErrorResponse(message = "Players not found")
-                }else{
-                    if(match.matchResult!!.count { it == 'A' } > match.matchResult.count { it == 'B' }){
+                } else {
+                    if (match.matchResult!!.count { it == 'A' } > match.matchResult.count { it == 'B' }) {
                         player1.points += pointsWiner
                         player2.points += pointsWiner
                         player3.points += pointsLouser
                         player4.points += pointsLouser
-                    }else{
+                    } else {
                         player1.points += pointsLouser
                         player2.points += pointsLouser
                         player3.points += pointsWiner
@@ -397,7 +406,6 @@ class PlayerRepositoryImpl(
             return BaseResponse.SuccessResponse(data = "Points earned")
         }
     }
-
 
 
     //Primero comprobar si el jugador existe

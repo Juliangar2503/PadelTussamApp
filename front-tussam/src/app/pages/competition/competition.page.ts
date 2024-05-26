@@ -23,43 +23,40 @@ export class CompetitionPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getRanking();
+    this.getPlayer();
     this.getLeague();
+    this.getRanking();
+    
   }
 
   onSegmentChanged(segmentValue: string) {
-    console.log(segmentValue);
     this.segmentValue = segmentValue;
   }
 
   getPlayer() {
     this.player = this.utilSvc.getFromLocalStorage('Player');
-    console.log(this.player);
-    console.log('player id: ' + this.player.id);
   }
 
   getLeague() {
     if (this.player && this.player.leagueId) {
       this.backSvc.getLeagueById(this.player.leagueId).subscribe((res) => {
         this.league = res.data;
-        console.log(this.league);
-        console.log('league id: ' + this.league.id);
+        console.log(`league: ${this.league}`);
       });
     } else {
       console.error('Player or player.leagueId is null or undefined');
     }
   }
 
-
-
   async getRanking() {
     //http://localhost:8080/player/all/{orderField}/{filterField}/{filterValor}
     const leagueId = this.player.leagueId;
     const orderField = 'points';
-    const filterField = `league/${leagueId}`;
+    const filterField = `leagueId/${leagueId}`;
     this.backSvc.getAllPlayers(orderField, filterField).subscribe((res) => {
+      
       this.ranking = res.data;
-      console.log(this.ranking);
+      console.log('ranking:', this.ranking);
     });
   }
 

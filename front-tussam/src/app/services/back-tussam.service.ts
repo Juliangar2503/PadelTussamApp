@@ -9,6 +9,8 @@ import { EditPlayerParams } from '../interfaces/edit-player-params';
 import { ApiResponseLeagues } from '../interfaces/api-response-leagues';
 import { League } from '../interfaces/league';
 import { ApiResponseLeague } from '../interfaces/api-response-league';
+import { ApiReponseMatches } from '../interfaces/api-reponse-matches';
+import { GameResults } from '../interfaces/game-results';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,10 @@ export class BackTussamService {
   }
 
   // ***************** PLAYERS *****************
+
+  getPlayer(idPlayer:Number):Observable<ApiResponse>{
+    return this.http.get<any>(environment.baseUrl + environment.player + `findById/${idPlayer}`);
+  }
 
   //http://localhost:8080/player/all/{orderField}/{filterField}/{filterValor}
   getAllPlayers(orderField:string, filterField:string):Observable<ApiResponsePlayers>{
@@ -70,6 +76,40 @@ export class BackTussamService {
 
   // ***************** MATCHES *****************
 
+  openMatch(playerId: Number, type:string):Observable<ApiResponse>{
+    return this.http.post<any>(environment.baseUrl + `player/openMatch/${playerId}/${type}` , null);
+  }
+
+  //http://localhost:8080/player/{playerId}/addMatch/{matchId}
+  joinMatch(playerId: Number, matchId: Number):Observable<ApiResponse>{
+    return this.http.put<any>(environment.baseUrl + `player/${playerId}/addMatch/${matchId}` , null);
+  }
+
+  // http://localhost:8080/player/{playerId}/removeMatch/{matchId}
+  leaveMatch(playerId: Number, matchId: Number):Observable<ApiResponse>{
+    return this.http.put<any>(environment.baseUrl + `player/${playerId}/removeMatch/${matchId}`, null);
+  }
+
+  // http://localhost:8080/player/loadResults/{matchId}
+  loadResults(matchId: Number, resultsListInt: GameResults):Observable<ApiResponse>{
+    return this.http.put<any>(environment.baseUrl + `player/loadResults/${matchId}`, resultsListInt);
+  }
+
+  //http://localhost:8080/player/confirmResultTeamA/{matchId}/{playerId}
+  confirmResultTeamA(matchId: Number, playerId: Number):Observable<ApiResponse>{
+    return this.http.put<any>(environment.baseUrl + `player/confirmResultTeamA/${matchId}/${playerId}`, null);
+  }
+
+  // http://localhost:8080/player/confirmResultTeamB/{matchId}/{playerId}
+  confirmResultTeamB(matchId: Number, playerId: Number):Observable<ApiResponse>{
+    return this.http.put<any>(environment.baseUrl + `player/confirmResultTeamB/${matchId}/${playerId}`, null);
+  }
+
+  getMatchesByLeague(leagueId: Number):Observable<ApiReponseMatches>{
+    return this.http.get<any>(environment.baseUrl + `matches/league/${leagueId}`);
+  }
+
+  
 
 
 }
