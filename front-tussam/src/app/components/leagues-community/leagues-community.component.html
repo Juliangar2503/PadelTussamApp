@@ -1,3 +1,7 @@
-<p>
-  leagues-community works!
-</p>
+<ion-item>
+  <ion-label>Ligas</ion-label>
+  <ion-select [(ngModel)]="leagueId" (ionChange)="getRanking()">
+    <ion-select-option *ngFor="let league of leagues" [value]="league.id">{{league.name}}</ion-select-option>
+  </ion-select>
+</ion-item>
+<app-ranking-item [ranking]="ranking"></app-ranking-item>
