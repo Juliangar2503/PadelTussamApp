@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>detail-player</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <!-- Datos usuario -->
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img *ngIf="player.avatar && player.avatar !== 'null'; else defaultImage" [src]="player.avatar">
+            <ng-template #defaultImage>
+              <img src="../../../assets/img/defaultAvatar.webp">
+            </ng-template>
+          </ion-avatar>
+          <ion-label>
+            <h2>{{player.name}} {{player.lastName}}</h2>
+            <p>{{player.location}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" class="ion-text-center">
+        <ion-item>
+          <ion-label>
+            <p>Inscrito desde: {{player.createdAt}} </p>
+            <p>Email: {{player.email}}</p>
+            <p>Liga: {{player.leagueId}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <!-- Estadísticas del usuario -->
+      <ion-col size="4">
+        <ion-card class="ion-text-center">
+          <ion-card-header>
+            <ion-icon name="tennisball"></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            0
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            0
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-icon name="close-circle" color="danger"></ion-icon>
+          </ion-card-header>
+          <ion-card-content class="ion-text-center">
+            0
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!-- Segment para mostrar partidos abiertos o histórico de partidos -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-segment>
+            <ion-segment-button value="openMatches">
+              <ion-label>Partidos abiertos</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="playedMatches">
+              <ion-label>Histórico de partidos</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</ion-content>

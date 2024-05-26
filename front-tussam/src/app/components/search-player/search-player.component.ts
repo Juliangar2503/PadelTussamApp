@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-search-player',
@@ -11,7 +12,8 @@ export class SearchPlayerComponent  implements OnInit {
   players: Player[] = [];
 
   constructor(
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private utilSvc: UtilsService
   ) { }
 
   ngOnInit() {}
@@ -23,6 +25,10 @@ export class SearchPlayerComponent  implements OnInit {
         console.log(this.players);
       });
     }
+  }
+
+  ViewPlayer(id: number) {
+    this.utilSvc.goToDetailPage('community/detail-player', id);
   }
 
 }
