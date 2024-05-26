@@ -23,7 +23,8 @@ const routes: Routes = [
   },
   {
     path: 'community',
-    loadChildren: () => import('./pages/community/community.module').then( m => m.CommunityPageModule)
+    loadChildren: () => import('./pages/community/community.module').then( m => m.CommunityPageModule),
+    canActivate: [LoginGuard], // Agrega tu guardia aquí
   },
   {
     path: 'profile',

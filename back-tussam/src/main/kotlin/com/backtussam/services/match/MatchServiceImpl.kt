@@ -161,6 +161,15 @@ class MatchServiceImpl : MatchService {
 
     /**** OPERACIONES CON RESULTADOS DE PARTIDOS *****/
 
+    override suspend fun changeOpenState(idMatch: Int, open:Boolean): Match? {
+        dbQuery {
+            MatchTable.update({ MatchTable.id eq idMatch }) {
+                it[MatchTable.open] = open
+            }
+        }
+        return getMatchById(idMatch)
+    }
+
     override suspend fun loadResults(idMatch: Int, params: ResultMatchParams): Match? {
         dbQuery {
             MatchTable.update({ MatchTable.id eq idMatch }) {
@@ -223,7 +232,7 @@ class MatchServiceImpl : MatchService {
     /*** FUNCIONES UTILS ***/
 
     private fun UpdateBuilder<*>.setMatchParams(params: CreateMatchParams) {
-        println("paramsMatchService: ${params}")
+        println("paramsMatchService: $params")
         if (params.id_player1 != null) this[MatchTable.id_player1] = params.id_player1
         if (params.id_player2 != null) this[MatchTable.id_player2] = params.id_player2
         if (params.id_player3 != null) this[MatchTable.id_player3] = params.id_player3
@@ -261,6 +270,8 @@ class MatchServiceImpl : MatchService {
             date = row[MatchTable.date].toString(),
             level = row[MatchTable.level],
             open = row[MatchTable.open],
+            confirmResult1 = row[MatchTable.confirmResult1],
+            confirmResult2 = row[MatchTable.confirmResult2],
             chat = row[MatchTable.chat],
             court = row[MatchTable.court]
         )

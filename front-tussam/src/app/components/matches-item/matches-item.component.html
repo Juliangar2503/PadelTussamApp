@@ -5,55 +5,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-xs="12" size-md="6" size-lg="4" *ngFor="let match of matches">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle>25/03/24 | tarde/mañana/todo</ion-card-subtitle>
-            <ion-card-title>IMD Pinomontano</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            <!-- fila PADRE -->
-            <ion-row>
-              <!-- columna de los participantes -->
-              <ion-col size="8">
-                <!-- fila equipoA -->
-                <ion-row>
-                  <ion-col>JULIAN</ion-col>
-                  <ion-col>ANDREA</ion-col>
-                </ion-row>
-                <!-- fila equipoAB-->
-                <ion-row>
-                  <ion-col>FRAN</ion-col>
-                  <ion-col>JANNETH</ion-col>
-                </ion-row>
-              </ion-col>
-              <!-- columna de los resultados -->
-              <ion-col size="4">
-                <!-- fila resultadoA-->
-                <ion-row>
-                  <ion-col>0</ion-col>
-                  <ion-col>0</ion-col>
-                  <ion-col>0</ion-col>
-                </ion-row>
-                <!-- fila resultadoA-->
-                <ion-row>
-                  <ion-col>0</ion-col>
-                  <ion-col>0</ion-col>
-                  <ion-col>0</ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col>
-                <ion-button expand="full" (click)="joinMatch(match.id)">Unirse al partido</ion-button>
-              </ion-col>
-              <ion-col>
-                <ion-button expand="full" (click)="submitResult(match.id)">Subir el resultado</ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
+        <app-match-item [match]="match" [jugadorLocal]="player"></app-match-item>
       </ion-col>
     </ion-row>
   </ion-grid>

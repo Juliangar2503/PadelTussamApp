@@ -46,14 +46,7 @@ export class MatchesItemComponent  implements OnInit {
       console.error(err);
     });
   }
-  joinMatch(matchId: number){
-    console.log('joinMatch');
-    
-  }
   
-  submitResult(matchId: number){
-    console.log('submitResult');
-  }
 
   
   
