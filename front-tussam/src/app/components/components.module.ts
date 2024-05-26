@@ -20,6 +20,9 @@ import { MatchesItemComponent } from './matches-item/matches-item.component';
 import { MatchItemComponent } from './match-item/match-item.component';
 import { ResultModalComponent } from './result-modal/result-modal.component';
 import { SearchPlayerComponent } from './search-player/search-player.component';
+import { LeaguesCommunityComponent } from './leagues-community/leagues-community.component';
+import { MatchesCommunityComponent } from './matches-community/matches-community.component';
+import { PostsCommunityComponent } from './posts-community/posts-community.component';
 
 
 
@@ -43,7 +46,11 @@ import { SearchPlayerComponent } from './search-player/search-player.component';
     MatchesItemComponent,
     MatchItemComponent,
     ResultModalComponent,
-    SearchPlayerComponent
+    SearchPlayerComponent,
+    LeaguesCommunityComponent,
+    MatchesCommunityComponent,
+    PostsCommunityComponent
+
   ],
   exports:[
     //Exportar los componentes que se van a utilizar
@@ -64,7 +71,10 @@ import { SearchPlayerComponent } from './search-player/search-player.component';
     MatchesItemComponent,
     MatchItemComponent,
     ResultModalComponent,
-    SearchPlayerComponent
+    SearchPlayerComponent,
+    LeaguesCommunityComponent,
+    MatchesCommunityComponent,
+    PostsCommunityComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes
