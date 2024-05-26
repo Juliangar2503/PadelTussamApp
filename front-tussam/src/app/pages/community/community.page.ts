@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Player } from 'src/app/interfaces/player';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-community',
@@ -7,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommunityPage implements OnInit {
   viewOption: string = 'search';
+  player: Player = {} as Player;
 
-  constructor() { }
+  constructor(
+    private utilSvc: UtilsService
+  ) { }
 
   ngOnInit() {
+    this.getPlayer();
+  }
+
+  getPlayer() {
+    this.player = this.utilSvc.getFromLocalStorage('Player');
   }
 
   selectOption(option: string) {

@@ -3,6 +3,7 @@ import { League } from 'src/app/interfaces/league';
 import { Player } from 'src/app/interfaces/player';
 import { Match } from 'src/app/interfaces/match';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-matches-item',
@@ -11,12 +12,14 @@ import { BackTussamService } from 'src/app/services/back-tussam.service';
 })
 export class MatchesItemComponent  implements OnInit {
 
-  @Input() league: League = {} as League;
+  @Input() league?: League = {} as League;
   @Input() player: Player = {} as Player;
+  @Input() type: string = '';
   matches: Match[] = [];
 
   constructor(
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private alertCtrl: AlertController
   ) { 
     
   }
@@ -25,10 +28,10 @@ export class MatchesItemComponent  implements OnInit {
     this.getMatchesOpen()
   }
 
-  playerOpenMatch(){
+  playerOpenMatch(tipo: string){
     console.log('playerOpenMatch');
     console.log(this.player.id);
-    this.backSvc.openMatch(this.player.id, 'competitive').subscribe((res) => {
+    this.backSvc.openMatch(this.player.id, tipo).subscribe((res) => {
       console.log(res);
     },
     (err) => {
@@ -37,15 +40,63 @@ export class MatchesItemComponent  implements OnInit {
   }
 
   getMatchesOpen(){
-    console.log('getMatchesOpen');
-    this.backSvc.getMatchesByLeague(this.league.id).subscribe((res) => {
-      console.log(res);
-      this.matches = res.data;
-    },
-    (err) => {
-      console.error(err);
-    });
+    if(this.type == 'Competitive' && this.league){
+      this.backSvc.getMatchesByLeague(this.league.id).subscribe((res) => {
+        console.log(res);
+        this.matches = res.data;
+      },
+      (err) => {
+        console.error(err);
+      });
+    }else{
+      this.backSvc.getFriendlyMatches().subscribe((res) => {
+        console.log(res);
+        this.matches = res.data;
+      },
+      (err) => {
+        console.error(err);
+      });
+    }
+    
   }
+
+  async openAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Select Match Type',
+      inputs: [
+        {
+          name: 'matchType',
+          type: 'radio',
+          label: 'Competitive',
+          value: 'Competitive',
+          checked: true
+        },
+        {
+          name: 'matchType',
+          type: 'radio',
+          label: 'Friendly',
+          value: 'Friendly'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+        }, {
+          text: 'Ok',
+          handler: (data: string) => {
+          console.log('tipo: ' + data);
+            this.playerOpenMatch(data);
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+  }
+
+
   
 
   
