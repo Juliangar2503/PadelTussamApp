@@ -10,5 +10,6 @@ object PlayerMatchesHistoricalTable: Table("player_matches_historical"){
     val score = integer("score")
     val date = varchar("date", 256)
     val partner = integer("partner").references(PlayerTable.id)
+    val name_league = integer("name_league")
     override val primaryKey = PrimaryKey(id)
 }

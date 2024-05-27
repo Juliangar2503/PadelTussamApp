@@ -47,6 +47,19 @@ class MatchServiceImpl : MatchService {
         }
     }
 
+    override suspend fun getMatchesOpenByPlayer(playerId: Int): List<Match?> {
+        return dbQuery {
+            MatchTable.select {
+                ((MatchTable.id_player1 eq playerId) or
+                        (MatchTable.id_player2 eq playerId) or
+                        (MatchTable.id_player3 eq playerId) or
+                        (MatchTable.id_player4 eq playerId)) and
+                        (MatchTable.confirmResult1 eq false) and
+                        (MatchTable.confirmResult2 eq false)
+            }.mapNotNull { rowToMatch(it) }
+        }
+    }
+
     /***** CREAR, ACTUALIZAR Y ELIMINAR PARTIDOS ******/
 
     override suspend fun createMatch(params: CreateMatchParams): Match? {
