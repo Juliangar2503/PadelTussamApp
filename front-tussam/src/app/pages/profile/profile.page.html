@@ -78,7 +78,7 @@
     <ion-row>
       <ion-col size="12">
         <ion-item>
-          <ion-segment>
+          <ion-segment (ionChange)="segmentChanged($event)">
             <ion-segment-button value="openMatches">
               <ion-label>Partidos abiertos</ion-label>
             </ion-segment-button>

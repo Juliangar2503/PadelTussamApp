@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { EditProfileComponent } from 'src/app/components/edit-profile/edit-profile.component';
+import { Match } from 'src/app/interfaces/match';
 import { Player } from 'src/app/interfaces/player';
+import { BackTussamService } from 'src/app/services/back-tussam.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -12,10 +14,12 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class ProfilePage implements OnInit {
 
   player: Player = {} as Player;
+  matches: Match[] = [];
 
   constructor(
     private utilSvc: UtilsService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private backSvc: BackTussamService
   ) {
     
   }
@@ -40,6 +44,32 @@ export class ProfilePage implements OnInit {
     });
     return await modal.present();
   }
+
+  getOpenMatches() {
+    this.backSvc.getMatchesOpenByPlayer(this.player.id).subscribe((data) => {
+      this.matches = data.data;
+      console.log(this.matches);
+    });
+  }
+
+  getCloseMatches() {
+    this.backSvc.getMatchesCloseByPlayer(this.player.id).subscribe((data) => {
+      this.matches = data.data;
+      console.log(this.matches);
+    });
+  }
+
+  segmentChanged(event: CustomEvent) {
+    switch (event.detail.value) {
+      case 'openMatches':
+        this.getOpenMatches();
+        break;
+      case 'closedMatches':
+        this.getCloseMatches();
+        break;
+    }
+  }
+
 
   logout() {
     localStorage.clear();

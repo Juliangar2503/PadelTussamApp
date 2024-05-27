@@ -47,6 +47,24 @@ class MatchRepositoryImpl(
         }
     }
 
+    override suspend fun getMatchesOpenByPlayer(playerId: Int): BaseResponse<Any> {
+        val matches = matchService.getMatchesOpenByPlayer(playerId)
+        return if (matches.isNotEmpty()) {
+            BaseResponse.SuccessResponse(data = matches)
+        } else {
+            BaseResponse.ErrorResponse(message = "No matches found")
+        }
+    }
+
+    override suspend fun getMatchesCloseByPlayer(playerId: Int): BaseResponse<Any> {
+        val matches = matchService.getMatchesCloseByPlayer(playerId)
+        return if (matches.isNotEmpty()) {
+            BaseResponse.SuccessResponse(data = matches)
+        } else {
+            BaseResponse.ErrorResponse(message = "No matches found")
+        }
+    }
+
     override suspend fun createMatch(params: CreateMatchParams): BaseResponse<Any> {
         val match = matchService.createMatch(params)
         return if (match != null) {

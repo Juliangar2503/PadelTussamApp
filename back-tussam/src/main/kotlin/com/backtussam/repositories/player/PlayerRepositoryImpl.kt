@@ -2,12 +2,14 @@ package com.backtussam.repositories.player
 
 import com.backtussam.security.JWTConfig
 import com.backtussam.security.hash
+import com.backtussam.services.historical.HistoricalMatchService
 import com.backtussam.services.league.LeagueService
 import com.backtussam.services.match.MatchService
 import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.LoginPlayerParams
 import com.backtussam.services.player.PlayerService
 import com.backtussam.utils.BaseResponse
+import com.backtussam.utils.params.historical.CreateHistoricalMatch
 import com.backtussam.utils.params.match.CreateMatchParams
 import com.backtussam.utils.params.match.ResultMatchParams
 import com.backtussam.utils.params.player.UpdatePlayerParams
@@ -16,7 +18,8 @@ import kotlin.random.Random
 class PlayerRepositoryImpl(
     private val playerService: PlayerService,
     private val leagueService: LeagueService,
-    private val matchService: MatchService
+    private val matchService: MatchService,
+    private val historicalMatchService: HistoricalMatchService
 ) : PlayerRepository {
     /*** ALTA Y BAJA DE JUGADORES ***/
     override suspend fun registerPlayer(params: CreatePlayerParams): BaseResponse<Any> {
@@ -314,6 +317,11 @@ class PlayerRepositoryImpl(
                 matchService.confirmOneResults(matchId)
                 //Si ambos equipos han confirmado el resultado, se actualizan los puntos
                 earnPointsAfterCheckMatch(matchId)
+                //Si ambos equipos han confirmado se guarda el paritdo en el historico
+                saveMatchInHistory(matchId, match.id_player1!!)
+                saveMatchInHistory(matchId, match.id_player2!!)
+                saveMatchInHistory(matchId, match.id_player3!!)
+                saveMatchInHistory(matchId, match.id_player4!!)
                 return BaseResponse.SuccessResponse(data = "Match updated")
             } else {
                 return BaseResponse.ErrorResponse(message = "Player not eligible to confirm")
@@ -331,6 +339,11 @@ class PlayerRepositoryImpl(
                 matchService.confirmSecondResults(matchId)
                 //Si ambos equipos han confirmado el resultado, se actualizan los puntos
                 earnPointsAfterCheckMatch(matchId)
+                //Si ambos equipos han confirmado se guarda el paritdo en el historico
+                saveMatchInHistory(matchId, match.id_player1!!)
+                saveMatchInHistory(matchId, match.id_player2!!)
+                saveMatchInHistory(matchId, match.id_player3!!)
+                saveMatchInHistory(matchId, match.id_player4!!)
                 return BaseResponse.SuccessResponse(data = "Match updated")
             } else {
                 return BaseResponse.ErrorResponse(message = "Player not eligible to confirm")
@@ -406,6 +419,70 @@ class PlayerRepositoryImpl(
         }
     }
 
+    override suspend fun saveMatchInHistory(matchId: Int, playerId: Int): BaseResponse<Any> {
+        val match = matchService.getMatchById(matchId)
+        val player = playerService.getPlayerById(playerId)
+        if (match == null || player == null) {
+            return BaseResponse.ErrorResponse(message = "Match or player not found")
+        } else {
+            val params = CreateHistoricalMatch(
+                id_player = playerId,
+                id_match = matchId,
+                score = match.matchResult.toString(),
+                partner = getParnet(matchId, playerId)!!,
+                name_league = getNameLeague(matchId)!!,
+                isWin = checkWhoseWin(matchId, playerId)
+            )
+            val historicalMatch = historicalMatchService.registerHistoricalMatch(params)
+            return if (historicalMatch != null) {
+                BaseResponse.SuccessResponse(data = historicalMatch)
+            } else {
+                BaseResponse.ErrorResponse(message = "Error creating historical match")
+            }
+        }
+    }
+
+    private suspend fun getParnet(matchId: Int, playerId: Int): String? {
+        val match = matchService.getMatchById(matchId)
+        //Obtener el id del juagdor pareja
+        return if (match != null) {
+            if (match.id_player1 == playerId) {
+                playerService.getPlayerById(match.id_player2!!)?.name
+            } else if (match.id_player2 == playerId) {
+                playerService.getPlayerById(match.id_player1!!)?.name
+            } else if (match.id_player3 == playerId) {
+                playerService.getPlayerById(match.id_player4!!)?.name
+            } else if (match.id_player4 == playerId) {
+                playerService.getPlayerById(match.id_player3!!)?.name
+            } else {
+                null
+            }
+        } else {
+            null
+        }
+    }
+
+    private suspend fun getNameLeague(matchId: Int): String? {
+        val match = matchService.getMatchById(matchId)
+        return if (match != null) {
+            leagueService.getLeagueById(match.level!!)?.name
+        } else {
+            null
+        }
+    }
+
+    private suspend fun checkWhoseWin(matchId: Int, playerId: Int): Boolean {
+        val match = matchService.getMatchById(matchId)
+        return if (match != null) {
+            if (match.id_player1 == playerId || match.id_player2 == playerId) {
+                match.matchResult!!.count { it == 'A' } > match.matchResult.count { it == 'B' }
+            } else {
+                match.matchResult!!.count { it == 'B' } > match.matchResult.count { it == 'A' }
+            }
+        } else {
+            false
+        }
+    }
 
     //Primero comprobar si el jugador existe
     private suspend fun isEmailExist(email: String): Boolean {

@@ -109,6 +109,17 @@ export class BackTussamService {
     return this.http.get<any>(environment.baseUrl + `matches/type/Friendly`);
   }
 
+  //http://localhost:8080/matches/player/open/{playerId}
+  getMatchesOpenByPlayer(playerId: Number):Observable<ApiReponseMatches>{
+    return this.http.get<any>(environment.baseUrl + `matches/player/open/${playerId}`);
+
+  }
+
+   // http://localhost:8080/matches/player/close/{playerId}
+  getMatchesCloseByPlayer(playerId: Number):Observable<ApiReponseMatches>{
+    return this.http.get<any>(environment.baseUrl + `matches/player/close/${playerId}`);
+  }
+
 
   
 

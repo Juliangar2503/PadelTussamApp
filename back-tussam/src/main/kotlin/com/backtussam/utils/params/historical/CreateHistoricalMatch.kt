@@ -1,12 +1,10 @@
-package com.backtussam.model
+package com.backtussam.utils.params.historical
 
-data class PlayerMatchesHistorical(
-    val id: Int,
+data class CreateHistoricalMatch (
     val id_player: Int,
     val id_match: Int,
     val score: String,
     val isWin: Boolean,
-    val date: String,
     val partner: String,
     val name_league: String
 )

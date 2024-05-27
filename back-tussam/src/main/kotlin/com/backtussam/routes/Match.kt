@@ -55,6 +55,20 @@ fun Application.matchesRoutes(repository: MatchRepository) {
                 call.respond(result.statusCode, result)
             }
 
+            // http://localhost:8080/matches/player/open/{playerId}
+            get("/player/open/{playerId}") {
+                val playerId = call.parameters["playerId"]?.toIntOrNull() ?: 0
+                val result = repository.getMatchesOpenByPlayer(playerId)
+                call.respond(result.statusCode, result)
+            }
+
+            // http://localhost:8080/matches/player/close/{playerId}
+            get("/player/close/{playerId}") {
+                val playerId = call.parameters["playerId"]?.toIntOrNull() ?: 0
+                val result = repository.getMatchesCloseByPlayer(playerId)
+                call.respond(result.statusCode, result)
+            }
+
         }
     }
 }
