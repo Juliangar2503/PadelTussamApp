@@ -28,6 +28,7 @@ object DatabaseFactory {
             )
         }
     }
+
     private fun hikari(): HikariDataSource {
         //Crear un objeto HijariConfig
         val config = HikariConfig()

@@ -14,7 +14,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class ProfilePage implements OnInit {
 
   player: Player = {} as Player;
-  openMatches: Match[] = [];
+  matches: Match[] = [];
 
   constructor(
     private utilSvc: UtilsService,
@@ -47,8 +47,15 @@ export class ProfilePage implements OnInit {
 
   getOpenMatches() {
     this.backSvc.getMatchesOpenByPlayer(this.player.id).subscribe((data) => {
-      this.openMatches = data.data;
-      console.log(this.openMatches);
+      this.matches = data.data;
+      console.log(this.matches);
+    });
+  }
+
+  getCloseMatches() {
+    this.backSvc.getMatchesCloseByPlayer(this.player.id).subscribe((data) => {
+      this.matches = data.data;
+      console.log(this.matches);
     });
   }
 
@@ -57,7 +64,9 @@ export class ProfilePage implements OnInit {
       case 'openMatches':
         this.getOpenMatches();
         break;
-      // Manejar otros valores de segmento aquí
+      case 'closedMatches':
+        this.getCloseMatches();
+        break;
     }
   }
 

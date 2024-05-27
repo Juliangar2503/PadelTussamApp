@@ -12,6 +12,7 @@ interface MatchService {
     suspend fun getMatchesByLeague(leagueId: Int): List<Match?>
     suspend fun getMatchesByType(typoMatch:String): List<Match?>
     suspend fun getMatchesOpenByPlayer(playerId: Int): List<Match?>
+    suspend fun getMatchesCloseByPlayer(playerId: Int): List<Match?>
     /***** CREAR, ACTUALIZAR Y ELIMINAR PARTIDOS ******/
     suspend fun createMatch(params:CreateMatchParams): Match?
     suspend fun updateMatch(id: Int, params:CreateMatchParams): Match?

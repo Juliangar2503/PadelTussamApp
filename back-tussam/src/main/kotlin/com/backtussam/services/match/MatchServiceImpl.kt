@@ -56,8 +56,21 @@ class MatchServiceImpl : MatchService {
                         (MatchTable.id_player2 eq playerId) or
                         (MatchTable.id_player3 eq playerId) or
                         (MatchTable.id_player4 eq playerId)) and
-                        (MatchTable.confirmResult1 eq false) and
+                        (MatchTable.confirmResult1 eq false) or
                         (MatchTable.confirmResult2 eq false)
+            }.mapNotNull { rowToMatch(it) }
+        }
+    }
+
+    override suspend fun getMatchesCloseByPlayer(playerId: Int): List<Match?> {
+        return dbQuery {
+            MatchTable.select {
+                ((MatchTable.id_player1 eq playerId) or
+                        (MatchTable.id_player2 eq playerId) or
+                        (MatchTable.id_player3 eq playerId) or
+                        (MatchTable.id_player4 eq playerId)) and
+                        (MatchTable.confirmResult1 eq true) and
+                        (MatchTable.confirmResult2 eq true)
             }.mapNotNull { rowToMatch(it) }
         }
     }
