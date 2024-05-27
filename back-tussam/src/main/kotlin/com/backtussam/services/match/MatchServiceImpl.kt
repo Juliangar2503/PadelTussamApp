@@ -34,7 +34,9 @@ class MatchServiceImpl : MatchService {
     override suspend fun getMatchesByLeague(leagueId: Int): List<Match?> {
         return dbQuery {
             MatchTable.select {
-                (MatchTable.level eq leagueId) and (MatchTable.type eq "competitive")
+                (MatchTable.level eq leagueId) and
+                        (MatchTable.type eq "competitive") and
+                        (MatchTable.open eq true)
             }.mapNotNull { rowToMatch(it) }
         }
     }
