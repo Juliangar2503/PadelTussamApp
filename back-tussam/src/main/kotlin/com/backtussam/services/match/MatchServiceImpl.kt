@@ -34,7 +34,7 @@ class MatchServiceImpl : MatchService {
     override suspend fun getMatchesByLeague(leagueId: Int): List<Match?> {
         return dbQuery {
             MatchTable.select {
-                MatchTable.level eq leagueId
+                (MatchTable.level eq leagueId) and (MatchTable.type eq "competitive")
             }.mapNotNull { rowToMatch(it) }
         }
     }
@@ -270,6 +270,7 @@ class MatchServiceImpl : MatchService {
             date = row[MatchTable.date].toString(),
             level = row[MatchTable.level],
             open = row[MatchTable.open],
+            type = row[MatchTable.type],
             confirmResult1 = row[MatchTable.confirmResult1],
             confirmResult2 = row[MatchTable.confirmResult2],
             chat = row[MatchTable.chat],

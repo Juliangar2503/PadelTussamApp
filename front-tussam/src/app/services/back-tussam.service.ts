@@ -104,6 +104,12 @@ export class BackTussamService {
     return this.http.get<any>(environment.baseUrl + `matches/league/${leagueId}`);
   }
 
+  // http://localhost:8080/matches/type/{type}
+  getFriendlyMatches():Observable<ApiReponseMatches>{
+    return this.http.get<any>(environment.baseUrl + `matches/type/Friendly`);
+  }
+
+
   
 
 

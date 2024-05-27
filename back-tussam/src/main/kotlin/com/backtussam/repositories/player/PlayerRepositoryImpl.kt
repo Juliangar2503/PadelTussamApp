@@ -213,8 +213,7 @@ class PlayerRepositoryImpl(
             val player = playerService.getPlayerById(playerId)
             //Crear partido con el jugador como primer jugador
             val params =
-                CreateMatchParams(id_player1 = playerId, open = true, type = "Competitive", level = player?.leagueId)
-            println("params: ${params}")
+                CreateMatchParams(id_player1 = playerId, open = true, type = type, level = player?.leagueId)
             matchService.createMatch(params)
             return BaseResponse.SuccessResponse(data = "Match created")
         }
