@@ -10,6 +10,5 @@ fun LocalDateTime.toReadableFormat(): String {
 }
 
 fun String.toLocalDateTime(): LocalDateTime {
-    val formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy, HH:mm", Locale("es"))
-    return LocalDateTime.parse(this, formatter)
+    return LocalDateTime.parse(this, DateTimeFormatter.ISO_DATE_TIME)
 }
