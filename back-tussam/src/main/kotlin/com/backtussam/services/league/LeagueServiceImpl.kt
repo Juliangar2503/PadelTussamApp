@@ -3,6 +3,7 @@ package com.backtussam.services.league
 import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.db.tables.LeagueTable
 import com.backtussam.model.League
+import com.backtussam.utils.extensions.toReadableFormat
 import com.backtussam.utils.params.league.CreateLeagueParams
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.*
@@ -95,10 +96,10 @@ class LeagueServiceImpl : LeagueService {
             id = row[LeagueTable.id],
             name = row[LeagueTable.name],
             duration = row[LeagueTable.duration],
-            startDate = row[LeagueTable.startDate].toString(),
+            startDate = row[LeagueTable.startDate].toReadableFormat(),
             ascent = row[LeagueTable.ascent],
             descent = row[LeagueTable.descent],
-            endDate = row[LeagueTable.endDate].toString()
+            endDate = row[LeagueTable.endDate].toReadableFormat()
         )
     }
 }
