@@ -35,6 +35,17 @@ services:
     depends_on:
       - postgres
 
+  frontend:
+    build:
+      context: ./front-tussam
+      dockerfile: Dockerfile
+    volumes:
+      - ./front-ionic-tussam:/app
+      - /app/node_modules
+    ports:
+      - "8100:8100" # Mapea el puerto del contenedor al puerto local
+      - "35729:35729" # Live reload
+
 
 volumes:
   postgres:

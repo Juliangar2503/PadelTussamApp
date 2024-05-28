@@ -1,7 +1,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080/',
+  baseUrl: 'http://ktor:8080/',
   login: 'auth/login',
   register: 'auth/register',
   player: 'player/',
