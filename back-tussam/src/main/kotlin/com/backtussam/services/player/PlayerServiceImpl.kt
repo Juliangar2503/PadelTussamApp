@@ -4,6 +4,7 @@ import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.db.tables.PlayerTable
 import com.backtussam.model.Player
 import com.backtussam.security.hash
+import com.backtussam.utils.extensions.toReadableFormat
 import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.UpdatePlayerParams
 import org.jetbrains.exposed.sql.*
@@ -121,7 +122,7 @@ class PlayerServiceImpl : PlayerService {
             name = row[PlayerTable.name],
             lastName = row[PlayerTable.lastName],
             email = row[PlayerTable.email],
-            createdAt = row[PlayerTable.createdAt].toString(),
+            createdAt = row[PlayerTable.createdAt].toReadableFormat(),
             location = row[PlayerTable.location],
             nickname = row[PlayerTable.nickname],
             avatar = row[PlayerTable.avatar].toString(),

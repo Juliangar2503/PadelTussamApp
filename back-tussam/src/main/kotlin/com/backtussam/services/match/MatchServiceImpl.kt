@@ -3,6 +3,8 @@ package com.backtussam.services.match
 import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.model.Match
 import com.backtussam.db.tables.MatchTable
+import com.backtussam.utils.extensions.toLocalDateTime
+import com.backtussam.utils.extensions.toReadableFormat
 import com.backtussam.utils.params.match.CreateMatchParams
 import com.backtussam.utils.params.match.ResultMatchParams
 import org.jetbrains.exposed.sql.*
@@ -272,7 +274,7 @@ class MatchServiceImpl : MatchService {
         if (params.scoreSet3A != null) this[MatchTable.scoreSet3A] = params.scoreSet3A
         if (params.scoreSet3B != null) this[MatchTable.scoreSet3B] = params.scoreSet3B
         if (params.matchResult != null) this[MatchTable.matchResult] = params.matchResult
-        if (params.date != null) this[MatchTable.date] = params.date
+        if (params.date != null) this[MatchTable.date] = params.date.toLocalDateTime()
         this[MatchTable.open] = params.open
         if (params.type != null) this[MatchTable.type] = params.type
         if (params.level != null) this[MatchTable.level] = params.level
@@ -295,7 +297,7 @@ class MatchServiceImpl : MatchService {
             scoreSet3A = row[MatchTable.scoreSet3A],
             scoreSet3B = row[MatchTable.scoreSet3B],
             matchResult = row[MatchTable.matchResult],
-            date = row[MatchTable.date].toString(),
+            date = row[MatchTable.date].toReadableFormat(),
             level = row[MatchTable.level],
             open = row[MatchTable.open],
             type = row[MatchTable.type],
