@@ -3,6 +3,8 @@ package com.backtussam.services.league
 import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.db.tables.LeagueTable
 import com.backtussam.model.League
+import com.backtussam.utils.extensions.toISO8601Format
+import com.backtussam.utils.extensions.toLocalDateTime
 import com.backtussam.utils.extensions.toReadableFormat
 import com.backtussam.utils.params.league.CreateLeagueParams
 import org.jetbrains.exposed.sql.ResultRow
@@ -74,8 +76,8 @@ class LeagueServiceImpl : LeagueService {
                     it[LeagueTable.duration] = params.duration
                     it[LeagueTable.ascent] = params.ascent
                     it[LeagueTable.descent] = params.descent
-                    it[LeagueTable.startDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME)
-                    it[LeagueTable.endDate] = LocalDateTime.parse(params.startDate, DateTimeFormatter.ISO_DATE_TIME).plusMonths(params.duration.toLong())
+                    it[LeagueTable.startDate] = params.startDate!!.toLocalDateTime()
+                    it[LeagueTable.endDate] = params.startDate.toLocalDateTime().plusMonths(params.duration.toLong())
                 }
             }
         }
