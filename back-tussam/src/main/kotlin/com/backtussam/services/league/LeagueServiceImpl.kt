@@ -3,7 +3,6 @@ package com.backtussam.services.league
 import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.db.tables.LeagueTable
 import com.backtussam.model.League
-import com.backtussam.utils.extensions.toISO8601Format
 import com.backtussam.utils.extensions.toLocalDateTime
 import com.backtussam.utils.extensions.toReadableFormat
 import com.backtussam.utils.params.league.CreateLeagueParams

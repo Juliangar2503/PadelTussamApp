@@ -1,6 +1,9 @@
 package com.backtussam.db.tables
 
+import com.backtussam.db.tables.LeagueTable.clientDefault
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.javatime.datetime
+import java.time.LocalDateTime
 
 object MatchTable : Table("matches"){
     val id = integer("id").autoIncrement()
@@ -17,7 +20,7 @@ object MatchTable : Table("matches"){
     val matchResult = varchar("matchResult", 256).nullable()
     val type = varchar("type", 256).nullable()
     val level = integer("level").nullable()
-    val date = varchar("date", 256).default("")
+    val date = datetime("created_at").clientDefault { LocalDateTime.now() }
     val open = bool("open").default(true)
     val confirmResult1 = bool("confirmResult1").default(false)
     val confirmResult2 = bool("confirmResult2").default(false)
