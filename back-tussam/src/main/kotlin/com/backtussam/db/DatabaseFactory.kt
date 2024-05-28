@@ -35,7 +35,7 @@ object DatabaseFactory {
         config.driverClassName = "org.postgresql.Driver"
         //Instanciar la ruta para la base de datos -> DireccionBD, nombreBD, usuario y contraseña
         //Importante el nombreDB en minusculas
-        config.jdbcUrl = "jdbc:postgresql://localhost:5432/bd-padel-tussam?user=julian&password=admin"
+        config.jdbcUrl = "jdbc:postgresql://postgres:5432/bd-padel-tussam?user=julian&password=admin"
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
