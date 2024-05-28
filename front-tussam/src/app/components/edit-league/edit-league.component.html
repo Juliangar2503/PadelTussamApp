@@ -10,29 +10,28 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>Name: 
+      <ion-label>Nombre: 
         <ion-input [(ngModel)]="league.name"></ion-input>
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Ascent: 
+      <ion-label>Ascensos: 
         <ion-input [(ngModel)]="league.ascent"></ion-input>
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Descent
+      <ion-label>Descensos:
         <ion-input [(ngModel)]="league.descent"></ion-input>
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Initial Date: 
-        <ion-input [(ngModel)]="league.startDate"></ion-input>
+      <ion-label>Duracion (meses): 
+        <ion-input [(ngModel)]="league.duration"></ion-input>
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Duration: 
-        <ion-input [(ngModel)]="league.duration"></ion-input>
-      </ion-label>
+      <ion-label>Fecha inicial:</ion-label>
+      <ion-datetime displayFormat="DD 'de' MMMM 'de' YYYY, HH:mm" [(ngModel)]="league.startDate"></ion-datetime>
     </ion-item>
   </ion-list>
   
