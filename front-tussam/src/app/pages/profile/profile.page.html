@@ -10,9 +10,11 @@
       <ion-col size="12" class="ion-text-center">
         <ion-item>
           <ion-avatar slot="start">
-            <img *ngIf="player.avatar && player.avatar !== 'null'; else defaultImage" [src]="player.avatar">
+            <ng-container *ngIf="player && player.avatar; else defaultImage">
+              <img [src]="getAvatarImage(player)">
+            </ng-container>
             <ng-template #defaultImage>
-              <img src="../../../assets/img/defaultAvatar.webp">
+              <img src="assets/img/defaultAvatar.webp">
             </ng-template>
           </ion-avatar>
           <ion-label>

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,11 +15,30 @@ export class EditProfileComponent{
 
   constructor(
     private modalController: ModalController,
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private utilSvc: UtilsService
   ) { }
 
   dismissModal() {
     this.modalController.dismiss();
+  }
+
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target) {
+          let base64String = e.target.result as string;
+          base64String = base64String.split(',')[1]; 
+          console.log('Base64 string:', base64String);
+          console.log('PlayerAntes: ', this.player);
+          this.player.avatar = base64String;
+          console.log('PlayerDespues: ', this.player);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   savePlayer() {
@@ -33,5 +53,7 @@ export class EditProfileComponent{
     );
     this.dismissModal();
   }
+
+
 
 }

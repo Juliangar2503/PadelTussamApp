@@ -34,6 +34,10 @@
         <ion-input [(ngModel)]="player.location"></ion-input>
       </ion-label>
     </ion-item>
+    <ion-item>
+      <ion-label>Avatar</ion-label>
+      <ion-input type="file" (change)="onFileChange($event)"></ion-input>
+    </ion-item>
   </ion-list>
   
 

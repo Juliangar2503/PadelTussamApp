@@ -38,4 +38,11 @@ export class DetailPlayerPage implements OnInit {
     });
   }
 
+  getAvatarImage(player: Player) {
+    if (player.avatar) {
+      return 'data:image/jpeg;base64,' + player.avatar;
+    }
+    return null;
+  }
+
 }

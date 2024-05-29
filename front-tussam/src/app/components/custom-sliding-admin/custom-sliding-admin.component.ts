@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Player } from 'src/app/interfaces/player';
 import { EditPlayerComponent } from '../edit-player/edit-player.component';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-custom-sliding-admin',
@@ -14,7 +15,8 @@ export class CustomSlidingAdminComponent {
   @Input() player!: Player;
   constructor(
     private modalController: ModalController,
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private utilSvc: UtilsService
   ) { }
 
 
@@ -36,5 +38,11 @@ export class CustomSlidingAdminComponent {
     return await modal.present();
   }
 
+  getAvatarImage(player: Player) {
+    if (player.avatar) {
+      return 'data:image/jpeg;base64,' + player.avatar;
+    }
+    return null;
+  }
 
 }
