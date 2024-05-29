@@ -1,5 +1,6 @@
 package com.backtussam.db.tables
 
+import com.backtussam.utils.Variable
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
@@ -12,7 +13,7 @@ object PlayerTable: Table("players") {
     val password = text("password")
     val location = varchar("location", 256).nullable()
     val nickname = varchar("nikename", 256).nullable()
-    val avatar = text("avatar").nullable()
+    val avatar = text("avatar").default(Variable.defaultAvatar)
     val points = integer("points").default(0)
     val active = bool("active").default(false)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
