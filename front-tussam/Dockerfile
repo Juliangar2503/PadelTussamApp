@@ -20,13 +20,10 @@ RUN npm run build
 FROM nginx:alpine
 
 # Instalar Node.js y npm en la imagen de nginx
-RUN apk add --update nodejs npm
+#RUN apk add --update nodejs npm
 
 # Copiar el directorio generado en la etapa de construcción a la imagen de nginx
 COPY --from=build /app/www /usr/share/nginx/html
 
 # Exponer el puerto en el que se ejecutará la aplicación
-EXPOSE 8100
-
-# Comando para iniciar la aplicación
-CMD ["npm", "run", "serve", "start"]
+EXPOSE 80
