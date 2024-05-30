@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BackTussamService } from './back-tussam.service';
 import { ToastController } from '@ionic/angular';
 
 @Injectable({
@@ -40,10 +39,12 @@ export class UtilsService {
   }
 
   // ----------------- TOAST ---------------------- //
-  async presentToast(message: string, duration: number = 2000) {
+  async presentToast(message: string|null, duration: number = 2000, position: 'top'|'bottom'|'middle' = 'middle') {
+    if (!message) return;
     const toast = await this.toastController.create({
       message: message,
-      duration: duration
+      duration: duration,
+      position: position
     });
     toast.present();
   }

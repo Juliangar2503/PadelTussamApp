@@ -34,14 +34,12 @@ export class LoginPage implements OnInit {
       if (email && password) {
         this.backSvc.login(email, password).subscribe(
           response => {
-            console.log(response);
-            //Éxito en el login
             if (response.data){
+              this.utilSvc.presentToast(response.message, 3000)
               this.utilSvc.saveInLocalStorage('Player',response.data)
               this.utilSvc.goToPage("competition")
             }else{
-              const message = response.message || 'Mensaje predeterminado';
-              this.utilSvc.presentToast(message, 3000)
+              this.utilSvc.presentToast(response.message, 3000)
             }                    
           },
           error => {

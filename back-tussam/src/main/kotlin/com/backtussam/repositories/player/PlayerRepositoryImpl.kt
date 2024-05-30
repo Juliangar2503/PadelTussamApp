@@ -197,7 +197,7 @@ class PlayerRepositoryImpl(
                 val token = JWTConfig.instance.createToken(player.id.toString())
                 player.authToken = token
                 // Jugador encontrado y contraseña correcta
-                BaseResponse.SuccessResponse(data = player)
+                BaseResponse.SuccessResponse(data = player, message = "Bienvenido ${player.name}")
             } else {
                 // Contraseña incorrecta
                 BaseResponse.ErrorResponse(message = "Invalid password")

@@ -71,12 +71,9 @@ fun Application.myApplicationModule() {
 
     matchesRoutes(repositoryMatch)
 
-    
     routing {
-        authenticate {
-            get("/testUrl") {
-                call.respondText("Hello World")
-            }
+        get("/") {
+            call.respondText("La api está funcionando!!")
         }
     }
 }
