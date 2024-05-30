@@ -11,12 +11,12 @@ export class AuthService {
     private utilSvc: UtilsService
   ) { }
 
+  // ******  OBTENER HEADER  ******
   getToken(): string {
     const player = this.utilSvc.getFromLocalStorage('Player');
     return player ? player.authToken : null;
   }
 
-  // ******  OBTENER HEADER  ******
   async createAuthorizationHeader() {
     const token = await this.utilSvc.getFromLocalStorage('Token');
     let headers = new HttpHeaders();
@@ -36,6 +36,7 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.removeItem('Token');
     localStorage.removeItem('Player');
   }
 }

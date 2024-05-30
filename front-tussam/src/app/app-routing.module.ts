@@ -35,7 +35,9 @@ const routes: Routes = [
   },
   {
     path: 'admin-configure',
-    loadChildren: () => import('./pages/admin-configure/admin-configure.module').then( m => m.AdminConfigurePageModule)
+    loadChildren: () => import('./pages/admin-configure/admin-configure.module').then( m => m.AdminConfigurePageModule),
+    canActivate: [LoginGuard], // Agrega tu guardia aquí
+    data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
   },
 ];
 
