@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
             if (response.data){
               this.utilSvc.presentToast(response.message, 3000)
               this.utilSvc.saveInLocalStorage('Player',response.data)
+              this.utilSvc.saveInLocalStorage('Token',response.data.authToken)
               this.utilSvc.goToPage("competition")
             }else{
               this.utilSvc.presentToast(response.message, 3000)
