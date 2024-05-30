@@ -30,9 +30,10 @@ export class ProfilePage implements OnInit {
   }
 
   getPlayer() {
-    this.player = this.utilSvc.getFromLocalStorage('Player');
-    console.log(this.player);
-    console.log('player id: ' + this.player.id);
+    let playerId: Number = this.utilSvc.getFromLocalStorage('Player').id;
+    this.backSvc.getPlayer(playerId).subscribe((data) => {
+      this.player = data.data;
+    });
   }
 
   async editProfile() {
