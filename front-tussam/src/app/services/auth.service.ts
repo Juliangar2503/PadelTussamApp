@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from './utils.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,19 @@ export class AuthService {
     private utilSvc: UtilsService
   ) { }
 
+  // ******  OBTENER HEADER  ******
   getToken(): string {
     const player = this.utilSvc.getFromLocalStorage('Player');
     return player ? player.authToken : null;
+  }
+
+  async createAuthorizationHeader() {
+    const token = await this.utilSvc.getFromLocalStorage('Token');
+    let headers = new HttpHeaders();
+    if (token) {
+      headers = headers.set('Authorization', 'Bearer ' + token);
+    }
+    return headers;
   }
 
   isAuthenticated(): boolean {
@@ -25,6 +36,7 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.removeItem('Token');
     localStorage.removeItem('Player');
   }
 }
