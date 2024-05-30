@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackTussamService } from './back-tussam.service';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class UtilsService {
 
   constructor(
     private router: Router,
-    private backSvc: BackTussamService
+    private toastController: ToastController
   ) { }
  
   // ---------------- NAVEGACIÓN -------------------- //
@@ -38,25 +39,13 @@ export class UtilsService {
     localStorage.clear();
   }
 
-  // ---------------- IMAGENES ----------------------//
-
-  arrayBufferToBase64(buffer: ArrayBuffer): string {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
+  // ----------------- TOAST ---------------------- //
+  async presentToast(message: string, duration: number = 2000) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration
+    });
+    toast.present();
   }
-
-  base64ToArrayBuffer(base64: string): ArrayBuffer {
-    const binaryString = window.atob(base64);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-  }
+ 
 }

@@ -40,8 +40,8 @@ export class LoginPage implements OnInit {
               this.utilSvc.saveInLocalStorage('Player',response.data)
               this.utilSvc.goToPage("competition")
             }else{
-              //Mostrar error por consola 
-              console.log(response.message)
+              const message = response.message || 'Mensaje predeterminado';
+              this.utilSvc.presentToast(message, 3000)
             }                    
           },
           error => {
