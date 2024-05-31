@@ -6,6 +6,7 @@ data class PlayerLeagueHistorical(
     val numberMatches:Int,
     val points:Int,
     val positionLeague:Int,
-    val date:String
+    val gameDifference:Int,
+    val endDate:String
 
 )

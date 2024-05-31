@@ -8,6 +8,10 @@ export interface Player {
     avatar?: string;
     points?: number;
     active: boolean;
+    gameWon: Number,
+    gameLost : Number,
+    gameDifference: Number,
+    gamePlayed: Number,
     createdAt: string;
     leagueId?: number;
     roleId?: number;

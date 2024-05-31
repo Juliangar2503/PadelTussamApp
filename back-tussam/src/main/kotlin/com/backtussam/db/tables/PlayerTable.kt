@@ -16,6 +16,10 @@ object PlayerTable: Table("players") {
     val avatar = text("avatar").default(Variable.defaultAvatar)
     val points = integer("points").default(0)
     val active = bool("active").default(false)
+    val gameWon = integer("game_won").default(0)
+    val gameLost = integer("game_lost").default(0)
+    val gameDifference = integer("game_difference").default(0)
+    val gamePlayed = integer("game_played").default(0)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val leagueId = integer("league_id").references(LeagueTable.id).nullable()
     val roleId = integer("role_id").references(RoleTable.id).nullable()

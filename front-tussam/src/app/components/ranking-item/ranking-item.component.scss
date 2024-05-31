@@ -1,3 +1,9 @@
 .row-with-border {
     border-bottom: 1px solid #000; /* Cambia el color según tus necesidades */
   }
+
+  @media screen and (max-width: 576px) {
+    .ion-hide-sm-down {
+      display: none !important;
+    }
+  }

@@ -310,18 +310,11 @@ class PlayerRepositoryImpl(
     override suspend fun confirmResultMatchTeamA(matchId: Int, playerId: Int): BaseResponse<Any> {
         val match = matchService.getMatchById(matchId)
         val player = playerService.getPlayerById(playerId)
-        if (match == null || match.open || player == null) {
-            return BaseResponse.ErrorResponse(message = "Match not found")
+        if (match == null || match.open || player == null ) {
+            return BaseResponse.ErrorResponse(message = "No se ha encontrado el partido o no es competitivo")
         } else {
             if (match.id_player1 == playerId || match.id_player2 == playerId) {
-                matchService.confirmOneResults(matchId)
-                //Si ambos equipos han confirmado el resultado, se actualizan los puntos
-                earnPointsAfterCheckMatch(matchId)
-                //Si ambos equipos han confirmado se guarda el paritdo en el historico
-                saveMatchInHistory(matchId, match.id_player1!!)
-                saveMatchInHistory(matchId, match.id_player2!!)
-                saveMatchInHistory(matchId, match.id_player3!!)
-                saveMatchInHistory(matchId, match.id_player4!!)
+                checkMatch(matchId)
                 return BaseResponse.SuccessResponse(data = "Match updated")
             } else {
                 return BaseResponse.ErrorResponse(message = "Player not eligible to confirm")
@@ -442,6 +435,44 @@ class PlayerRepositoryImpl(
         }
     }
 
+    private suspend fun getGamesA(idMach: Int) : Int{
+        val match = matchService.getMatchById(idMach)
+        if (match != null) {
+           val totalGamesA = match.scoreSet1A + match.scoreSet2A + match.scoreSet3A
+            return totalGamesA
+        }else{
+            return 0
+        }
+    }
+
+    private suspend fun getGamesB(idMach: Int) : Int{
+        val match = matchService.getMatchById(idMach)
+        if (match != null) {
+            val totalGamesB = match.scoreSet1B + match.scoreSet2B + match.scoreSet3B
+            return totalGamesB
+        }else{
+            return 0
+        }
+    }
+
+    private suspend fun addGameToPlayer(matchId: Int, playerId: Int){
+        val player = playerService.getPlayerById(playerId)
+        val match = matchService.getMatchById(matchId)
+        if (player != null) {
+            if (match != null) {
+                if (match.id_player1 == playerId || match.id_player2 == playerId) {
+                    playerService.winGames(playerId, getGamesA(matchId))
+                    playerService.loseGames(playerId, getGamesB(matchId))
+                    playerService.differenceGames(playerId, getGamesA(matchId) - getGamesB(matchId))
+                } else {
+                    playerService.winGames(playerId, getGamesB(matchId))
+                    playerService.loseGames(playerId, getGamesA(matchId))
+                    playerService.differenceGames(playerId, getGamesB(matchId) - getGamesA(matchId))
+                }
+            }
+        }
+    }
+
     private suspend fun getParnet(matchId: Int, playerId: Int): String? {
         val match = matchService.getMatchById(matchId)
         //Obtener el id del juagdor pareja
@@ -482,6 +513,27 @@ class PlayerRepositoryImpl(
         } else {
             false
         }
+    }
+
+    private suspend fun checkMatch(matchId: Int){
+        val match = matchService.getMatchById(matchId)
+        matchService.confirmOneResults(matchId)
+        if(match?.type == "Competitive") {
+            //Si ambos equipos han confirmado el resultado, se actualizan los puntos
+            earnPointsAfterCheckMatch(matchId)
+            //Si ambos equipos han confirmado se guarda el paritdo en el historico
+            saveMatchInHistory(matchId, match.id_player1!!)
+            saveMatchInHistory(matchId, match.id_player2!!)
+            saveMatchInHistory(matchId, match.id_player3!!)
+            saveMatchInHistory(matchId, match.id_player4!!)
+            //Se actualizan los juegos ganados, perdidos y diferencia de juegos
+            addGameToPlayer(matchId, match.id_player1)
+            addGameToPlayer(matchId, match.id_player2)
+            addGameToPlayer(matchId, match.id_player3)
+            addGameToPlayer(matchId, match.id_player4)
+
+        }
+
     }
 
     //Primero comprobar si el jugador existe

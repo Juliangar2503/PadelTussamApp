@@ -9,6 +9,7 @@ import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.UpdatePlayerParams
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.plus
 import org.jetbrains.exposed.sql.statements.InsertStatement
 
 
@@ -98,6 +99,43 @@ class PlayerServiceImpl : PlayerService {
         }
     }
 
+    override suspend fun winGames(playerId: Int, quantity: Int): Player? {
+        return dbQuery {
+            PlayerTable.update({ PlayerTable.id eq playerId }) {
+                it[PlayerTable.gameWon] = PlayerTable.gameWon + quantity
+                it[PlayerTable.gamePlayed] = PlayerTable.gamePlayed + 1
+            }
+            PlayerTable.select { PlayerTable.id eq playerId }
+                .mapNotNull { rowToPlayer(it) }
+                .singleOrNull()
+        }
+    }
+
+
+
+    override suspend fun loseGames(playerId: Int, quantity: Int): Player? {
+        return dbQuery {
+            PlayerTable.update({ PlayerTable.id eq playerId }) {
+                it[PlayerTable.gameLost] = PlayerTable.gameLost + quantity
+            }
+            PlayerTable.select { PlayerTable.id eq playerId }
+                .mapNotNull { rowToPlayer(it) }
+                .singleOrNull()
+        }
+    }
+
+    override suspend fun differenceGames(playerId: Int, quantity: Int): Player? {
+        return dbQuery {
+            PlayerTable.update({ PlayerTable.id eq playerId }) {
+                it[PlayerTable.gameDifference] = PlayerTable.gameDifference + quantity
+            }
+            PlayerTable.select { PlayerTable.id eq playerId }
+                .mapNotNull { rowToPlayer(it) }
+                .singleOrNull()
+        }
+    }
+
+
     /*** BUSCAR JUGADORES POR EMAIL Y PASSWORD ***/
     override suspend fun findPlayerByEmail(email: String): Player? {
         val player = dbQuery {
@@ -128,6 +166,10 @@ class PlayerServiceImpl : PlayerService {
             avatar = row[PlayerTable.avatar].toString(),
             points = row[PlayerTable.points],
             active = row[PlayerTable.active],
+            gameWon = row[PlayerTable.gameWon],
+            gameLost = row[PlayerTable.gameLost],
+            gameDifference = row[PlayerTable.gameDifference],
+            gamePlayed = row[PlayerTable.gamePlayed],
             leagueId = row[PlayerTable.leagueId],
             roleId = row[PlayerTable.roleId]
         )

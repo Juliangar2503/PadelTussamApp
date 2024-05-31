@@ -1,17 +1,21 @@
   <h2>{{ league.name }}</h2>
   <ion-grid>
     <ion-row>
-      <ion-col size="2" class="ion-text-center ion-align-self-center">Pº</ion-col>
-      <ion-col class="ion-text-center ion-align-self-center">Nombre</ion-col>
-      <ion-col size="2" class="ion-text-center ion-align-self-center">PTS.</ion-col>
-      <ion-col size="2" class="ion-text-center ion-align-self-center">PJ</ion-col>
-      <ion-col size="2" class="ion-text-center ion-align-self-center">Dif</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">Pº</ion-col>
+      <ion-col size="6" class="ion-text-center ion-align-self-center">Nombre</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">PTS.</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center ion-hide-sm-down">PG</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center ion-hide-sm-down">PP</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">PJ</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">Dif</ion-col>
     </ion-row>
     <ion-row class="row-with-border" *ngFor="let player of ranking; let i = index">
-      <ion-col size="2" class="ion-text-center ion-align-self-center">{{i + 1}}</ion-col>
-      <ion-col class="ion-text-center ion-align-self-center">{{player.name}}.{{player.lastName.charAt(0)}}</ion-col>
-      <ion-col size="2" class="ion-text-center ion-align-self-center">{{player.points}}</ion-col>
-      <ion-col size="2" class="ion-text-center ion-align-self-center">0</ion-col>
-      <ion-col size="2" class="ion-text-center ion-align-self-center">0</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">{{i + 1}}</ion-col>
+      <ion-col size="6" class="ion-text-center ion-align-self-center">{{player.name}}.{{player.lastName.charAt(0)}}</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">{{player.points}}</ion-col>      
+      <ion-col class="ion-text-center ion-align-self-center ion-hide-sm-down">{{player.gameWon}}</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center ion-hide-sm-down">{{player.gameLost}}</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">{{player.gamePlayed}}</ion-col>
+      <ion-col class="ion-text-center ion-align-self-center">{{player.gameDifference}}</ion-col>
     </ion-row>
   </ion-grid>

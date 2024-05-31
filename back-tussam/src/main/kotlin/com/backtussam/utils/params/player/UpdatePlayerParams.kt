@@ -13,6 +13,10 @@ data class UpdatePlayerParams (
     val authToken: String?,
     val points: Int?,
     val active: Boolean?,
+    val gameWon: Int?,
+    val gameLost : Int?,
+    val gameDifference: Int?,
+    val gamePlayed: Int?,
     val leagueId: Int?,
     val roleId: Int?
 )
