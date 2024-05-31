@@ -209,6 +209,8 @@ class MatchServiceImpl : MatchService {
                 it[MatchTable.scoreSet2B] = params.scoreSet2B
                 it[MatchTable.scoreSet3A] = params.scoreSet3A
                 it[MatchTable.scoreSet3B] = params.scoreSet3B
+                it[MatchTable.confirmResult1] = false
+                it[MatchTable.confirmResult2] = false
             }
         }
         return getMatchById(idMatch)

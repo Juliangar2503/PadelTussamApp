@@ -19,6 +19,7 @@ export class MatchItemComponent  implements OnInit {
   jugador2: Player = {} as Player;
   jugador3: Player = {} as Player;
   jugador4: Player = {} as Player;
+  playerInMatch: boolean = false;
   
 
   constructor(
@@ -26,10 +27,58 @@ export class MatchItemComponent  implements OnInit {
     private modelCtrl: ModalController 
   ) { }
 
+  hola(){
+    console.log('Hola');
+  
+  }
+
   ngOnInit() {
-    console.log('Jugador local: ' + this.jugadorLocal.id);
-    console.log('Partido local: ' + this.match.id);
     this.getPlayers();
+  }
+
+  ngDoCheck() {
+    this.playerInMatch = this.isPlayerInMatch(this.jugadorLocal.id);
+  }
+
+  isOpen(): boolean{
+    if(this.match.open){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  isConfirmResult1(): boolean{
+    if(this.match.confirmResult1){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  isConfirmResult2(): boolean{
+    if(this.match.confirmResult2){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  isPlayerInMatch(playerId: number): boolean{
+    if(this.match.id_player1 == playerId || this.match.id_player2 == playerId || this.match.id_player3 == playerId || this.match.id_player4 == playerId){
+      console.log('Jugador en partido: ' + this.playerInMatch);
+      return this.playerInMatch = true;
+    }
+    return this.playerInMatch = false;
+  }
+
+  isUploadResult(): boolean{
+    if(this.match.matchResult){
+      return true;
+    }else{
+      return false;
+    }
+
   }
 
 

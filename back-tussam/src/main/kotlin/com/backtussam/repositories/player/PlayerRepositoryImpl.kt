@@ -224,12 +224,13 @@ class PlayerRepositoryImpl(
 
     override suspend fun uploadResultMatch(matchId: Int, params: ResultMatchParams): BaseResponse<Any> {
         //Comprobar si el partido existe
-        if (matchService.getMatchById(matchId) == null) {
+        val match = matchService.getMatchById(matchId)
+        if (match == null) {
             return BaseResponse.ErrorResponse(message = "Match not found")
         } else {
             //Actualizar resultado del partido
-            if (matchService.getIdPlayersInMatch(matchId).size != 4) {
-                return BaseResponse.ErrorResponse(message = "Match is not full")
+            if (matchService.getIdPlayersInMatch(matchId).size != 4 || ( match.confirmResult1 && match.confirmResult2)) {
+                return BaseResponse.ErrorResponse(message = "Match is not full or already confirmed")
             } else {
                 matchService.loadResults(matchId, params)
 

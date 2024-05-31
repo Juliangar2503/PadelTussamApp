@@ -1,6 +1,6 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle>25/03/24 | tarde/mañana/todo</ion-card-subtitle>
+    <ion-card-subtitle (click)="hola()">25/03/24 | tarde/mañana/todo</ion-card-subtitle>
     <ion-card-title>IMD Pinomontano</ion-card-title>
   </ion-card-header>
 
@@ -39,20 +39,20 @@
     </ion-row>
 
     <ion-row>
-      <ion-col>
-        <ion-button expand="full" (click)="joinMatch(match.id)">Unirse al partido</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="full" (click)="submitResult(match.id)">Subir el resultado</ion-button>
+      <ion-col size="12">
+        <ion-button expand="full" *ngIf="!playerInMatch" (click)="joinMatch(match.id)">Unirse al partido</ion-button>
       </ion-col>
       <ion-col size="12">
-        <ion-button expand="full" (click)="confirmResultTeamA()">Confirmar resultado equipo A</ion-button>
+        <ion-button expand="full" *ngIf="playerInMatch && !isOpen()" (click)="submitResult(match.id)">Subir el resultado</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="full" [disabled]="isConfirmResult1()" *ngIf="isUploadResult()" (click)="confirmResultTeamA()">Confirmar resultado equipo A</ion-button>
       </ion-col >
-      <ion-col size="12">
-        <ion-button expand="full" (click)="confirmResultTeamB()">Confirmar resultado equipo B</ion-button>
+      <ion-col size="6">
+        <ion-button expand="full" [disabled]="isConfirmResult2()" *ngIf="isUploadResult()" (click)="confirmResultTeamB()">Confirmar resultado equipo B</ion-button>
       </ion-col>
       <ion-col size="12">
-        <ion-button expand="full" (click)="leaveGame()">Salir del partido</ion-button>
+        <ion-button expand="full"  *ngIf="playerInMatch"  (click)="leaveGame()">Salir del partido</ion-button>
       </ion-col>
     </ion-row>
 
