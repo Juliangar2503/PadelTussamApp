@@ -21,6 +21,11 @@ interface PlayerService {
     suspend fun deletePlayer(id: Int): Boolean
     suspend fun earnPoints(playerId: Int, point: Int): Boolean
 
+    /*** GAMES ***/
+    suspend fun winGames(playerId: Int, quantity:Int): Player?
+    suspend fun loseGames(playerId: Int, quantity:Int): Player?
+    suspend fun differenceGames(playerId: Int, quantity:Int): Player?
+
     /*** BUSCAR JUGADORES POR EMAIL Y PASSWORD ***/
     suspend fun findPlayerByEmail(email: String): Player?
     suspend fun findPasswordByEmail(email: String): String?

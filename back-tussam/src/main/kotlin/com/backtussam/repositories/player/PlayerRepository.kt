@@ -32,6 +32,8 @@ interface PlayerRepository {
     suspend fun confirmResultMatchTeamA(matchId: Int, playerId: Int): BaseResponse<Any>
     suspend fun confirmResultMatchTeamB(matchId: Int, playerId: Int): BaseResponse<Any>
     suspend fun choosePlacesToPlay(matchId: Int, playerId: Int): Int
+
+
     suspend fun earnPointsAfterCheckMatch(matchId: Int): BaseResponse<Any>
     suspend fun saveMatchInHistory(matchId: Int, playerId: Int): BaseResponse<Any>
 }
