@@ -97,7 +97,7 @@ class MatchServiceImpl : MatchService {
 
     override suspend fun deleteMatch(id: Int): Boolean {
         return dbQuery {
-            MatchTable.deleteWhere { MatchTable.id eq MatchTable.id } > 0
+            MatchTable.deleteWhere { MatchTable.id eq id } > 0
         }
     }
 
