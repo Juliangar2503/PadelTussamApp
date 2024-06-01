@@ -45,7 +45,7 @@
             <ion-icon name="tennisball"></ion-icon>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
-            0
+            {{statsPlayer.matchesPlayed}}
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -55,7 +55,7 @@
             <ion-icon name="checkmark-circle" color="success"></ion-icon>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
-            0
+            {{statsPlayer.matchesWon}}
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -65,25 +65,28 @@
             <ion-icon name="close-circle" color="danger"></ion-icon>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
-            0
+            {{statsPlayer.matchesLost}}
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
 
-    <!-- Segment para mostrar partidos abiertos o histórico de partidos -->
+    <!-- Partidos -->
     <ion-row>
       <ion-col size="12">
         <ion-item>
-          <ion-segment>
+          <ion-segment (ionChange)="segmentChanged($event)">
             <ion-segment-button value="openMatches">
               <ion-label>Partidos abiertos</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="playedMatches">
+            <ion-segment-button value="closedMatches">
               <ion-label>Histórico de partidos</ion-label>
             </ion-segment-button>
           </ion-segment>
         </ion-item>
+      </ion-col>
+      <ion-col size="12" *ngFor="let match of matches">
+        <app-match-item [match]="match" [jugadorLocal]="player"></app-match-item>
       </ion-col>
     </ion-row>
 
