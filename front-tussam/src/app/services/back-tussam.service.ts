@@ -14,6 +14,8 @@ import { GameResults } from '../interfaces/game-results';
 import { AuthService } from './auth.service';
 import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { StatsPlayer } from '../interfaces/stats-player';
+import { StatsPlayerApiResponse } from '../interfaces/stats-player-api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -150,6 +152,9 @@ export class BackTussamService {
     );
   }
   
+
+  /********** HISTORY PLAYER **************/
+ 
   getMatchesOpenByPlayer(playerId: Number):Observable<ApiReponseMatches>{
     return from(this.authSvc.createAuthorizationHeader()).pipe(
       switchMap(headers => this.http.get<ApiReponseMatches>(environment.baseUrl + `matches/player/open/${playerId}`, { headers }))
@@ -159,6 +164,12 @@ export class BackTussamService {
   getMatchesCloseByPlayer(playerId: Number):Observable<ApiReponseMatches>{
     return from(this.authSvc.createAuthorizationHeader()).pipe(
       switchMap(headers => this.http.get<ApiReponseMatches>(environment.baseUrl + `matches/player/close/${playerId}`, { headers }))
+    );
+  }
+
+  getHistoryPlayerStats(playerId: Number):Observable<StatsPlayerApiResponse>{
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.get<StatsPlayerApiResponse>(environment.baseUrl + `player/historyMatches/${playerId}/stats`, { headers }))
     );
   }
 

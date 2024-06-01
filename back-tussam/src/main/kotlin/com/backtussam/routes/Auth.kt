@@ -137,6 +137,11 @@ fun Application.authRoutes(repository: PlayerRepository){
                     val result = repository.getGlobalQueryPlayer(orderField, filterField, filterValor)
                     call.respond(result.statusCode, result)
                 }
+                get ("/historyMatches/{playerId}/stats"){
+                    val playerId = call.parameters["playerId"]?.toInt() ?: 0
+                    val result = repository.getHistoryPlayerStats(playerId)
+                    call.respond(result.statusCode, result)
+                }
             }
         }
 

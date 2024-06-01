@@ -21,7 +21,6 @@ object DatabaseFactory {
                 MatchTable,
                 NotificationTable,
                 PlayerLeagueHistoricalTable,
-                PlayerMatchesHistoricalTable,
                 PlayerNotificationTable,
                 PlayerTable,
                 RoleTable

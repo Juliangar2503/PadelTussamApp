@@ -24,6 +24,7 @@ interface MatchService {
     suspend fun addPlayerInMatch(idPlayer: Int, idMatch: Int, position: Int) : Match?
     suspend fun removePlayerInMatch(idPlayer: Int, idMatch: Int, position: Int) : Match?
     suspend fun getPlaceOfPlayerInMatch(idMatch: Int, idPlayer: Int): Int
+    suspend fun getHistoryPlayer(playerId: Int): List<Match?>
     /**** OPERACIONES CON RESULTADOS DE PARTIDOS *****/
     suspend fun loadResults(idMatch: Int, params:ResultMatchParams): Match?
     suspend fun calculateResults(idMatch: Int): Match?

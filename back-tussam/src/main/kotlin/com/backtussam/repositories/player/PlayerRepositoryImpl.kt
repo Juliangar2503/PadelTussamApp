@@ -2,16 +2,15 @@ package com.backtussam.repositories.player
 
 import com.backtussam.security.JWTConfig
 import com.backtussam.security.hash
-import com.backtussam.services.historical.HistoricalMatchService
 import com.backtussam.services.league.LeagueService
 import com.backtussam.services.match.MatchService
 import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.LoginPlayerParams
 import com.backtussam.services.player.PlayerService
 import com.backtussam.utils.BaseResponse
-import com.backtussam.utils.params.historical.CreateHistoricalMatch
 import com.backtussam.utils.params.match.CreateMatchParams
 import com.backtussam.utils.params.match.ResultMatchParams
+import com.backtussam.utils.params.player.StatsPlayerParams
 import com.backtussam.utils.params.player.UpdatePlayerParams
 import kotlin.random.Random
 
@@ -19,7 +18,6 @@ class PlayerRepositoryImpl(
     private val playerService: PlayerService,
     private val leagueService: LeagueService,
     private val matchService: MatchService,
-    private val historicalMatchService: HistoricalMatchService
 ) : PlayerRepository {
     /*** ALTA Y BAJA DE JUGADORES ***/
     override suspend fun registerPlayer(params: CreatePlayerParams): BaseResponse<Any> {
@@ -275,6 +273,7 @@ class PlayerRepositoryImpl(
                 return BaseResponse.ErrorResponse(message = "Match not found")
             } else {
                 val payersId = matchService.getIdPlayersInMatch(matchId)
+                println("Los jugadores en el partido son $payersId")
                 if (payersId.isNotEmpty() && !payersId.contains(playerId)) {
                     return BaseResponse.ErrorResponse(message = "Player not in match")
                 } else {
@@ -284,6 +283,7 @@ class PlayerRepositoryImpl(
                     matchService.changeOpenState(matchId, true)
                     if (matchService.getIdPlayersInMatch(matchId).isEmpty()) {
                         matchService.deleteMatch(matchId)
+                        println("Partido eliminado")
                     }
                     return BaseResponse.SuccessResponse(data = "Player removed from match")
                 }
@@ -333,11 +333,7 @@ class PlayerRepositoryImpl(
                 matchService.confirmSecondResults(matchId)
                 //Si ambos equipos han confirmado el resultado, se actualizan los puntos
                 earnPointsAfterCheckMatch(matchId)
-                //Si ambos equipos han confirmado se guarda el paritdo en el historico
-                saveMatchInHistory(matchId, match.id_player1!!)
-                saveMatchInHistory(matchId, match.id_player2!!)
-                saveMatchInHistory(matchId, match.id_player3!!)
-                saveMatchInHistory(matchId, match.id_player4!!)
+
                 return BaseResponse.SuccessResponse(data = "Match updated")
             } else {
                 return BaseResponse.ErrorResponse(message = "Player not eligible to confirm")
@@ -413,64 +409,27 @@ class PlayerRepositoryImpl(
         }
     }
 
-    override suspend fun saveMatchInHistory(matchId: Int, playerId: Int): BaseResponse<Any> {
-        val match = matchService.getMatchById(matchId)
+
+    override suspend fun getHistoryPlayerStats(playerId: Int): BaseResponse<Any> {
         val player = playerService.getPlayerById(playerId)
-        if (match == null || player == null) {
-            return BaseResponse.ErrorResponse(message = "Match or player not found")
-        } else {
-            val params = CreateHistoricalMatch(
-                id_player = playerId,
-                id_match = matchId,
-                score = match.matchResult.toString(),
-                partner = getParnet(matchId, playerId)!!,
-                name_league = getNameLeague(matchId)!!,
-                isWin = checkWhoseWin(matchId, playerId)
-            )
-            val historicalMatch = historicalMatchService.registerHistoricalMatch(params)
-            return if (historicalMatch != null) {
-                BaseResponse.SuccessResponse(data = historicalMatch)
+        return if (player != null) {
+            val history = matchService.getMatchesCloseByPlayer(player.id)
+            if (history.isNotEmpty()) {
+                //Calcular estadísticas
+                val matchesPlayed = history.size
+                val matchesWon = history.count { checkWhoseWin(it!!.id, playerId)}
+                val matchesLost = history.count { !checkWhoseWin(it!!.id, playerId) }
+                val dataStats = StatsPlayerParams(
+                    matchesPlayed = matchesPlayed,
+                    matchesWon = matchesWon,
+                    matchesLost = matchesLost
+                )
+                BaseResponse.SuccessResponse(data = dataStats)
             } else {
-                BaseResponse.ErrorResponse(message = "Error creating historical match")
+                BaseResponse.SuccessResponse(data = StatsPlayerParams())
             }
-        }
-    }
-
-    private suspend fun getGamesA(idMach: Int) : Int{
-        val match = matchService.getMatchById(idMach)
-        if (match != null) {
-           val totalGamesA = match.scoreSet1A + match.scoreSet2A + match.scoreSet3A
-            return totalGamesA
-        }else{
-            return 0
-        }
-    }
-
-    private suspend fun getGamesB(idMach: Int) : Int{
-        val match = matchService.getMatchById(idMach)
-        if (match != null) {
-            val totalGamesB = match.scoreSet1B + match.scoreSet2B + match.scoreSet3B
-            return totalGamesB
-        }else{
-            return 0
-        }
-    }
-
-    private suspend fun addGameToPlayer(matchId: Int, playerId: Int){
-        val player = playerService.getPlayerById(playerId)
-        val match = matchService.getMatchById(matchId)
-        if (player != null) {
-            if (match != null) {
-                if (match.id_player1 == playerId || match.id_player2 == playerId) {
-                    playerService.winGames(playerId, getGamesA(matchId))
-                    playerService.loseGames(playerId, getGamesB(matchId))
-                    playerService.differenceGames(playerId, getGamesA(matchId) - getGamesB(matchId))
-                } else {
-                    playerService.winGames(playerId, getGamesB(matchId))
-                    playerService.loseGames(playerId, getGamesA(matchId))
-                    playerService.differenceGames(playerId, getGamesB(matchId) - getGamesA(matchId))
-                }
-            }
+        } else {
+            BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
 
@@ -516,22 +475,57 @@ class PlayerRepositoryImpl(
         }
     }
 
+
+    private suspend fun getGamesA(idMach: Int) : Int{
+        val match = matchService.getMatchById(idMach)
+        if (match != null) {
+           val totalGamesA = match.scoreSet1A + match.scoreSet2A + match.scoreSet3A
+            return totalGamesA
+        }else{
+            return 0
+        }
+    }
+
+    private suspend fun getGamesB(idMach: Int) : Int{
+        val match = matchService.getMatchById(idMach)
+        if (match != null) {
+            val totalGamesB = match.scoreSet1B + match.scoreSet2B + match.scoreSet3B
+            return totalGamesB
+        }else{
+            return 0
+        }
+    }
+
+    private suspend fun addGameToPlayer(matchId: Int, playerId: Int){
+        val player = playerService.getPlayerById(playerId)
+        val match = matchService.getMatchById(matchId)
+        if (player != null) {
+            if (match != null) {
+                if (match.id_player1 == playerId || match.id_player2 == playerId) {
+                    playerService.winGames(playerId, getGamesA(matchId))
+                    playerService.loseGames(playerId, getGamesB(matchId))
+                    playerService.differenceGames(playerId, getGamesA(matchId) - getGamesB(matchId))
+                } else {
+                    playerService.winGames(playerId, getGamesB(matchId))
+                    playerService.loseGames(playerId, getGamesA(matchId))
+                    playerService.differenceGames(playerId, getGamesB(matchId) - getGamesA(matchId))
+                }
+            }
+        }
+    }
+
     private suspend fun checkMatch(matchId: Int){
         val match = matchService.getMatchById(matchId)
         matchService.confirmOneResults(matchId)
         if(match?.type == "Competitive") {
             //Si ambos equipos han confirmado el resultado, se actualizan los puntos
             earnPointsAfterCheckMatch(matchId)
-            //Si ambos equipos han confirmado se guarda el paritdo en el historico
-            saveMatchInHistory(matchId, match.id_player1!!)
-            saveMatchInHistory(matchId, match.id_player2!!)
-            saveMatchInHistory(matchId, match.id_player3!!)
-            saveMatchInHistory(matchId, match.id_player4!!)
+
             //Se actualizan los juegos ganados, perdidos y diferencia de juegos
-            addGameToPlayer(matchId, match.id_player1)
-            addGameToPlayer(matchId, match.id_player2)
-            addGameToPlayer(matchId, match.id_player3)
-            addGameToPlayer(matchId, match.id_player4)
+            addGameToPlayer(matchId, match.id_player1!!)
+            addGameToPlayer(matchId, match.id_player2!!)
+            addGameToPlayer(matchId, match.id_player3!!)
+            addGameToPlayer(matchId, match.id_player4!!)
 
         }
 

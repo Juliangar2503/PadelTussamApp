@@ -37,7 +37,7 @@ class MatchServiceImpl : MatchService {
         return dbQuery {
             MatchTable.select {
                 (MatchTable.level eq leagueId) and
-                        (MatchTable.type eq "competitive") and
+                        (MatchTable.type eq "Competitive") and
                         (MatchTable.open eq true)
             }.mapNotNull { rowToMatch(it) }
         }
@@ -58,8 +58,8 @@ class MatchServiceImpl : MatchService {
                         (MatchTable.id_player2 eq playerId) or
                         (MatchTable.id_player3 eq playerId) or
                         (MatchTable.id_player4 eq playerId)) and
-                        (MatchTable.confirmResult1 eq false) or
-                        (MatchTable.confirmResult2 eq false)
+                        ((MatchTable.confirmResult1 eq false) or (MatchTable.confirmResult2 eq false))
+
             }.mapNotNull { rowToMatch(it) }
         }
     }
@@ -71,8 +71,9 @@ class MatchServiceImpl : MatchService {
                         (MatchTable.id_player2 eq playerId) or
                         (MatchTable.id_player3 eq playerId) or
                         (MatchTable.id_player4 eq playerId)) and
-                        (MatchTable.confirmResult1 eq true) and
-                        (MatchTable.confirmResult2 eq true)
+                        ((MatchTable.confirmResult1 eq true) and
+                                (MatchTable.confirmResult2 eq true))
+
             }.mapNotNull { rowToMatch(it) }
         }
     }
@@ -187,6 +188,17 @@ class MatchServiceImpl : MatchService {
             }
         }
         return -1
+    }
+
+    override suspend fun getHistoryPlayer(playerId: Int): List<Match?> {
+        return dbQuery {
+            MatchTable.select {
+                (MatchTable.id_player1 eq playerId) or
+                        (MatchTable.id_player2 eq playerId) or
+                        (MatchTable.id_player3 eq playerId) or
+                        (MatchTable.id_player4 eq playerId)
+            }.mapNotNull { rowToMatch(it) }
+        }
     }
 
     /**** OPERACIONES CON RESULTADOS DE PARTIDOS *****/
