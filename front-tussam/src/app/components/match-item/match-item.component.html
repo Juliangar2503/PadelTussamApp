@@ -1,6 +1,6 @@
 <ion-card>
   <ion-card-header>
-    <ion-icon name="settings"  (click)="openEditMatchModal(match.id)"></ion-icon>
+    <ion-icon name="settings" *ngIf="isPlayerInMatch() && !isMatchResult()" (click)="openEditMatchModal(match.id)"></ion-icon>
     <ion-card-subtitle>{{ match.date }}</ion-card-subtitle>
     <ion-card-title>{{ match.court }}</ion-card-title>
   </ion-card-header>
