@@ -95,6 +95,17 @@ class MatchServiceImpl : MatchService {
         return getMatchById(id)
     }
 
+    override suspend fun updateMatchDateAndCourt(id: Int, date: String, court: Int): Match? {
+        dbQuery {
+            MatchTable.update({ MatchTable.id eq id }) {
+                it[MatchTable.date] = date.toLocalDateTime()
+                it[MatchTable.court] = court
+            }
+        }
+        return getMatchById(id)
+    }
+
+
     override suspend fun deleteMatch(id: Int): Boolean {
         return dbQuery {
             MatchTable.deleteWhere { MatchTable.id eq id } > 0

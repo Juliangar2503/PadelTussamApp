@@ -4,6 +4,7 @@ import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
 import { ResultModalComponent } from '../result-modal/result-modal.component';
 import { ModalController } from '@ionic/angular';
+import { EditMatchComponent } from '../edit-match/edit-match.component';
 
 @Component({
   selector: 'app-match-item',
@@ -22,7 +23,8 @@ export class MatchItemComponent  implements OnInit {
 
   constructor(
     private backSvc: BackTussamService,
-    private modelCtrl: ModalController 
+    private modelCtrl: ModalController,
+    private modalController: ModalController 
   ) { }
 
   
@@ -146,6 +148,16 @@ export class MatchItemComponent  implements OnInit {
         this.jugador4 = res.data;
       });
     }
+  }
+
+  async openEditMatchModal(matchId: number) {
+    const modal = await this.modalController.create({
+      component: EditMatchComponent,
+      componentProps: {
+        'match': this.match
+      }
+    });
+    return await modal.present();
   }
   
 }

@@ -27,6 +27,7 @@ import { CourtManagementComponent } from './court-management/court-management.co
 import { SlidingCourtListComponent } from './sliding-court-list/sliding-court-list.component';
 import { EditCourtComponent } from './edit-court/edit-court.component';
 import { RegisterCourtComponent } from './register-court/register-court.component';
+import { EditMatchComponent } from './edit-match/edit-match.component';
 
 
 
@@ -57,7 +58,8 @@ import { RegisterCourtComponent } from './register-court/register-court.componen
     CourtManagementComponent,
     SlidingCourtListComponent,
     EditCourtComponent,
-    RegisterCourtComponent
+    RegisterCourtComponent,
+    EditMatchComponent
 
   ],
   exports:[
@@ -86,7 +88,8 @@ import { RegisterCourtComponent } from './register-court/register-court.componen
     CourtManagementComponent,
     SlidingCourtListComponent,
     EditCourtComponent,
-    RegisterCourtComponent
+    RegisterCourtComponent,
+    EditMatchComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes

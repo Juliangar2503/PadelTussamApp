@@ -20,6 +20,7 @@ import { ApiResponseCourts } from '../interfaces/api-response-courts';
 import { ApiResponseCourt } from '../interfaces/api-response-court';
 import { Court } from '../interfaces/court';
 import { CourtParams } from '../interfaces/court-params';
+import { Match } from '../interfaces/match';
 
 @Injectable({
   providedIn: 'root'
@@ -153,6 +154,13 @@ export class BackTussamService {
   getFriendlyMatches():Observable<ApiReponseMatches>{
     return from(this.authSvc.createAuthorizationHeader()).pipe(
       switchMap(headers => this.http.get<ApiReponseMatches>(environment.baseUrl + `matches/type/Friendly`, { headers }))
+    );
+  }
+
+  //http://localhost:8080/matches/update/{id}/date/{date}/court/{court}
+  editMatch(idMatch: Number, match: Match):Observable<ApiResponse>{
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.put<ApiResponse>(environment.baseUrl + `matches/update/${idMatch}/date/${match.date}/court/${match.court}`, null, { headers }))
     );
   }
   

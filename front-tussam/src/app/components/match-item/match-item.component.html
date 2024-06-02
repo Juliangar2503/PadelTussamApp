@@ -1,7 +1,8 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle>25/03/24 | tarde/mañana/todo</ion-card-subtitle>
-    <ion-card-title>IMD Pinomontano</ion-card-title>
+    <ion-icon name="settings"  (click)="openEditMatchModal(match.id)"></ion-icon>
+    <ion-card-subtitle>{{ match.date }}</ion-card-subtitle>
+    <ion-card-title>{{ match.court }}</ion-card-title>
   </ion-card-header>
 
   <ion-card-content>

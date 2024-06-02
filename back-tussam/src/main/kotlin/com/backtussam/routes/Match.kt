@@ -36,6 +36,16 @@ fun Application.matchesRoutes(repository: MatchRepository) {
                     val result = repository.updateMatch(id, params)
                     call.respond(result.statusCode, result)
                 }
+
+                // http://localhost:8080/matches/update/{id}/date/{date}/court/{court}
+                put("/update/{id}/date/{date}/court/{court}") {
+                    val id = call.parameters["id"]?.toIntOrNull() ?: 0
+                    val date = call.parameters["date"] ?: ""
+                    val court = call.parameters["court"]?.toIntOrNull() ?: 0
+                    val result = repository.updateMatchDateAndCourt(id, date, court)
+                    call.respond(result.statusCode, result)
+                }
+
                 // http://localhost:8080/matches/delete/{id}
                 delete("/delete/{id}") {
                     val id = call.parameters["id"]?.toIntOrNull() ?: 0

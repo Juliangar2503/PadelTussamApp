@@ -83,6 +83,15 @@ class MatchRepositoryImpl(
         }
     }
 
+    override suspend fun updateMatchDateAndCourt(id: Int, date: String, court: Int): BaseResponse<Any> {
+        if (!isMatchExist(id)) {
+            return BaseResponse.ErrorResponse(message = "Match not found")
+        } else {
+            val match = matchService.updateMatchDateAndCourt(id, date, court)
+            return BaseResponse.SuccessResponse(data = match, message = "Match updated")
+        }
+    }
+
     override suspend fun deleteMatch(id: Int): BaseResponse<Any> {
         if (!isMatchExist(id)) {
             return BaseResponse.ErrorResponse(message = "Match not found")
