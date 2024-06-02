@@ -10,11 +10,13 @@
       <ion-select justify="start" label="Gestionar" placeholder="Jugador" (ionChange)="onTableChange($event)">
         <ion-select-option value="player">Jugador</ion-select-option>
         <ion-select-option value="league">Liga</ion-select-option>
+        <ion-select-option value="court">Cancha</ion-select-option>
       </ion-select>
     </ion-item>
 
     <app-player-management *ngIf="table === 'player'"></app-player-management>
     <app-league-management *ngIf="table === 'league'"></app-league-management>
+    <app-court-management *ngIf="table === 'court'"></app-court-management>
 
   </div>
 

@@ -26,12 +26,20 @@ class CourtServiceImpl : CourtService {
         }
     }
 
-    override suspend fun createCourt(params: CreateCourtParams): Court? {
+    override suspend fun getCourtById(id: Int): Court? {
+        return dbQuery {
+            CourtTable.select {
+                CourtTable.id eq id
+            }.mapNotNull { rowToCourt(it) }
+                .singleOrNull()
+        }
+    }
+
+    override suspend fun createCourt(name:String): Court? {
         var statement: InsertStatement<Number>? = null
         dbQuery {
             statement = CourtTable.insert {
-                it[CourtTable.name] = params.name
-                it[CourtTable.address] = params.address ?: ""
+                it[CourtTable.name] = name
             }
         }
         return rowToCourt(statement?.resultedValues?.get(0))
@@ -40,8 +48,8 @@ class CourtServiceImpl : CourtService {
     override suspend fun updateCourt(name: String, params: CreateCourtParams): Court {
         return dbQuery {
             CourtTable.update({ CourtTable.name eq name }) {
-                it[CourtTable.name] = params.name
-                it[CourtTable.address] = params.address ?: ""
+                if (params.name != null) it[CourtTable.name] = params.name
+                if (params.address!= null) it[CourtTable.address] = params.address ?: ""
             }
             CourtTable.select {
                 CourtTable.name eq params.name
@@ -62,7 +70,7 @@ class CourtServiceImpl : CourtService {
         else Court(
             id = row[CourtTable.id],
             name = row[CourtTable.name],
-            address = row[CourtTable.address],
+            address = row[CourtTable.address]
         )
     }
 }

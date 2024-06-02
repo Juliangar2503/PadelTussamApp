@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registrar Cancha</ion-title>
+    <ion-button slot="end" (click)="closeModal()">close</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input [(ngModel)]="courtName"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="register()">Registrar</ion-button>
+</ion-content>

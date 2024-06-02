@@ -18,16 +18,23 @@ fun Application.courtsRoutes(repository: CourtRepository){
                     val result = repository.getCourts()
                     call.respond(result.statusCode, result)
                 }
+                // http://localhost:8080/courts/findById/{id}
+                get ("/findById/{id}"){
+                    val id = call.parameters["id"]?.toIntOrNull() ?: 0
+                    val result = repository.getCourtById(id)
+                    call.respond(result.statusCode, result)
+                }
                 // http://localhost:8080/courts/find/{name}
-                get("/find/{name}") {
+                get("/findByName/{name}") {
                     val name = call.parameters["name"] ?: ""
                     val result = repository.getCourtByName(name)
                     call.respond(result.statusCode, result)
                 }
-                // http://localhost:8080/courts/create
-                post("/create") {
-                    val params = call.receive<CreateCourtParams>()
-                    val result = repository.createCourt(params)
+                // http://localhost:8080/courts/create/{name}
+                post("/create/{name}") {
+                    val name = call.parameters["name"] ?: ""
+                    print("params: $name")
+                    val result = repository.createCourt(name)
                     call.respond(result.statusCode, result)
                 }
                 // http://localhost:8080/courts/update/{name}

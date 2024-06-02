@@ -16,6 +16,10 @@ import { from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { StatsPlayer } from '../interfaces/stats-player';
 import { StatsPlayerApiResponse } from '../interfaces/stats-player-api-response';
+import { ApiResponseCourts } from '../interfaces/api-response-courts';
+import { ApiResponseCourt } from '../interfaces/api-response-court';
+import { Court } from '../interfaces/court';
+import { CourtParams } from '../interfaces/court-params';
 
 @Injectable({
   providedIn: 'root'
@@ -170,6 +174,44 @@ export class BackTussamService {
   getHistoryPlayerStats(playerId: Number):Observable<StatsPlayerApiResponse>{
     return from(this.authSvc.createAuthorizationHeader()).pipe(
       switchMap(headers => this.http.get<StatsPlayerApiResponse>(environment.baseUrl + `player/historyMatches/${playerId}/stats`, { headers }))
+    );
+  }
+
+  /********** COURTS **************/
+  getAllCourts():Observable<ApiResponseCourts>{
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.get<ApiResponseCourts>(environment.baseUrl + `courts/all`, { headers }))
+    );
+  }
+
+  getCourtById(idCourt: number):Observable<ApiResponseCourt> {
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.get<ApiResponseCourt>(environment.baseUrl + `courts/findById/${idCourt}`, { headers }))
+    );
+  }
+
+  getCourtByName(nameCourt: string):Observable<ApiResponseCourt>{
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.get<ApiResponseCourt>(environment.baseUrl + `courts/findByName/${nameCourt}`, { headers }))
+    );
+  }
+
+  createCourt(nameCourt:String):Observable<ApiResponseCourt>{
+
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.post<ApiResponseCourt>(environment.baseUrl + `courts/create/${nameCourt}`, { headers }))
+    );
+  }
+
+  updateCourt(nameCourt: string, court: CourtParams):Observable<ApiResponseCourt>{
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.put<ApiResponseCourt>(environment.baseUrl + `courts/update/${nameCourt}`, court, { headers }))
+    );
+  }
+
+  deleteCourt(nameCourt: string):Observable<ApiResponseCourt>{
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.delete<ApiResponseCourt>(environment.baseUrl + `courts/delete/${nameCourt}`, { headers }))
     );
   }
 

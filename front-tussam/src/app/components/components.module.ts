@@ -23,6 +23,10 @@ import { SearchPlayerComponent } from './search-player/search-player.component';
 import { LeaguesCommunityComponent } from './leagues-community/leagues-community.component';
 import { MatchesCommunityComponent } from './matches-community/matches-community.component';
 import { PostsCommunityComponent } from './posts-community/posts-community.component';
+import { CourtManagementComponent } from './court-management/court-management.component';
+import { SlidingCourtListComponent } from './sliding-court-list/sliding-court-list.component';
+import { EditCourtComponent } from './edit-court/edit-court.component';
+import { RegisterCourtComponent } from './register-court/register-court.component';
 
 
 
@@ -49,7 +53,11 @@ import { PostsCommunityComponent } from './posts-community/posts-community.compo
     SearchPlayerComponent,
     LeaguesCommunityComponent,
     MatchesCommunityComponent,
-    PostsCommunityComponent
+    PostsCommunityComponent,
+    CourtManagementComponent,
+    SlidingCourtListComponent,
+    EditCourtComponent,
+    RegisterCourtComponent
 
   ],
   exports:[
@@ -74,7 +82,11 @@ import { PostsCommunityComponent } from './posts-community/posts-community.compo
     SearchPlayerComponent,
     LeaguesCommunityComponent,
     MatchesCommunityComponent,
-    PostsCommunityComponent
+    PostsCommunityComponent,
+    CourtManagementComponent,
+    SlidingCourtListComponent,
+    EditCourtComponent,
+    RegisterCourtComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes
