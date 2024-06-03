@@ -33,7 +33,6 @@ fun Application.courtsRoutes(repository: CourtRepository){
                 // http://localhost:8080/courts/create/{name}
                 post("/create/{name}") {
                     val name = call.parameters["name"] ?: ""
-                    print("params: $name")
                     val result = repository.createCourt(name)
                     call.respond(result.statusCode, result)
                 }

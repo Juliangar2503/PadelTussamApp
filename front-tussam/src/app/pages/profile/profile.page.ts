@@ -17,6 +17,7 @@ export class ProfilePage implements OnInit {
   player: Player = {} as Player;
   matches: Match[] = [];
   statsPlayer: StatsPlayer = {} as StatsPlayer;
+  leagueName: string = '';
 
   constructor(
     private utilSvc: UtilsService,
@@ -66,6 +67,7 @@ export class ProfilePage implements OnInit {
     this.getPlayerHistoryStats(playerId)
     this.backSvc.getPlayer(playerId).subscribe((data) => {
       this.player = data.data;
+      this.getLeagueNameById(data.data.leagueId || 0);
     });
     
   }
@@ -82,6 +84,14 @@ export class ProfilePage implements OnInit {
       console.log(res);
       this.statsPlayer = res.data;
     });
+  }
+
+  getLeagueNameById(leagueId: Number){
+    if(leagueId){
+      this.backSvc.getLeagueById(leagueId).subscribe((res) => {
+        this.leagueName = res.data.name;
+      });
+    }
   }
 
 
@@ -102,6 +112,8 @@ export class ProfilePage implements OnInit {
       console.log(this.matches);
     });
   }
+
+  
 
   
 }
