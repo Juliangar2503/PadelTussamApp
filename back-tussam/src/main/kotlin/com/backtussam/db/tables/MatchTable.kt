@@ -1,6 +1,6 @@
 package com.backtussam.db.tables
 
-import com.backtussam.db.tables.LeagueTable.clientDefault
+
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime

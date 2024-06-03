@@ -28,11 +28,11 @@ class MatchRepositoryImpl(
     }
 
     override suspend fun getMatchesByLeague(leagueId: Int): BaseResponse<Any> {
-        val matchesCompetitives = matchService.getMatchesByType("Competitive")
+        val matchesCompetitives = matchService.getMatchesByLeague(leagueId)
         println("MatchRepository -> getMatchesByLeague -> matchesCompetitives: $matchesCompetitives")
-        val matchesByLeague = matchesCompetitives.filter { it?.level == leagueId }
-        return if (matchesByLeague.isNotEmpty()) {
-            BaseResponse.SuccessResponse(data = matchesByLeague)
+//        val matchesByLeague = matchesCompetitives.filter { it?.level == leagueId }
+        return if (matchesCompetitives.isNotEmpty()) {
+            BaseResponse.SuccessResponse(data = matchesCompetitives)
         } else {
             BaseResponse.ErrorResponse(message = "No matches found")
         }
@@ -80,6 +80,15 @@ class MatchRepositoryImpl(
         } else {
             val match = matchService.updateMatch(id, params)
             return BaseResponse.SuccessResponse(data = match)
+        }
+    }
+
+    override suspend fun updateMatchDateAndCourt(id: Int, date: String, court: Int): BaseResponse<Any> {
+        if (!isMatchExist(id)) {
+            return BaseResponse.ErrorResponse(message = "Match not found")
+        } else {
+            val match = matchService.updateMatchDateAndCourt(id, date, court)
+            return BaseResponse.SuccessResponse(data = match, message = "Match updated")
         }
     }
 

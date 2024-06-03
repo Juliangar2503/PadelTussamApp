@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Match } from 'src/app/interfaces/match';
 import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
-import { UtilsService } from 'src/app/services/utils.service';
 import { ResultModalComponent } from '../result-modal/result-modal.component';
 import { ModalController } from '@ionic/angular';
+import { EditMatchComponent } from '../edit-match/edit-match.component';
 
 @Component({
   selector: 'app-match-item',
@@ -23,48 +23,72 @@ export class MatchItemComponent  implements OnInit {
 
   constructor(
     private backSvc: BackTussamService,
-    private modelCtrl: ModalController 
+    private modelCtrl: ModalController,
+    private modalController: ModalController 
   ) { }
 
+  
   ngOnInit() {
-    console.log('Jugador local: ' + this.jugadorLocal.id);
-    console.log('Partido local: ' + this.match.id);
     this.getPlayers();
   }
+   /******* COMPROBACIONES DEL PARTIDO ********/
 
-
-  getPlayers(){
-    if(this.match.id_player1){
-      this.backSvc.getPlayer(this.match.id_player1).subscribe((res) => {
-        this.jugador1 = res.data;
-      });
-    }
-    if(this.match.id_player2){
-      this.backSvc.getPlayer(this.match.id_player2).subscribe((res) => {
-        this.jugador2 = res.data;
-      });
-    }
-    if(this.match.id_player3){
-      this.backSvc.getPlayer(this.match.id_player3).subscribe((res) => {
-        this.jugador3 = res.data;
-      });
-    }
-    if(this.match.id_player4){
-      this.backSvc.getPlayer(this.match.id_player4).subscribe((res) => {
-        this.jugador4 = res.data;
-      });
+  isOpen(): boolean{
+    if(this.match.open){
+      return true;
+    }else{
+      return false;
     }
   }
-  
 
-  joinMatch(matchId: number){
-    this.backSvc.joinMatch(this.jugadorLocal.id, matchId).subscribe((res) => {
-      console.log(res);
-    });
-    
+  isConfirmResult1(): boolean{
+    if(this.match.confirmResult1){
+      return true;
+    }else{
+      return false;
+    }
   }
-  
-  async submitResult(matchId: number) {
+
+  isMatchResult(): boolean{
+    if(this.match.matchResult){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  isConfirmResult2(): boolean{
+    if(this.match.confirmResult2){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  isPlayerInMatch(): boolean{
+    if(
+      this.match.id_player1 == this.jugadorLocal.id || 
+      this.match.id_player2 == this.jugadorLocal.id || 
+      this.match.id_player3 == this.jugadorLocal.id || 
+      this.match.id_player4 == this.jugadorLocal.id
+    ){
+      return  true;
+    }
+    return false;
+  }
+
+  isUploadResult(): boolean{
+    if(this.match.matchResult){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
+
+   /******* ACCIONES DE JUGADOR ********/
+
+   async submitResult(matchId: number) {
     const modal = await this.modelCtrl.create({
       component: ResultModalComponent,
       componentProps: {
@@ -93,4 +117,47 @@ export class MatchItemComponent  implements OnInit {
       console.log(res);
     });
   }
+
+  joinMatch(matchId: number){
+    this.backSvc.joinMatch(this.jugadorLocal.id, matchId).subscribe((res) => {
+      console.log(res);
+    });
+    
+  }
+
+   /******* OBTENER LISTA DE JUGADORES ********/
+
+  getPlayers(){
+    if(this.match.id_player1){
+      this.backSvc.getPlayer(this.match.id_player1).subscribe((res) => {
+        this.jugador1 = res.data;
+      });
+    }
+    if(this.match.id_player2){
+      this.backSvc.getPlayer(this.match.id_player2).subscribe((res) => {
+        this.jugador2 = res.data;
+      });
+    }
+    if(this.match.id_player3){
+      this.backSvc.getPlayer(this.match.id_player3).subscribe((res) => {
+        this.jugador3 = res.data;
+      });
+    }
+    if(this.match.id_player4){
+      this.backSvc.getPlayer(this.match.id_player4).subscribe((res) => {
+        this.jugador4 = res.data;
+      });
+    }
+  }
+
+  async openEditMatchModal(matchId: number) {
+    const modal = await this.modalController.create({
+      component: EditMatchComponent,
+      componentProps: {
+        'match': this.match
+      }
+    });
+    return await modal.present();
+  }
+  
 }

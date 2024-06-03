@@ -1,0 +1,16 @@
+<!-- BOTON PARA ABRIR MODAL DEL REGISTRO DE COURTS -->
+<ion-item>
+  <ion-button (click)="openModal()">
+    Registrar cancha
+    <ion-icon slot="end" name="add-circle"></ion-icon>
+  </ion-button>
+</ion-item>
+
+<!-- MOSTRAR LISTA DE JUGADORES -->
+<ion-item>
+  <ion-label>
+    <ion-list *ngIf="courts != undefined">
+      <app-sliding-court-list *ngFor="let court of courts" [court]="court" (courtDeleted)="onCourtDeleted()"></app-sliding-court-list>
+    </ion-list>
+</ion-label>
+</ion-item>

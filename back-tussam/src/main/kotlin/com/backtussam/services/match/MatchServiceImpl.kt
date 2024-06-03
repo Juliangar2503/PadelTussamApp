@@ -37,7 +37,7 @@ class MatchServiceImpl : MatchService {
         return dbQuery {
             MatchTable.select {
                 (MatchTable.level eq leagueId) and
-                        (MatchTable.type eq "competitive") and
+                        (MatchTable.type eq "Competitive") and
                         (MatchTable.open eq true)
             }.mapNotNull { rowToMatch(it) }
         }
@@ -58,8 +58,8 @@ class MatchServiceImpl : MatchService {
                         (MatchTable.id_player2 eq playerId) or
                         (MatchTable.id_player3 eq playerId) or
                         (MatchTable.id_player4 eq playerId)) and
-                        (MatchTable.confirmResult1 eq false) or
-                        (MatchTable.confirmResult2 eq false)
+                        ((MatchTable.confirmResult1 eq false) or (MatchTable.confirmResult2 eq false))
+
             }.mapNotNull { rowToMatch(it) }
         }
     }
@@ -71,8 +71,9 @@ class MatchServiceImpl : MatchService {
                         (MatchTable.id_player2 eq playerId) or
                         (MatchTable.id_player3 eq playerId) or
                         (MatchTable.id_player4 eq playerId)) and
-                        (MatchTable.confirmResult1 eq true) and
-                        (MatchTable.confirmResult2 eq true)
+                        ((MatchTable.confirmResult1 eq true) and
+                                (MatchTable.confirmResult2 eq true))
+
             }.mapNotNull { rowToMatch(it) }
         }
     }
@@ -94,9 +95,20 @@ class MatchServiceImpl : MatchService {
         return getMatchById(id)
     }
 
+    override suspend fun updateMatchDateAndCourt(id: Int, date: String, court: Int): Match? {
+        dbQuery {
+            MatchTable.update({ MatchTable.id eq id }) {
+                it[MatchTable.date] = date.toLocalDateTime()
+                it[MatchTable.court] = court
+            }
+        }
+        return getMatchById(id)
+    }
+
+
     override suspend fun deleteMatch(id: Int): Boolean {
         return dbQuery {
-            MatchTable.deleteWhere { MatchTable.id eq MatchTable.id } > 0
+            MatchTable.deleteWhere { MatchTable.id eq id } > 0
         }
     }
 
@@ -189,6 +201,17 @@ class MatchServiceImpl : MatchService {
         return -1
     }
 
+    override suspend fun getHistoryPlayer(playerId: Int): List<Match?> {
+        return dbQuery {
+            MatchTable.select {
+                (MatchTable.id_player1 eq playerId) or
+                        (MatchTable.id_player2 eq playerId) or
+                        (MatchTable.id_player3 eq playerId) or
+                        (MatchTable.id_player4 eq playerId)
+            }.mapNotNull { rowToMatch(it) }
+        }
+    }
+
     /**** OPERACIONES CON RESULTADOS DE PARTIDOS *****/
 
     override suspend fun changeOpenState(idMatch: Int, open:Boolean): Match? {
@@ -209,6 +232,8 @@ class MatchServiceImpl : MatchService {
                 it[MatchTable.scoreSet2B] = params.scoreSet2B
                 it[MatchTable.scoreSet3A] = params.scoreSet3A
                 it[MatchTable.scoreSet3B] = params.scoreSet3B
+                it[MatchTable.confirmResult1] = false
+                it[MatchTable.confirmResult2] = false
             }
         }
         return getMatchById(idMatch)

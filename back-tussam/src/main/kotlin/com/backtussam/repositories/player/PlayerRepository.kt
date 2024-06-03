@@ -35,5 +35,5 @@ interface PlayerRepository {
 
 
     suspend fun earnPointsAfterCheckMatch(matchId: Int): BaseResponse<Any>
-    suspend fun saveMatchInHistory(matchId: Int, playerId: Int): BaseResponse<Any>
+    suspend fun getHistoryPlayerStats(playerId: Int): BaseResponse<Any>
 }

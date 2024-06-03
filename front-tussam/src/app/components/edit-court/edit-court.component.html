@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Court</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Nombre: 
+        <ion-input [(ngModel)]="court.name"></ion-input>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Dirrecion: 
+        <ion-input [(ngModel)]="court.address"></ion-input>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <ion-button expand="full" (click)="saveCourt()">Save</ion-button>
+</ion-content>

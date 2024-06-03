@@ -12,5 +12,6 @@ interface MatchRepository {
     suspend fun getMatchesCloseByPlayer(playerId: Int): BaseResponse<Any>
     suspend fun createMatch(params: CreateMatchParams): BaseResponse<Any>
     suspend fun updateMatch(id: Int, params:CreateMatchParams): BaseResponse<Any>
+    suspend fun updateMatchDateAndCourt(id: Int, date: String, court: Int): BaseResponse<Any>
     suspend fun deleteMatch(id: Int): BaseResponse<Any>
 }

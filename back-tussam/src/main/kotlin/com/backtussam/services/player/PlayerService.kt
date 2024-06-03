@@ -26,6 +26,7 @@ interface PlayerService {
     suspend fun loseGames(playerId: Int, quantity:Int): Player?
     suspend fun differenceGames(playerId: Int, quantity:Int): Player?
 
+
     /*** BUSCAR JUGADORES POR EMAIL Y PASSWORD ***/
     suspend fun findPlayerByEmail(email: String): Player?
     suspend fun findPasswordByEmail(email: String): String?

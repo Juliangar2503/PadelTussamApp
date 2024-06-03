@@ -29,8 +29,6 @@ export class MatchesItemComponent  implements OnInit {
   }
 
   playerOpenMatch(tipo: string){
-    console.log('playerOpenMatch');
-    console.log(this.player.id);
     this.backSvc.openMatch(this.player.id, tipo).subscribe((res) => {
       console.log(res);
     },

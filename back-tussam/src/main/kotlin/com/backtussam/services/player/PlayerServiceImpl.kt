@@ -99,6 +99,7 @@ class PlayerServiceImpl : PlayerService {
         }
     }
 
+    /*** GANAR Y PERDER JUEGOS ***/
     override suspend fun winGames(playerId: Int, quantity: Int): Player? {
         return dbQuery {
             PlayerTable.update({ PlayerTable.id eq playerId }) {
@@ -110,8 +111,6 @@ class PlayerServiceImpl : PlayerService {
                 .singleOrNull()
         }
     }
-
-
 
     override suspend fun loseGames(playerId: Int, quantity: Int): Player? {
         return dbQuery {
