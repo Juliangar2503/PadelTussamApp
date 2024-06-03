@@ -205,9 +205,8 @@ export class BackTussamService {
   }
 
   createCourt(nameCourt:String):Observable<ApiResponseCourt>{
-
     return from(this.authSvc.createAuthorizationHeader()).pipe(
-      switchMap(headers => this.http.post<ApiResponseCourt>(environment.baseUrl + `courts/create/${nameCourt}`, { headers }))
+      switchMap(headers => this.http.post<ApiResponseCourt>(environment.baseUrl + `courts/create/${nameCourt}`, null, { headers }))
     );
   }
 

@@ -19,6 +19,7 @@ export class AuthService {
 
   async createAuthorizationHeader() {
     const token = await this.utilSvc.getFromLocalStorage('Token');
+    console.log('token: ', token);
     let headers = new HttpHeaders();
     if (token) {
       headers = headers.set('Authorization', 'Bearer ' + token);

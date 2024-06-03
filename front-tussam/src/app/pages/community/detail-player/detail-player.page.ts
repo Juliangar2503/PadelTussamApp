@@ -21,6 +21,7 @@ export class DetailPlayerPage implements OnInit {
   player: Player = {} as Player;  
   matches: Match[] = [];
   statsPlayer: StatsPlayer = {} as StatsPlayer;
+  leagueName: string = '';
 
   constructor(
     private backSvc: BackTussamService,
@@ -74,6 +75,7 @@ export class DetailPlayerPage implements OnInit {
     this.backSvc.getPlayer(this.id).subscribe((res) => {
       this.player = res.data;
       console.log(this.player);
+      this.getLeagueNameById(res.data.leagueId || 0);
     });
     this.getPlayerHistoryStats(this.id)
   }
@@ -92,6 +94,14 @@ export class DetailPlayerPage implements OnInit {
       console.log(res);
       this.statsPlayer = res.data;
     });
+  }
+
+  getLeagueNameById(leagueId: Number){
+    if(leagueId){
+      this.backSvc.getLeagueById(leagueId).subscribe((res) => {
+        this.leagueName = res.data.name;
+      });
+    }
   }
 
 }
