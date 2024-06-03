@@ -19,6 +19,7 @@ export class MatchItemComponent  implements OnInit {
   jugador2: Player = {} as Player;
   jugador3: Player = {} as Player;
   jugador4: Player = {} as Player;
+  courtName:string = '';
   
 
   constructor(
@@ -30,6 +31,7 @@ export class MatchItemComponent  implements OnInit {
   
   ngOnInit() {
     this.getPlayers();
+    this.getCourtNameById();
   }
    /******* COMPROBACIONES DEL PARTIDO ********/
 
@@ -157,7 +159,17 @@ export class MatchItemComponent  implements OnInit {
         'match': this.match
       }
     });
+    this.getCourtNameById();
     return await modal.present();
   }
+
+  getCourtNameById(){
+    if(this.match.court){
+      this.backSvc.getCourtById(this.match.court).subscribe((res) => {
+        this.courtName = res.data.name;
+      });
+    }
+  }
+  
   
 }

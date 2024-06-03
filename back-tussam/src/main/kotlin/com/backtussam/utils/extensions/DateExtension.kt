@@ -2,6 +2,7 @@ package com.backtussam.utils.extensions
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 fun LocalDateTime.toReadableFormat(): String {
@@ -10,5 +11,18 @@ fun LocalDateTime.toReadableFormat(): String {
 }
 
 fun String.toLocalDateTime(): LocalDateTime {
-    return LocalDateTime.parse(this, DateTimeFormatter.ISO_DATE_TIME)
+    val formats = listOf(
+        DateTimeFormatter.ISO_DATE_TIME,
+        DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy, HH:mm", Locale("es"))
+    )
+
+    for (format in formats) {
+        try {
+            return LocalDateTime.parse(this, format)
+        } catch (e: DateTimeParseException) {
+            // Ignorar y probar el siguiente formato
+        }
+    }
+
+    throw DateTimeParseException("No se pudo parsear la fecha: $this", this, 0)
 }
