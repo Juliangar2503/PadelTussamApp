@@ -1,6 +1,7 @@
 package com.backtussam.db
 
 import com.backtussam.db.tables.*
+import com.backtussam.utils.SeedData
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,7 @@ object DatabaseFactory {
                 PlayerTable,
                 RoleTable
             )
+            SeedData.seedRoles()
         }
     }
 
