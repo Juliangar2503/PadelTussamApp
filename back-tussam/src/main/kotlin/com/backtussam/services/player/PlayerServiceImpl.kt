@@ -2,6 +2,7 @@ package com.backtussam.services.player
 
 import com.backtussam.db.DatabaseFactory.dbQuery
 import com.backtussam.db.tables.PlayerTable
+import com.backtussam.model.League
 import com.backtussam.model.Player
 import com.backtussam.security.hash
 import com.backtussam.utils.extensions.toReadableFormat
@@ -24,6 +25,7 @@ class PlayerServiceImpl : PlayerService {
     override suspend fun getPlayersByLeague(leagueId: Int): List<Player> {
         return dbQuery {
             PlayerTable.select { PlayerTable.leagueId eq leagueId }
+                .orderBy(PlayerTable.points, SortOrder.DESC)
                 .mapNotNull { rowToPlayer(it) }
         }
     }
@@ -78,7 +80,14 @@ class PlayerServiceImpl : PlayerService {
                 if (params.avatar != null) it[PlayerTable.avatar] = params.avatar
                 if (params.points != null) it[PlayerTable.points] = params.points
                 if (params.active != null) it[PlayerTable.active] = params.active
-                if (params.leagueId != null) it[PlayerTable.leagueId] = params.leagueId
+                if (params.leagueId != null) {
+                    it[PlayerTable.leagueId] = params.leagueId
+                    it[PlayerTable.points] = 0
+                    it[PlayerTable.gameWon] = 0
+                    it[PlayerTable.gameLost] = 0
+                    it[PlayerTable.gameDifference] = 0
+                    it[PlayerTable.gamePlayed] = 0
+                }
                 if (params.roleId != null) it[PlayerTable.roleId] = params.roleId
             }
         }
@@ -96,6 +105,29 @@ class PlayerServiceImpl : PlayerService {
             PlayerTable.update({ PlayerTable.id eq playerId }) {
                 it[PlayerTable.points] = point
             } > 0
+        }
+    }
+
+    override suspend fun changeLeague(playerId: Int, leagueId: League?): Boolean {
+        return dbQuery {
+            PlayerTable.update({ PlayerTable.id eq playerId }) {
+                it[PlayerTable.leagueId] = leagueId?.id
+            } > 0
+        }
+    }
+
+    override suspend fun resetsPlayers(playerId: Int): Player? {
+        return dbQuery {
+            PlayerTable.update({ PlayerTable.id eq playerId }) {
+                it[PlayerTable.points] = 0
+                it[PlayerTable.gameWon] = 0
+                it[PlayerTable.gameLost] = 0
+                it[PlayerTable.gameDifference] = 0
+                it[PlayerTable.gamePlayed] = 0
+            } > 0
+            PlayerTable.select { PlayerTable.id eq playerId }
+                .mapNotNull { rowToPlayer(it) }
+                .singleOrNull()
         }
     }
 

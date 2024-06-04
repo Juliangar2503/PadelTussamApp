@@ -1,5 +1,6 @@
 package com.backtussam.services.player
 
+import com.backtussam.model.League
 import com.backtussam.model.Player
 import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.UpdatePlayerParams
@@ -20,6 +21,8 @@ interface PlayerService {
     suspend fun updatePlayer(email: String, params: UpdatePlayerParams): Player?
     suspend fun deletePlayer(id: Int): Boolean
     suspend fun earnPoints(playerId: Int, point: Int): Boolean
+    suspend fun changeLeague(playerId: Int, leagueId: League?): Boolean
+    suspend fun resetsPlayers(playerId: Int):Player?
 
     /*** GAMES ***/
     suspend fun winGames(playerId: Int, quantity:Int): Player?

@@ -1,11 +1,15 @@
 package com.backtussam.repositories.league
 
 import com.backtussam.services.league.LeagueService
+import com.backtussam.services.player.PlayerService
 import com.backtussam.utils.BaseResponse
+import com.backtussam.utils.extensions.toLocalDateTime
 import com.backtussam.utils.params.league.CreateLeagueParams
+import java.time.LocalDateTime
 
 class LeagueRepositoryImpl (
-    private val leagueService: LeagueService
+    private val leagueService: LeagueService,
+    private val playerService: PlayerService
 ) : LeagueRepository{
     override suspend fun getLeague(name: String): BaseResponse<Any> {
         // Comprobar si la liga existe
@@ -92,17 +96,19 @@ class LeagueRepositoryImpl (
 
     override suspend fun deleteLeague(name: String): BaseResponse<Any> {
         return if (isLeagueExist(name)){
-            // Eliminar liga
-            val deleted = leagueService.deleteLeague(name)
-            if (deleted){
-                // Liga eliminada
-                BaseResponse.SuccessResponse(data = "League deleted")
-            }else{
-                // Error al eliminar liga
-                BaseResponse.ErrorResponse(message = "Error deleting league")
+            val league = leagueService.getLeague(name)
+            val players = playerService.getPlayersByLeague(league?.id ?: 0)
+            if (players.isEmpty()) {
+                val deleted = leagueService.deleteLeague(name)
+                if (deleted) {
+                    BaseResponse.SuccessResponse(data = "League deleted")
+                } else {
+                    BaseResponse.ErrorResponse(message = "Error deleting league")
+                }
+            } else {
+                BaseResponse.ErrorResponse(message = "No se puede eliminar la liga si hay jugadores en ella")
             }
         }else{
-            // Liga no encontrada
             BaseResponse.ErrorResponse(message = "League not found")
         }
     }
