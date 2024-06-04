@@ -82,20 +82,4 @@ fun Application.myApplicationModule() {
         }
     }
 
-    val resend = Resend("re_KScrbY1u_62pY6oMyBf7tGmppC7whRM4r")
-
-    val params = CreateEmailOptions.builder()
-        .from("onboarding@resend.dev")
-        .to("julian.garrido.quintero.alu@iesjulioverne.es")
-        .subject("Hello World")
-        .html("<p>Congrats on sending your <strong>first email</strong>!</p>")
-        .build();
-
-    try {
-        resend.emails().send(params)
-    } catch (e: ResendException) {
-        e.printStackTrace()
-    }
-
-
 }

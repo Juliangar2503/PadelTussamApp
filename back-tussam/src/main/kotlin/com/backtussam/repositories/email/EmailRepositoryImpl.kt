@@ -25,7 +25,8 @@ class EmailRepositoryImpl(
             val resetToken = JWTConfig.instance.createToken(player.id.toString())
             player.authToken = resetToken
             // Crear el enlace de restablecimiento de contraseña
-            val resetLink = "https://yourwebsite.com/reset-password?token=$resetToken"
+            //val resetLink = "https://localhost:8100/login?token=$resetToken"
+            val resetLink = "https://localhost:8100/reset-password?token=$resetToken"
             // Crear el mensaje de correo electrónico
             val message = """
             <p>Para restablecer tu contraseña, por favor haz clic en el siguiente enlace:</p>
