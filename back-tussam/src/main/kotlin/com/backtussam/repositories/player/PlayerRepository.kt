@@ -20,6 +20,8 @@ interface PlayerRepository {
 
     suspend fun registerPlayer(params: CreatePlayerParams): BaseResponse<Any>
     suspend fun loginPlayer(params: LoginPlayerParams): BaseResponse<Any>
+    suspend fun resetPassword(email: String): BaseResponse<Any>
+
     suspend fun addPlayerToLeague(playerId: Int, leagueId: Int): BaseResponse<Any>
 
     suspend fun updatePlayer(email:String, params: UpdatePlayerParams): BaseResponse<Any>

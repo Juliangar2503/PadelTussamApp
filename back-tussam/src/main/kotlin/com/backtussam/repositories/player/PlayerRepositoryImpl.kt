@@ -3,6 +3,7 @@ package com.backtussam.repositories.player
 import com.backtussam.model.Player
 import com.backtussam.security.JWTConfig
 import com.backtussam.security.hash
+import com.backtussam.services.email.EmailService
 import com.backtussam.services.league.LeagueService
 import com.backtussam.services.match.MatchService
 import com.backtussam.utils.params.player.CreatePlayerParams
@@ -21,6 +22,7 @@ class PlayerRepositoryImpl(
     private val playerService: PlayerService,
     private val leagueService: LeagueService,
     private val matchService: MatchService,
+    private val emailService: EmailService
 ) : PlayerRepository {
     /*** ALTA Y BAJA DE JUGADORES ***/
     override suspend fun registerPlayer(params: CreatePlayerParams): BaseResponse<Any> {
@@ -201,6 +203,37 @@ class PlayerRepositoryImpl(
         } else {
             BaseResponse.ErrorResponse(message = "Player not found")
         }
+    }
+
+    override suspend fun resetPassword(email: String): BaseResponse<Any> {
+        // Buscar al jugador por su correo electrónico
+        println(email)
+        val player = playerService.findPlayerByEmail(email)
+        println(player)
+        if (player != null) {
+            // Generar un token único para la recuperación de contraseña
+            val resetToken = JWTConfig.instance.createToken(player.id.toString())
+            player.authToken = resetToken
+            // Crear el enlace de restablecimiento de contraseña
+            //val resetLink = "https://localhost:8100/login?token=$resetToken"
+            val resetLink = "https://localhost:8100/reset-password?token=$resetToken"
+            // Crear el mensaje de correo electrónico
+            val message = """
+            <p>Para restablecer tu contraseña, por favor haz clic en el siguiente enlace:</p>
+            <a href="$resetLink">Restablecer contraseña</a>
+            <p>Si no has solicitado un restablecimiento de contraseña, por favor ignora este correo electrónico.</p>
+        """.trimIndent()
+            // Enviar el correo electrónico
+            emailService.sendEmail(email, "Restablecimiento de contraseña", message)
+            return BaseResponse.SuccessResponse(
+                true,
+                "Se ha enviado un correo electrónico con las instrucciones para restablecer tu contraseña."
+            )
+        }
+        return BaseResponse.ErrorResponse(
+            null,
+            "No se ha encontrado un jugador con el correo electrónico proporcionado."
+        )
     }
 
     override suspend fun openMatch(playerId: Int, type: String): BaseResponse<Any> {

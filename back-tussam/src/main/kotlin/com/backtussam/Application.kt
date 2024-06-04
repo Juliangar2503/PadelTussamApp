@@ -18,6 +18,8 @@ import com.backtussam.routes.matchesRoutes
 import com.backtussam.security.configureSecurity
 import com.backtussam.services.court.CourtService
 import com.backtussam.services.court.CourtServiceImpl
+import com.backtussam.services.email.EmailService
+import com.backtussam.services.email.EmailServiceImpl
 import com.backtussam.services.league.LeagueService
 import com.backtussam.services.league.LeagueServiceImpl
 import com.backtussam.services.match.MatchService
@@ -53,6 +55,7 @@ fun Application.myApplicationModule() {
 
 
     val serviceLeague: LeagueService = LeagueServiceImpl()
+    val serviceEmail: EmailService = EmailServiceImpl()
 
 
     val serviceCourt: CourtService = CourtServiceImpl()
@@ -64,7 +67,7 @@ fun Application.myApplicationModule() {
 
     val servicePlayer: PlayerService = PlayerServiceImpl()
     val repositoryLeague: LeagueRepository = LeagueRepositoryImpl(serviceLeague, servicePlayer)
-    val repositoryPlayer: PlayerRepository = PlayerRepositoryImpl(servicePlayer, serviceLeague, serviceMatch)
+    val repositoryPlayer: PlayerRepository = PlayerRepositoryImpl(servicePlayer, serviceLeague, serviceMatch, serviceEmail)
 
     authRoutes(repositoryPlayer)
 
