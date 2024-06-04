@@ -55,6 +55,7 @@
     <orderEntry type="library" name="Gradle: org.postgresql:postgresql:42.5.1" level="project" />
     <orderEntry type="library" name="Gradle: com.zaxxer:HikariCP:5.1.0" level="project" />
     <orderEntry type="library" name="Gradle: org.ehcache:ehcache:3.10.8" level="project" />
+    <orderEntry type="library" name="Gradle: com.resend:resend-java:3.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.8.22" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:2.0.7" level="project" />
@@ -113,6 +114,8 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.21" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.fusesource.jansi:jansi:2.4.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.squareup.okhttp3:okhttp:4.11.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.checkerframework:checker-qual:3.33.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.guava:guava:32.1.1-jre" level="project" />
@@ -126,5 +129,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.errorprone:error_prone_annotations:2.18.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.squareup.okio:okio-jvm:3.2.0" level="project" />
   </component>
 </module>

@@ -25,6 +25,10 @@ import com.backtussam.services.match.MatchServiceImpl
 import com.backtussam.services.player.PlayerService
 import com.backtussam.services.player.PlayerServiceImpl
 import com.backtussam.utils.automations.automationsLeagueFinish
+import com.resend.Resend
+import com.resend.core.exception.ResendException
+import com.resend.services.emails.model.CreateEmailOptions
+import com.resend.services.emails.model.CreateEmailResponse
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.engine.*
@@ -77,4 +81,21 @@ fun Application.myApplicationModule() {
             call.respondText("La api está funcionando!!")
         }
     }
+
+    val resend = Resend("re_KScrbY1u_62pY6oMyBf7tGmppC7whRM4r")
+
+    val params = CreateEmailOptions.builder()
+        .from("onboarding@resend.dev")
+        .to("julian.garrido.quintero.alu@iesjulioverne.es")
+        .subject("Hello World")
+        .html("<p>Congrats on sending your <strong>first email</strong>!</p>")
+        .build();
+
+    try {
+        resend.emails().send(params)
+    } catch (e: ResendException) {
+        e.printStackTrace()
+    }
+
+
 }
