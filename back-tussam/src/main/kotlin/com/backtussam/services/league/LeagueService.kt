@@ -13,5 +13,10 @@ interface LeagueService {
     suspend fun updateLeague(name:String, params:CreateLeagueParams): League?
     suspend fun registerLeagueByName(name:String): League?
     suspend fun registerLeague(params:CreateLeagueParams): League?
+
+    /*** FIN DE LIGA ***/
+    suspend fun finishLeague(name:String): League?
+
+    /*** ELIMINAR LIGAS ***/
     suspend fun deleteLeague(name:String): Boolean
 }

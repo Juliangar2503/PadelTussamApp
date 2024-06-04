@@ -66,6 +66,19 @@ class LeagueServiceImpl : LeagueService {
         return rowToLeague(statement?.resultedValues?.get(0))
     }
 
+    override suspend fun finishLeague(name: String): League? {
+        val league = getLeague(name)
+        if (league != null) {
+            dbQuery {
+                LeagueTable.update({ LeagueTable.name eq name }) {
+                    it[LeagueTable.startDate] = LocalDateTime.now().toString().toLocalDateTime()
+                    it[LeagueTable.endDate] = LocalDateTime.now().toString().toLocalDateTime().plusMonths(league.duration.toLong())
+                }
+            }
+        }
+        return getLeague(name)
+    }
+
     override suspend fun updateLeague(name: String, params: CreateLeagueParams): League? {
         val league = getLeague(name)
         if (league != null) {

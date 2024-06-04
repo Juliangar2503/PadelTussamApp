@@ -24,6 +24,7 @@ import com.backtussam.services.match.MatchService
 import com.backtussam.services.match.MatchServiceImpl
 import com.backtussam.services.player.PlayerService
 import com.backtussam.services.player.PlayerServiceImpl
+import com.backtussam.utils.automations.automationsLeagueFinish
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.engine.*
@@ -48,7 +49,7 @@ fun Application.myApplicationModule() {
 
 
     val serviceLeague: LeagueService = LeagueServiceImpl()
-    val repositoryLeague: LeagueRepository = LeagueRepositoryImpl(serviceLeague)
+
 
     val serviceCourt: CourtService = CourtServiceImpl()
     val repositoryCourt: CourtRepository = CourtRepositoryImpl(serviceCourt)
@@ -58,6 +59,7 @@ fun Application.myApplicationModule() {
 
 
     val servicePlayer: PlayerService = PlayerServiceImpl()
+    val repositoryLeague: LeagueRepository = LeagueRepositoryImpl(serviceLeague, servicePlayer)
     val repositoryPlayer: PlayerRepository = PlayerRepositoryImpl(servicePlayer, serviceLeague, serviceMatch)
 
     authRoutes(repositoryPlayer)
@@ -67,6 +69,8 @@ fun Application.myApplicationModule() {
     courtsRoutes(repositoryCourt)
 
     matchesRoutes(repositoryMatch)
+
+    //automationsLeagueFinish(repositoryPlayer)
 
     routing {
         get("/") {

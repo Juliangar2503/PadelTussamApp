@@ -112,6 +112,16 @@ class MatchServiceImpl : MatchService {
         }
     }
 
+    override suspend fun deleteMatchesOpenAndCompetitve(leagueId: Int): Boolean {
+        return dbQuery {
+            MatchTable.deleteWhere {
+                (MatchTable.level eq leagueId) and
+                        (MatchTable.type eq "Competitive") and
+                        (MatchTable.open eq true)
+            } > 0
+        }
+    }
+
     /**** OPERACIONES CON JUGADORES EN PARTIDOS *****/
 
     override suspend fun isPlayerInMatch(playerId: Int, matchId: Int): Boolean {

@@ -1,5 +1,6 @@
 package com.backtussam.repositories.player
 
+import com.backtussam.model.Player
 import com.backtussam.security.JWTConfig
 import com.backtussam.security.hash
 import com.backtussam.services.league.LeagueService
@@ -8,10 +9,12 @@ import com.backtussam.utils.params.player.CreatePlayerParams
 import com.backtussam.utils.params.player.LoginPlayerParams
 import com.backtussam.services.player.PlayerService
 import com.backtussam.utils.BaseResponse
+import com.backtussam.utils.extensions.toLocalDateTime
 import com.backtussam.utils.params.match.CreateMatchParams
 import com.backtussam.utils.params.match.ResultMatchParams
 import com.backtussam.utils.params.player.StatsPlayerParams
 import com.backtussam.utils.params.player.UpdatePlayerParams
+import java.time.LocalDateTime
 import kotlin.random.Random
 
 class PlayerRepositoryImpl(
@@ -184,24 +187,18 @@ class PlayerRepositoryImpl(
     /**** ACCIONES DE JUGADORES ****/
 
     override suspend fun loginPlayer(params: LoginPlayerParams): BaseResponse<Any> {
-        // Comprobar si el jugador existe
         val player = playerService.findPlayerByEmail(params.email)
-        // Comprobar si la contraseña es correcta
         val encryptedPassword = playerService.findPasswordByEmail(params.email)
-        // Comprobar si el jugador existe y la contraseña es correcta
         return if (player != null) {
             if (encryptedPassword == hash(params.password)) {
-                // Crear token
                 val token = JWTConfig.instance.createToken(player.id.toString())
                 player.authToken = token
-                // Jugador encontrado y contraseña correcta
+                if(player.roleId == 1) checkAndFinishLeagues()
                 BaseResponse.SuccessResponse(data = player, message = "Bienvenido ${player.name}")
             } else {
-                // Contraseña incorrecta
                 BaseResponse.ErrorResponse(message = "Invalid password")
             }
         } else {
-            // Jugador no encontrado
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
@@ -430,34 +427,102 @@ class PlayerRepositoryImpl(
         }
     }
 
-    private suspend fun getParnet(matchId: Int, playerId: Int): String? {
-        val match = matchService.getMatchById(matchId)
-        //Obtener el id del juagdor pareja
-        return if (match != null) {
-            if (match.id_player1 == playerId) {
-                playerService.getPlayerById(match.id_player2!!)?.name
-            } else if (match.id_player2 == playerId) {
-                playerService.getPlayerById(match.id_player1!!)?.name
-            } else if (match.id_player3 == playerId) {
-                playerService.getPlayerById(match.id_player4!!)?.name
-            } else if (match.id_player4 == playerId) {
-                playerService.getPlayerById(match.id_player3!!)?.name
-            } else {
+    override suspend fun checkAndFinishLeagues(): BaseResponse<Any> {
+        val leagues = leagueService.getLeagues()
+        val playersDesc = mutableListOf<Player>()
+        val playersAsc = mutableListOf<Player>()
+
+        if (leagues.isNotEmpty()) {
+            val localDateTime = LocalDateTime.now()
+            leagues.forEach { league ->
+                if (localDateTime.isEqual(league.endDate.toLocalDateTime()) || localDateTime.isAfter(league.endDate.toLocalDateTime())) {
+                    leagueService.finishLeague(league.name)
+                    if(league.ascent != 0 ){
+                        playersAsc.addAll(getWhoPlayerAscend(league.id)!!)
+                    }
+                    if(league.descent != 0){
+                        playersDesc.addAll(getWhoPlayerDescend(league.id)!!)
+                    }
+                    resetsPlayers(league.name)
+                    matchService.deleteMatchesOpenAndCompetitve(league.id)
+                }
+            }
+
+            checkAndChangeLeague(playersDesc, playersAsc)
+            playersDesc.clear()
+            playersAsc.clear()
+
+            return BaseResponse.SuccessResponse(data = leagues, message = "Ligas checkeadas")
+        } else {
+            return BaseResponse.ErrorResponse(message = "No leagues found")
+        }
+    }
+
+    private suspend fun resetsPlayers(leagueName: String) {
+        val league = leagueService.getLeague(leagueName)
+        val players = playerService.getPlayersByLeague(league!!.id)
+        players.forEach { player ->
+            playerService.resetsPlayers(player.id)
+        }
+    }
+
+    private suspend fun changePlayerLeague(player:Player, ascend: Boolean) {
+        val leagues = leagueService.getLeagues().sortedBy { it.id }
+        val currentLeagueIndex = leagues.indexOfFirst { it.id == player.leagueId }
+
+        if (!ascend && currentLeagueIndex < leagues.lastIndex) {
+            // Si el jugador está ascendiendo y no está en la liga de más alto nivel
+            val leagueIdToAsc = leagues[currentLeagueIndex + 1]
+            playerService.changeLeague(player.id, leagueIdToAsc)
+        } else if (ascend && currentLeagueIndex > 0) {
+            // Si el jugador está descendiendo y no está en la liga de más bajo nivel
+            val leagueIdToDesc = leagues[currentLeagueIndex - 1]
+            playerService.changeLeague(player.id, leagueIdToDesc)
+        }
+    }
+
+
+    private suspend fun getWhoPlayerDescend(leagueId: Int): List<Player>? {
+        val league = leagueService.getLeagueById(leagueId)
+        val players = playerService.getPlayersByLeague(leagueId)
+        return if (league != null) {
+            if (league.descent == 0) {
                 null
+            } else {
+                players.takeLast(league.descent)
             }
         } else {
             null
         }
     }
 
-    private suspend fun getNameLeague(matchId: Int): String? {
-        val match = matchService.getMatchById(matchId)
-        return if (match != null) {
-            leagueService.getLeagueById(match.level!!)?.name
+    private suspend fun getWhoPlayerAscend(leagueId: Int): List<Player>? {
+        val league = leagueService.getLeagueById(leagueId)
+        val players = playerService.getPlayersByLeague(leagueId)
+        return if (league != null) {
+            if (league.ascent == 0) {
+                null
+            } else {
+                players.take(league.ascent)
+            }
         } else {
             null
         }
     }
+
+    private suspend fun checkAndChangeLeague(playersDesc: List<Player>, playersAsc: List<Player>) {
+        if (playersAsc.isNotEmpty()) {
+            playersAsc.forEach { player ->
+                changePlayerLeague(player, true)
+            }
+        }
+        if (playersDesc.isNotEmpty()) {
+            playersDesc.forEach { player ->
+                changePlayerLeague(player, false)
+            }
+        }
+    }
+
 
     private suspend fun checkWhoseWin(matchId: Int, playerId: Int): Boolean {
         val match = matchService.getMatchById(matchId)
@@ -471,7 +536,6 @@ class PlayerRepositoryImpl(
             false
         }
     }
-
 
     private suspend fun getGamesA(idMach: Int): Int {
         val match = matchService.getMatchById(idMach)

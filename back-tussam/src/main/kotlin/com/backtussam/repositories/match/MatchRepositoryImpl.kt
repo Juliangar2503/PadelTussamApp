@@ -30,7 +30,6 @@ class MatchRepositoryImpl(
     override suspend fun getMatchesByLeague(leagueId: Int): BaseResponse<Any> {
         val matchesCompetitives = matchService.getMatchesByLeague(leagueId)
         println("MatchRepository -> getMatchesByLeague -> matchesCompetitives: $matchesCompetitives")
-//        val matchesByLeague = matchesCompetitives.filter { it?.level == leagueId }
         return if (matchesCompetitives.isNotEmpty()) {
             BaseResponse.SuccessResponse(data = matchesCompetitives)
         } else {
