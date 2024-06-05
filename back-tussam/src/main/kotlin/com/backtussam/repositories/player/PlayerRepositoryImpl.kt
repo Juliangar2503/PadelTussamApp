@@ -206,23 +206,18 @@ class PlayerRepositoryImpl(
     }
 
     override suspend fun resetPassword(email: String): BaseResponse<Any> {
-        // Buscar al jugador por su correo electrónico
-        println(email)
         val player = playerService.findPlayerByEmail(email)
-        println(player)
         if (player != null) {
-            // Generar un token único para la recuperación de contraseña
             val resetToken = JWTConfig.instance.createToken(player.id.toString())
             player.authToken = resetToken
-            // Crear el enlace de restablecimiento de contraseña
             //val resetLink = "https://localhost:8100/login?token=$resetToken"
-            val resetLink = "https://localhost:8100/reset-password?token=$resetToken"
+            val resetLink = "http://localhost:8100/reset-password"
             // Crear el mensaje de correo electrónico
             val message = """
-            <p>Para restablecer tu contraseña, por favor haz clic en el siguiente enlace:</p>
-            <a href="$resetLink">Restablecer contraseña</a>
-            <p>Si no has solicitado un restablecimiento de contraseña, por favor ignora este correo electrónico.</p>
-        """.trimIndent()
+                <p>Para restablecer tu contraseña, por favor haz clic en el siguiente enlace:</p>
+                <a href="$resetLink">Restablecer contraseña</a>
+                <p>Si no has solicitado un restablecimiento de contraseña, por favor ignora este correo electrónico.</p>
+            """.trimIndent()
             // Enviar el correo electrónico
             emailService.sendEmail(email, "Restablecimiento de contraseña", message)
             return BaseResponse.SuccessResponse(
@@ -235,6 +230,21 @@ class PlayerRepositoryImpl(
             "No se ha encontrado un jugador con el correo electrónico proporcionado."
         )
     }
+
+    override suspend fun changePassword(params: LoginPlayerParams): BaseResponse<Any> {
+        val player = playerService.findPlayerByEmail(params.email)
+        return if (player != null) {
+            val changed = playerService.changePassword(params.email, params.password)
+            if (changed) {
+                BaseResponse.SuccessResponse(data = "Password changed")
+            } else {
+                BaseResponse.ErrorResponse(message = "Error changing password")
+            }
+        } else {
+            BaseResponse.ErrorResponse(message = "Player not found")
+        }
+    }
+
 
     override suspend fun openMatch(playerId: Int, type: String): BaseResponse<Any> {
         //Comprobar si el jugador está registrado
