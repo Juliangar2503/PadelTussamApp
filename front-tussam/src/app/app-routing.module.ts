@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginGuard } from './guards/login.guard';
 import { noLoginGuard } from './guards/no-login.guard';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const routes: Routes = [
+  
+
   {
     path: '',
     redirectTo: 'login',
@@ -38,9 +41,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/admin-configure/admin-configure.module').then( m => m.AdminConfigurePageModule),
     canActivate: [LoginGuard], // Agrega tu guardia aquí
     data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
-  },  {
-    path: 'reset-password',
-    loadChildren: () => import('./pages/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
 
 ];

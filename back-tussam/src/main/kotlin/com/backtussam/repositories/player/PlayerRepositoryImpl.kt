@@ -208,15 +208,14 @@ class PlayerRepositoryImpl(
     override suspend fun resetPassword(email: String): BaseResponse<Any> {
         val player = playerService.findPlayerByEmail(email)
         if (player != null) {
-            val resetToken = JWTConfig.instance.createToken(player.id.toString())
-            player.authToken = resetToken
-            //val resetLink = "https://localhost:8100/login?token=$resetToken"
-            val resetLink = "http://localhost:8100/reset-password"
+
+            //Generar contraseña aleatoria
+            val newPassword = generatedRandomPassword()
+            //Actualizar contraseña
+            playerService.changePassword(email, newPassword)
             // Crear el mensaje de correo electrónico
             val message = """
-                <p>Para restablecer tu contraseña, por favor haz clic en el siguiente enlace:</p>
-                <a href="$resetLink">Restablecer contraseña</a>
-                <p>Si no has solicitado un restablecimiento de contraseña, por favor ignora este correo electrónico.</p>
+                <p>Su nueva contraseña es ${newPassword}</p>
             """.trimIndent()
             // Enviar el correo electrónico
             emailService.sendEmail(email, "Restablecimiento de contraseña", message)
@@ -633,6 +632,13 @@ class PlayerRepositoryImpl(
 
         }
 
+    }
+
+    private fun generatedRandomPassword(): String {
+        val chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        return (1..8)
+            .map { chars.random() }
+            .joinToString("")
     }
 
     //Primero comprobar si el jugador existe
