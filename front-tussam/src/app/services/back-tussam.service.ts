@@ -41,10 +41,13 @@ export class BackTussamService {
     return this.http.post<any>(environment.baseUrl +  `auth/resetPassword/${email}`, null);
   }
 
-  //http://localhost:8080/auth/changePassword/
+  //http://localhost:8080/auth/changePassword con token en el header
   changePassword(email: string, password: string): Observable<ApiResponse> {
-    return this.http.post<any>(environment.baseUrl + `auth/changePassword/`, { email, password });
+    return from(this.authSvc.createAuthorizationHeader()).pipe(
+      switchMap(headers => this.http.post<any>(environment.baseUrl +  `auth/changePassword`, { email, password }, { headers }))
+    );
   }
+
 
   // ***************** PLAYERS *****************
 

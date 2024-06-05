@@ -53,7 +53,4 @@ export class EditProfileComponent{
     );
     this.dismissModal();
   }
-
-
-
 }

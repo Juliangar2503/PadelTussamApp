@@ -28,6 +28,7 @@ import { SlidingCourtListComponent } from './sliding-court-list/sliding-court-li
 import { EditCourtComponent } from './edit-court/edit-court.component';
 import { RegisterCourtComponent } from './register-court/register-court.component';
 import { EditMatchComponent } from './edit-match/edit-match.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
@@ -59,7 +60,8 @@ import { EditMatchComponent } from './edit-match/edit-match.component';
     SlidingCourtListComponent,
     EditCourtComponent,
     RegisterCourtComponent,
-    EditMatchComponent
+    EditMatchComponent,
+    ChangePasswordComponent
 
   ],
   exports:[
@@ -89,7 +91,8 @@ import { EditMatchComponent } from './edit-match/edit-match.component';
     SlidingCourtListComponent,
     EditCourtComponent,
     RegisterCourtComponent,
-    EditMatchComponent
+    EditMatchComponent,
+    ChangePasswordComponent
   ],
   imports: [
     //Importar los modulos que necesiten los componentes
