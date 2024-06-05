@@ -215,7 +215,19 @@ class PlayerRepositoryImpl(
             playerService.changePassword(email, newPassword)
             // Crear el mensaje de correo electrónico
             val message = """
-                <p>Su nueva contraseña es ${newPassword}</p>
+                <div style="font-family: Arial, sans-serif; color: #333;">
+                    <h2 style="color: #4CAF50;">¡Hola!</h2>
+                    <p>Nos complace informarte que tu contraseña ha sido actualizada con éxito.</p>
+                    <p><strong>Tu nueva contraseña es:</strong> <span style="color: #FF5722;">${newPassword}</span></p>
+                    <p>Te recomendamos cambiar esta contraseña después de iniciar sesión para mantener tu cuenta segura.</p>
+                    <p>Si no solicitaste este cambio, por favor <a href="https://www.ejemplo.com/contacto" style="color: #FF5722;">contáctanos</a> de inmediato.</p>
+                    <br>
+                    <p>Gracias por confiar en nosotros,</p>
+                    <p>El equipo de soporte</p>
+                    <footer style="margin-top: 20px; font-size: 0.9em; color: #777;">
+                        <p>© 2024 BackPadelTussam. Todos los derechos reservados.</p>
+                    </footer>
+                </div>
             """.trimIndent()
             // Enviar el correo electrónico
             emailService.sendEmail(email, "Restablecimiento de contraseña", message)
