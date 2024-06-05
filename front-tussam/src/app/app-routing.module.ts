@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginGuard } from './guards/login.guard';
 import { noLoginGuard } from './guards/no-login.guard';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const routes: Routes = [
+  
+
   {
     path: '',
     redirectTo: 'login',
@@ -39,6 +42,7 @@ const routes: Routes = [
     canActivate: [LoginGuard], // Agrega tu guardia aquí
     data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
   },
+
 ];
 
 @NgModule({

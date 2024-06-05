@@ -36,6 +36,16 @@ export class BackTussamService {
     return this.http.post<any>(environment.baseUrl + environment.login, { email, password });
   }
 
+  //http://localhost:8080/auth/resetPassword/{email}
+  forgetPassword(email: string): Observable<ApiResponse> {
+    return this.http.post<any>(environment.baseUrl +  `auth/resetPassword/${email}`, null);
+  }
+
+  //http://localhost:8080/auth/changePassword/
+  changePassword(email: string, password: string): Observable<ApiResponse> {
+    return this.http.post<any>(environment.baseUrl + `auth/changePassword/`, { email, password });
+  }
+
   // ***************** PLAYERS *****************
 
   getPlayer(idPlayer:Number):Observable<ApiResponse>{

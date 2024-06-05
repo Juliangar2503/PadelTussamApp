@@ -3,6 +3,7 @@ package com.backtussam.repositories.player
 import com.backtussam.model.Player
 import com.backtussam.security.JWTConfig
 import com.backtussam.security.hash
+import com.backtussam.services.email.EmailService
 import com.backtussam.services.league.LeagueService
 import com.backtussam.services.match.MatchService
 import com.backtussam.utils.params.player.CreatePlayerParams
@@ -21,6 +22,7 @@ class PlayerRepositoryImpl(
     private val playerService: PlayerService,
     private val leagueService: LeagueService,
     private val matchService: MatchService,
+    private val emailService: EmailService
 ) : PlayerRepository {
     /*** ALTA Y BAJA DE JUGADORES ***/
     override suspend fun registerPlayer(params: CreatePlayerParams): BaseResponse<Any> {
@@ -202,6 +204,58 @@ class PlayerRepositoryImpl(
             BaseResponse.ErrorResponse(message = "Player not found")
         }
     }
+
+    override suspend fun resetPassword(email: String): BaseResponse<Any> {
+        val player = playerService.findPlayerByEmail(email)
+        if (player != null) {
+
+            //Generar contraseña aleatoria
+            val newPassword = generatedRandomPassword()
+            //Actualizar contraseña
+            playerService.changePassword(email, newPassword)
+            // Crear el mensaje de correo electrónico
+            val message = """
+                <div style="font-family: Arial, sans-serif; color: #333;">
+                    <h2 style="color: #4CAF50;">¡Hola!</h2>
+                    <p>Nos complace informarte que tu contraseña ha sido actualizada con éxito.</p>
+                    <p><strong>Tu nueva contraseña es:</strong> <span style="color: #FF5722;">${newPassword}</span></p>
+                    <p>Te recomendamos cambiar esta contraseña después de iniciar sesión para mantener tu cuenta segura.</p>
+                    <p>Si no solicitaste este cambio, por favor <a href="https://www.ejemplo.com/contacto" style="color: #FF5722;">contáctanos</a> de inmediato.</p>
+                    <br>
+                    <p>Gracias por confiar en nosotros,</p>
+                    <p>El equipo de soporte</p>
+                    <footer style="margin-top: 20px; font-size: 0.9em; color: #777;">
+                        <p>© 2024 BackPadelTussam. Todos los derechos reservados.</p>
+                    </footer>
+                </div>
+            """.trimIndent()
+            // Enviar el correo electrónico
+            emailService.sendEmail(email, "Restablecimiento de contraseña", message)
+            return BaseResponse.SuccessResponse(
+                true,
+                "Se ha enviado un correo electrónico con las instrucciones para restablecer tu contraseña."
+            )
+        }
+        return BaseResponse.ErrorResponse(
+            null,
+            "No se ha encontrado un jugador con el correo electrónico proporcionado."
+        )
+    }
+
+    override suspend fun changePassword(params: LoginPlayerParams): BaseResponse<Any> {
+        val player = playerService.findPlayerByEmail(params.email)
+        return if (player != null) {
+            val changed = playerService.changePassword(params.email, params.password)
+            if (changed) {
+                BaseResponse.SuccessResponse(data = "Password changed")
+            } else {
+                BaseResponse.ErrorResponse(message = "Error changing password")
+            }
+        } else {
+            BaseResponse.ErrorResponse(message = "Player not found")
+        }
+    }
+
 
     override suspend fun openMatch(playerId: Int, type: String): BaseResponse<Any> {
         //Comprobar si el jugador está registrado
@@ -590,6 +644,13 @@ class PlayerRepositoryImpl(
 
         }
 
+    }
+
+    private fun generatedRandomPassword(): String {
+        val chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        return (1..8)
+            .map { chars.random() }
+            .joinToString("")
     }
 
     //Primero comprobar si el jugador existe

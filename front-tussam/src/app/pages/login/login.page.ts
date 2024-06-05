@@ -53,7 +53,6 @@ export class LoginPage implements OnInit {
   }
   
   forgotPassword() {
-    //Mostramos un mensaje en consola
-    console.log('Forgot password');
+    this.utilSvc.goToPage("./login/forget-password")
   }
 }

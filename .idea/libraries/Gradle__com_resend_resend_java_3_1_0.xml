@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.resend:resend-java:3.1.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.resend" artifactId="resend-java" version="3.1.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.resend/resend-java/3.1.0/df332f0533ed3fa47e13655f9ac71824b10337f7/resend-java-3.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

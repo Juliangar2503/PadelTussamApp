@@ -26,6 +26,13 @@ fun Application.authRoutes(repository: PlayerRepository){
                 val result = repository.loginPlayer(params)
                 call.respond(result.statusCode, result)
             }
+
+            // http://localhost:8080/auth/resetPassword/{email}
+            post("/resetPassword/{email}") {
+                val email = call.parameters["email"] ?: ""
+                val result = repository.resetPassword(email)
+                call.respond(result.statusCode, result)
+            }
         }
         authenticate {
             route("/player"){

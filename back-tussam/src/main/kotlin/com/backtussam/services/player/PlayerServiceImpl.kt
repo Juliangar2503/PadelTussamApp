@@ -67,6 +67,14 @@ class PlayerServiceImpl : PlayerService {
         }
     }
 
+    override suspend fun changePassword(email: String, password: String): Boolean {
+        return dbQuery {
+            PlayerTable.update({ PlayerTable.email eq email }) {
+                it[PlayerTable.password] = hash(password)
+            } > 0
+        }
+    }
+
     /*** ACTUALIZAR Y ELIMINAR JUGADOR ***/
     override suspend fun updatePlayer(email: String, params: UpdatePlayerParams): Player? {
         dbQuery {
