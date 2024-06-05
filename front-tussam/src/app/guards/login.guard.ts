@@ -15,14 +15,14 @@ export class LoginGuard implements CanActivate {
   ){
       if (route.data['requiresAdmin'] && !this.authService.isAdmin()) {
         this.UtilSvc.goToPage('/competition');
-        console.log('No tienes permisos para acceder a esta página');
         return false;
       } else if (!this.authService.isAuthenticated()) {
         this.UtilSvc.goToPage('/login');
-        console.log('No tienes permisos para acceder a esta página');
+        return false;
+      } else if (route.data['requiresActive'] && !this.authService.isActive()) {
+        this.UtilSvc.goToPage('/community');
         return false;
       }
-      console.log('Tienes permisos para acceder a esta página');
       return true;
   }
   

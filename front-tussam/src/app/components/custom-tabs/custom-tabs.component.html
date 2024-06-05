@@ -2,12 +2,12 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button (click)="changePage('competition')" tab="competition">
+        <ion-tab-button  *ngIf="isActive()" (click)="changePage('competition')" tab="competition">
           <ion-icon name="trophy"></ion-icon>
           <ion-label>Competition</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button (click)="changePage('community')" tab="community">
+        <ion-tab-button  (click)="changePage('community')" tab="community">
           <ion-icon name="people"></ion-icon>
           <ion-label>Community</ion-label>
         </ion-tab-button>

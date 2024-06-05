@@ -15,32 +15,33 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
-    canActivate: [noLoginGuard], // Agrega tu guardia aquí
+    canActivate: [noLoginGuard], 
   },
   {
     path: 'competition',
     loadChildren: () => import('./pages/competition/competition.module').then( m => m.CompetitionPageModule),
-    canActivate: [LoginGuard], // Agrega tu guardia aquí
-    //data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
+    canActivate: [LoginGuard], 
+    data: { requiresActive: true }
+    
   
   },
   {
     path: 'community',
     loadChildren: () => import('./pages/community/community.module').then( m => m.CommunityPageModule),
-    canActivate: [LoginGuard], // Agrega tu guardia aquí
+    canActivate: [LoginGuard], 
   },
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
-    canActivate: [LoginGuard], // Agrega tu guardia aquí
-    //data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
+    canActivate: [LoginGuard],
+    
   
   },
   {
     path: 'admin-configure',
     loadChildren: () => import('./pages/admin-configure/admin-configure.module').then( m => m.AdminConfigurePageModule),
-    canActivate: [LoginGuard], // Agrega tu guardia aquí
-    data: { requiresAdmin: true } // Si la ruta requiere un administrador, agrega esta línea
+    canActivate: [LoginGuard], 
+    data: { requiresAdmin: true } 
   },
 
 ];
