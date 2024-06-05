@@ -67,14 +67,19 @@
       </ion-col>
     </ion-row>
 
+    <!-- Acciones del usuario -->
     <ion-row>
-      <!-- Acciones del usuario -->
-      <ion-col size="6">
+      <ion-col size="4">
+        <ion-button expand="full" fill="outline" (click)="changePassword()">Cambiar contraseña</ion-button>
+      </ion-col>      
+      <ion-col size="4">
         <ion-button expand="full" color="primary" (click)="editProfile()">Editar Perfil</ion-button>
+      </ion-col>      
+      <ion-col size="4">
+        <ion-button expand="full" fill="clear" (click)="logout()">Cerrrar sesión</ion-button>
       </ion-col>
-      <ion-col size="6">
-        <ion-button expand="full" fill="outline" (click)="logout()">Cerrrar sesión</ion-button>
-      </ion-col>
+      
+      
 
     </ion-row>
     <ion-row>

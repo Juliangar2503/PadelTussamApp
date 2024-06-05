@@ -247,7 +247,7 @@ class PlayerRepositoryImpl(
         return if (player != null) {
             val changed = playerService.changePassword(params.email, params.password)
             if (changed) {
-                BaseResponse.SuccessResponse(data = "Password changed")
+                BaseResponse.SuccessResponse(data = player.email, message = "Contraseña cambiada con éxito")
             } else {
                 BaseResponse.ErrorResponse(message = "Error changing password")
             }

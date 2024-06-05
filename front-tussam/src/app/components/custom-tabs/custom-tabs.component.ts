@@ -20,6 +20,10 @@ export class CustomTabsComponent  implements OnInit {
     return this.authSvc.isAdmin();
   }
 
+  isActive() {
+    return this.authSvc.isActive();
+  }
+
   changePage(pageName: string) {
     console.log('is admin', this.isAdmin());
     this.utilSvc.goToPage(pageName);

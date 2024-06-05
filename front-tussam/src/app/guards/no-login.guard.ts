@@ -11,7 +11,7 @@ export class noLoginGuard implements CanActivate {
   backSvc = inject(BackTussamService)
   authService = inject(AuthService)
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
+  canActivate(): boolean {
     if (this.authService.isAuthenticated()) {
       this.utilSvc.goToPage('/competition');
       return false;

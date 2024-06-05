@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UtilsService } from './utils.service';
 import { HttpHeaders } from '@angular/common/http';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,6 +30,11 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getToken() && !!localStorage.getItem('Player');
+  }
+
+  isActive(): boolean {
+    const player = this.utilSvc.getFromLocalStorage('Player');
+    return player && player.active;
   }
 
   isAdmin(): boolean {

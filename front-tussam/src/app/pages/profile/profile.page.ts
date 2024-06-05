@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { ChangePasswordComponent } from 'src/app/components/change-password/change-password.component';
 import { EditProfileComponent } from 'src/app/components/edit-profile/edit-profile.component';
 import { Match } from 'src/app/interfaces/match';
 import { Player } from 'src/app/interfaces/player';
@@ -38,6 +39,16 @@ export class ProfilePage implements OnInit {
       component: EditProfileComponent,
       componentProps: {
         player: this.player
+      }
+    });
+    return await modal.present();
+  }
+
+  async changePassword() {
+    const modal = await this.modalController.create({
+      component: ChangePasswordComponent,
+      componentProps: {
+        email: this.player.email
       }
     });
     return await modal.present();
