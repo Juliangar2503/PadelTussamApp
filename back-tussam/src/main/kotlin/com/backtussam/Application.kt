@@ -26,13 +26,9 @@ import com.backtussam.services.match.MatchService
 import com.backtussam.services.match.MatchServiceImpl
 import com.backtussam.services.player.PlayerService
 import com.backtussam.services.player.PlayerServiceImpl
-import com.backtussam.utils.automations.automationsLeagueFinish
-import com.resend.Resend
-import com.resend.core.exception.ResendException
-import com.resend.services.emails.model.CreateEmailOptions
-import com.resend.services.emails.model.CreateEmailResponse
+import com.typesafe.config.ConfigFactory
 import io.ktor.server.application.*
-import io.ktor.server.auth.*
+import io.ktor.server.config.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.response.*
@@ -40,9 +36,11 @@ import io.ktor.server.routing.*
 
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "127.0.0.1"){
-        myApplicationModule()
+    val config = HoconApplicationConfig(ConfigFactory.load())
+    val port = config.propertyOrNull("ktor.deployment.port")?.getString()?.toInt() ?: 8080
 
+    embeddedServer(Netty, port) {
+        myApplicationModule()
     }.start(wait = true)
 }
 

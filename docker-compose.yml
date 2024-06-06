@@ -1,24 +1,27 @@
 version: '3.8'
 services:
   postgres:
-    image: postgres # Utiliza la última versión que existe en docker
+    image: postgres:latest
+    container_name: postgres-db-tussam
     restart: always #En caso de fallo reinicia el servidor
-    ports:
-      - "5432:5432" #Para indicarle en que puerto ejecutarse
-    environment: #Configuraciones iniciales
-      DATABASE_HOST : 127.0.0.1
-      POSTGRES_PASSWORD: admin
+    environment:
+      POSTGRES_DB: bdpadeltussam
       POSTGRES_USER: julian
-      POSTGRES_BD : bdpadeltussam
-     
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
     volumes:
       - postgres:/var/lib/postgresql/data
-
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 1s
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin-tussam
+    restart: always #En caso de fallo reinicia el servidor
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_EMAIL: julian@pgadmin.com
       PGADMIN_DEFAULT_PASSWORD: password
       PGADMIN_LISTEN_PORT: 80
     ports:
@@ -27,6 +30,23 @@ services:
       - pgadmin:/var/lib/pgadmin
     depends_on:
       - postgres
+  
+  api-tussam:
+    build: 
+      context: ./back-tussam
+    container_name: ktor-api-tussam
+    restart: always #En caso de fallo reinicia el servidor
+    environment:
+      PORT: 8080
+      DATABASE_URL: bdpadeltussam?user=julian&password=admin
+      PGUSER: julian
+      PGPASSWORD: admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+
 
 
 volumes:
