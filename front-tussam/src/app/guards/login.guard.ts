@@ -17,7 +17,7 @@ export class LoginGuard implements CanActivate {
         this.UtilSvc.goToPage('/competition');
         return false;
       } else if (!this.authService.isAuthenticated()) {
-        this.UtilSvc.goToPage('/login');
+        this.authService.logout();
         return false;
       } else if (route.data['requiresActive'] && !this.authService.isActive()) {
         this.UtilSvc.goToPage('/community');

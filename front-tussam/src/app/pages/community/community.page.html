@@ -1,26 +1,26 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>community</ion-title>
-  </ion-toolbar>
+  <app-header title="Community" [showMenu]="true"></app-header>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <app-search-player *ngIf="viewOption === 'search'"></app-search-player>
-  <app-leagues-community *ngIf="viewOption === 'leagues'"></app-leagues-community>
-  <app-posts-community *ngIf="viewOption === 'posts'"></app-posts-community>
-  <app-matches-item *ngIf="viewOption === 'matches'" [player]="player" [type]="'Friendly'"></app-matches-item>
+  <app-menu />
+  <ion-content id="menu-content">
+    <app-search-player *ngIf="viewOption === 'search'"></app-search-player>
+    <app-leagues-community *ngIf="viewOption === 'leagues'"></app-leagues-community>
+    <app-posts-community *ngIf="viewOption === 'posts'"></app-posts-community>
+    <app-matches-item *ngIf="viewOption === 'matches'" [player]="player" [type]="'Friendly'"></app-matches-item>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="selectOption('search')"><ion-icon name="search"></ion-icon></ion-fab-button>
-      <ion-fab-button (click)="selectOption('leagues')"><ion-icon name="football"></ion-icon></ion-fab-button>
-      <ion-fab-button (click)="selectOption('posts')"><ion-icon name="chatbubbles"></ion-icon></ion-fab-button>
-      <ion-fab-button (click)="selectOption('matches')"><ion-icon name="calendar"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top">
+        <ion-fab-button (click)="selectOption('search')"><ion-icon name="search"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="selectOption('leagues')"><ion-icon name="football"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="selectOption('posts')"><ion-icon name="chatbubbles"></ion-icon></ion-fab-button>
+        <ion-fab-button (click)="selectOption('matches')"><ion-icon name="calendar"></ion-icon></ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+  </ion-content>
 </ion-content>
 
-<app-custom-tabs></app-custom-tabs>
+<app-custom-tabs class="ion-hide-md-up"></app-custom-tabs>

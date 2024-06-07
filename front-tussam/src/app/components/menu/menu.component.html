@@ -1,0 +1,39 @@
+
+
+<ion-menu contentId="menu-content" menuId="menu-content">
+  <app-header title="Menú"></app-header>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-menu-toggle auto-hide="false">
+      <ion-item (click)="changePage('competition')" tab="competition">
+        <ion-icon slot="start" name="trophy"></ion-icon>
+        <ion-label>Competition</ion-label>
+      </ion-item>
+      <ion-item (click)="changePage('community')" tab="community">
+        <ion-icon slot="start" name="people"></ion-icon>
+        <ion-label>Community</ion-label>
+      </ion-item>
+      <ion-item (click)="changePage('profile')" tab="profile">
+        <ion-icon slot="start" name="person"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-item>
+      <ion-item *ngIf="isAdmin()" (click)="changePage('admin-configure')" tab="admin">
+        <ion-icon slot="start" name="settings"></ion-icon>
+        <ion-label>Admin</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-content>
+  <ion-footer>
+    <ion-menu-toggle auto-hide="false">
+      <ion-item (click)="logout()">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-footer>
+</ion-menu>
+<ion-router-outlet id="menu-content" main></ion-router-outlet>

@@ -1,29 +1,26 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>admin-configure</ion-title>
-  </ion-toolbar>
+  <app-header title="Admin" [showMenu]="true"></app-header>
 </ion-header>
-<ion-content>
-  <div>
+<ion-content [fullscreen]="true">
+  <app-menu />
+  <ion-content id="menu-content">
+    <div>
 
-    <ion-item>
-      <ion-select justify="start" label="Gestionar" placeholder="Jugador" (ionChange)="onTableChange($event)">
-        <ion-select-option value="player">Jugador</ion-select-option>
-        <ion-select-option value="league">Liga</ion-select-option>
-        <ion-select-option value="court">Cancha</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-select justify="start" label="Gestionar" placeholder="Jugador" (ionChange)="onTableChange($event)">
+          <ion-select-option value="player">Jugador</ion-select-option>
+          <ion-select-option value="league">Liga</ion-select-option>
+          <ion-select-option value="court">Cancha</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <app-player-management *ngIf="table === 'player'"></app-player-management>
-    <app-league-management *ngIf="table === 'league'"></app-league-management>
-    <app-court-management *ngIf="table === 'court'"></app-court-management>
+      <app-player-management *ngIf="table === 'player'"></app-player-management>
+      <app-league-management *ngIf="table === 'league'"></app-league-management>
+      <app-court-management *ngIf="table === 'court'"></app-court-management>
 
-  </div>
-
-
-
-  
-
+    </div>
+    
+  </ion-content>
 </ion-content>
 
-<app-custom-tabs></app-custom-tabs>
+<app-custom-tabs class="ion-hide-md-up"></app-custom-tabs>

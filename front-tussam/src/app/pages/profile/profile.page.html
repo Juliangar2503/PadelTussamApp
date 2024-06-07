@@ -1,107 +1,108 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Player Profile</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true">
+  <app-header title="Profile" [showMenu]="true"></app-header>
 </ion-header>
-<ion-content>
-  <ion-grid>
-    <!-- Datos usuario -->
-    <ion-row>
-      <ion-col size="12" class="ion-text-center">
-        <ion-item>
-          <ion-avatar slot="start">
-            <ng-container *ngIf="player && player.avatar; else defaultImage">
-              <img [src]="getAvatarImage(player)">
-            </ng-container>
-            <ng-template #defaultImage>
-              <img src="assets/img/defaultAvatar.webp">
-            </ng-template>
-          </ion-avatar>
-          <ion-label>
-            <h2>{{player.name}} {{player.lastName}}</h2>
-            <p>{{player.location}}</p>
-          </ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col size="12" class="ion-text-center">
-        <ion-item>
-          <ion-label>
-            <p>Inscrito desde: {{player.createdAt}} </p>
-            <p>Email: {{player.email}}</p>
-            <p>Liga: {{ leagueName }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <!-- Estadísticas del usuario -->
-      <ion-col size="4">
-        <ion-card class="ion-text-center">
-          <ion-card-header>
-            <ion-icon name="tennisball"></ion-icon>
-          </ion-card-header>
-          <ion-card-content class="ion-text-center">
-            {{statsPlayer.matchesPlayed}}
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="4">
-        <ion-card>
-          <ion-card-header>
-            <ion-icon name="checkmark-circle" color="success"></ion-icon>
-          </ion-card-header>
-          <ion-card-content class="ion-text-center">
-            {{statsPlayer.matchesWon}}
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="4">
-        <ion-card>
-          <ion-card-header>
-            <ion-icon name="close-circle" color="danger"></ion-icon>
-          </ion-card-header>
-          <ion-card-content class="ion-text-center">
-            {{statsPlayer.matchesLost}}
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+<ion-content [fullscreen]="true">
+  <app-menu />
+  <ion-content id="menu-content">
+    <ion-grid>
+      <!-- Datos usuario -->
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <ion-item>
+            <ion-avatar slot="start">
+              <ng-container *ngIf="player && player.avatar; else defaultImage">
+                <img [src]="getAvatarImage(player)">
+              </ng-container>
+              <ng-template #defaultImage>
+                <img src="assets/img/defaultAvatar.webp">
+              </ng-template>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{player.name}} {{player.lastName}}</h2>
+              <p>{{player.location}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" class="ion-text-center">
+          <ion-item>
+            <ion-label>
+              <p>Inscrito desde: {{player.createdAt}} </p>
+              <p>Email: {{player.email}}</p>
+              <p>Liga: {{ leagueName }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <!-- Estadísticas del usuario -->
+        <ion-col size="4">
+          <ion-card class="ion-text-center">
+            <ion-card-header>
+              <ion-icon name="tennisball"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+              {{statsPlayer.matchesPlayed}}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+              {{statsPlayer.matchesWon}}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-icon name="close-circle" color="danger"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">
+              {{statsPlayer.matchesLost}}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
 
-    <!-- Acciones del usuario -->
-    <ion-row>
-      <ion-col size="4">
-        <ion-button expand="full" fill="outline" (click)="changePassword()">Cambiar contraseña</ion-button>
-      </ion-col>      
-      <ion-col size="4">
-        <ion-button expand="full" color="primary" (click)="editProfile()">Editar Perfil</ion-button>
-      </ion-col>      
-      <ion-col size="4">
-        <ion-button expand="full" fill="clear" (click)="logout()">Cerrrar sesión</ion-button>
-      </ion-col>
-      
-      
-
-    </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <ion-item>
-          <ion-segment (ionChange)="segmentChanged($event)">
-            <ion-segment-button value="openMatches">
-              <ion-label>Partidos abiertos</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="closedMatches">
-              <ion-label>Histórico de partidos</ion-label>
-            </ion-segment-button>
-          </ion-segment>
-        </ion-item>
-      </ion-col>
-      <ion-col size="12" *ngFor="let match of matches">
-        <app-match-item [match]="match" [jugadorLocal]="player"></app-match-item>
-      </ion-col>
-    </ion-row>
+      <!-- Acciones del usuario -->
+      <ion-row>
+        <ion-col size="4">
+          <ion-button expand="full" fill="outline" (click)="changePassword()">Cambiar contraseña</ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button expand="full" color="primary" (click)="editProfile()">Editar Perfil</ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button expand="full" fill="clear" (click)="logout()">Cerrrar sesión</ion-button>
+        </ion-col>
 
 
-  </ion-grid>
 
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-segment (ionChange)="segmentChanged($event)">
+              <ion-segment-button value="openMatches">
+                <ion-label>Partidos abiertos</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="closedMatches">
+                <ion-label>Histórico de partidos</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngFor="let match of matches">
+          <app-match-item [match]="match" [jugadorLocal]="player"></app-match-item>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-grid>
+
+  </ion-content>
 </ion-content>
-<app-custom-tabs></app-custom-tabs>
+<app-custom-tabs class="ion-hide-md-up"></app-custom-tabs>

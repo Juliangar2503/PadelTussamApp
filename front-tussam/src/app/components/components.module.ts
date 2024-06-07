@@ -29,6 +29,8 @@ import { EditCourtComponent } from './edit-court/edit-court.component';
 import { RegisterCourtComponent } from './register-court/register-court.component';
 import { EditMatchComponent } from './edit-match/edit-match.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { HeaderComponent } from './header/header.component';
+import { MenuComponent } from './menu/menu.component';
 
 
 
@@ -61,7 +63,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     EditCourtComponent,
     RegisterCourtComponent,
     EditMatchComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    HeaderComponent,
+    MenuComponent
 
   ],
   exports:[
@@ -92,7 +96,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     EditCourtComponent,
     RegisterCourtComponent,
     EditMatchComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    HeaderComponent,
+    MenuComponent
+
   ],
   imports: [
     //Importar los modulos que necesiten los componentes
