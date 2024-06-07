@@ -45,5 +45,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('Token');
     localStorage.removeItem('Player');
+    this.utilSvc.goToPage('login');
   }
 }

@@ -1,13 +1,12 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Ranking</ion-title>
-  </ion-toolbar>
+  <app-header title="Competicion" [showMenu]="true"></app-header>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <app-custom-segment-button (segmentChanged)="onSegmentChanged($event)"></app-custom-segment-button>
-  <app-ranking-item *ngIf="segmentValue === 'Ranking'" [player]="player" [ranking]="ranking" [league]="league"></app-ranking-item>
-  <app-matches-item *ngIf="segmentValue === 'Partidos'" [player]="player"  [league]="league" [type]="'Competitive'"></app-matches-item>
+  <app-menu />
+  <ion-content id="menu-content">
+    <app-custom-segment-button (segmentChanged)="onSegmentChanged($event)"></app-custom-segment-button>
+    <app-ranking-item *ngIf="segmentValue === 'Ranking'" [player]="player" [ranking]="ranking" [league]="league"></app-ranking-item>
+    <app-matches-item *ngIf="segmentValue === 'Partidos'" [player]="player"  [league]="league" [type]="'Competitive'"></app-matches-item>
+  </ion-content>
 </ion-content>
-
-<app-custom-tabs></app-custom-tabs>
+<app-custom-tabs class="ion-hide-md-up"></app-custom-tabs>
