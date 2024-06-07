@@ -1,0 +1,13 @@
+ktor:
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - com.backtussam.ApplicationKt.myApplicationModule
+datasource:
+  jdbcUrl: ${DATABASE_URL:-jdbc:postgresql://postgres:5432/bdpadeltussam?user=julian&password=admin}
+  username: ${PGUSER:-julian}
+  password: ${PGPASSWORD:-admin}
+  maximumPoolSize: 3
+  autoCommit: false
+  transactionIsolation: TRANSACTION_REPEATABLE_READ
