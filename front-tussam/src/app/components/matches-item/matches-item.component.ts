@@ -25,12 +25,22 @@ export class MatchesItemComponent  implements OnInit {
   }
 
   ngOnInit() {
+    this.loadData();
+  
+    setInterval(() => {
+      this.loadData();
+    }, 5000); // Recarga cada 5 segundos
+  }
+  
+  loadData() {
     this.getMatchesOpen()
   }
+
 
   playerOpenMatch(tipo: string){
     this.backSvc.openMatch(this.player.id, tipo).subscribe((res) => {
       console.log(res);
+      this.getMatchesOpen()
     },
     (err) => {
       console.error(err);
