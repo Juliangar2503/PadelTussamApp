@@ -24,9 +24,6 @@ export class CompetitionPage implements OnInit {
 
   ngOnInit() {
     this.getPlayer();
-    this.getLeague();
-    this.getRanking();
-    
   }
 
   onSegmentChanged(segmentValue: string) {
@@ -34,7 +31,13 @@ export class CompetitionPage implements OnInit {
   }
 
   getPlayer() {
-    this.player = this.utilSvc.getFromLocalStorage('Player');
+    let playerId = this.utilSvc.getFromLocalStorage('Player').id;
+    this.backSvc.getPlayer(playerId).subscribe((res) => {
+      this.player = res.data;
+      console.log(this.player);
+      this.getRanking();
+      this.getLeague();
+    });
   }
 
   getLeague() {
@@ -49,7 +52,6 @@ export class CompetitionPage implements OnInit {
   }
 
   async getRanking() {
-    //http://localhost:8080/player/all/{orderField}/{filterField}/{filterValor}
     const leagueId = this.player.leagueId;
     const orderField = 'points';
     const filterField = `leagueId/${leagueId}`;
