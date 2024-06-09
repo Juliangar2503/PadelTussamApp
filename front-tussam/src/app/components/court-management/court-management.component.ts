@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Court } from 'src/app/interfaces/court';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
 import { RegisterCourtComponent } from '../register-court/register-court.component';
@@ -16,7 +16,8 @@ export class CourtManagementComponent  implements OnInit {
 
   constructor(
     private backSvc: BackTussamService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -24,7 +25,12 @@ export class CourtManagementComponent  implements OnInit {
   }
 
   async getCourts() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando canchas...', 
+    });
+    await loading.present(); // Muestra el indicador de carga
     this.backSvc.getAllCourts().subscribe((res) => {
+      loading.dismiss();
       this.courts = res.data;
       console.log(this.courts);
     });

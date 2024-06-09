@@ -3,7 +3,7 @@ import { League } from 'src/app/interfaces/league';
 import { Player } from 'src/app/interfaces/player';
 import { Match } from 'src/app/interfaces/match';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-matches-item',
@@ -19,39 +19,58 @@ export class MatchesItemComponent  implements OnInit {
 
   constructor(
     private backSvc: BackTussamService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingController: LoadingController
   ) { 
     
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+  
+  loadData() {
     this.getMatchesOpen()
   }
+
 
   playerOpenMatch(tipo: string){
     this.backSvc.openMatch(this.player.id, tipo).subscribe((res) => {
       console.log(res);
+      this.getMatchesOpen()
     },
     (err) => {
       console.error(err);
     });
   }
 
-  getMatchesOpen(){
+  async getMatchesOpen(){
     if(this.type == 'Competitive' && this.league){
+      const loading = await this.loadingController.create({
+        message: 'Cargando partidos...', 
+      });
+      await loading.present(); // Muestra el indicador de carga
       this.backSvc.getMatchesByLeague(this.league.id).subscribe((res) => {
+        loading.dismiss();
         console.log(res);
         this.matches = res.data;
       },
       (err) => {
+        loading.dismiss();
         console.error(err);
       });
     }else{
+      const loading = await this.loadingController.create({
+        message: 'Cargando partidos...', 
+      });
+      await loading.present(); // Muestra el indicador de carga
       this.backSvc.getFriendlyMatches().subscribe((res) => {
+        loading.dismiss();
         console.log(res);
         this.matches = res.data;
       },
       (err) => {
+        loading.dismiss();
         console.error(err);
       });
     }

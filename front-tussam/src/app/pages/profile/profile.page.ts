@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { ChangePasswordComponent } from 'src/app/components/change-password/change-password.component';
 import { EditProfileComponent } from 'src/app/components/edit-profile/edit-profile.component';
 import { Match } from 'src/app/interfaces/match';
@@ -23,7 +23,8 @@ export class ProfilePage implements OnInit {
   constructor(
     private utilSvc: UtilsService,
     private modalController: ModalController,
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private loadingController: LoadingController
   ) {
     
   }
@@ -72,11 +73,16 @@ export class ProfilePage implements OnInit {
 
    /******* OBTENER DATOS DEL JUGADOR ********/
 
-  getPlayer() {
+  async getPlayer() {
     let playerId: Number = this.utilSvc.getFromLocalStorage('Player').id;
-    console.log(playerId);
+    
     this.getPlayerHistoryStats(playerId)
+    const loading = await this.loadingController.create({
+      message: 'Cargando perfil...', 
+    });
+    await loading.present(); // Muestra el indicador de carga
     this.backSvc.getPlayer(playerId).subscribe((data) => {
+      loading.dismiss();
       this.player = data.data;
       this.getLeagueNameById(data.data.leagueId || 0);
     });

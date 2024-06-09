@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { League } from 'src/app/interfaces/league';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
 import { RegisterLeagueComponent } from '../register-league/register-league.component';
@@ -15,7 +15,8 @@ export class LeagueManagementComponent  implements OnInit {
 
   constructor(
     private backSvc: BackTussamService,
-     private modalController: ModalController
+    private modalController: ModalController,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -23,7 +24,12 @@ export class LeagueManagementComponent  implements OnInit {
   }
 
   async getLeagues() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando ligas...', 
+    });
+    await loading.present(); // Muestra el indicador de carga
     this.backSvc.getLeagues().subscribe((res) => {
+      loading.dismiss();
       this.leagues = res.data;
       console.log(this.leagues);
     });

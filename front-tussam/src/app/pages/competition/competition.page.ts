@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { League } from 'src/app/interfaces/league';
 import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
@@ -19,14 +20,12 @@ export class CompetitionPage implements OnInit {
 
   constructor(
     private utilSvc: UtilsService,
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.getPlayer();
-    this.getLeague();
-    this.getRanking();
-    
   }
 
   onSegmentChanged(segmentValue: string) {
@@ -34,7 +33,13 @@ export class CompetitionPage implements OnInit {
   }
 
   getPlayer() {
-    this.player = this.utilSvc.getFromLocalStorage('Player');
+    let playerId = this.utilSvc.getFromLocalStorage('Player').id;
+    this.backSvc.getPlayer(playerId).subscribe((res) => {
+      this.player = res.data;
+      console.log(this.player);
+      this.getRanking();
+      this.getLeague();
+    });
   }
 
   getLeague() {
@@ -49,12 +54,15 @@ export class CompetitionPage implements OnInit {
   }
 
   async getRanking() {
-    //http://localhost:8080/player/all/{orderField}/{filterField}/{filterValor}
     const leagueId = this.player.leagueId;
     const orderField = 'points';
     const filterField = `leagueId/${leagueId}`;
+    const loading = await this.loadingController.create({
+      message: 'Cargando...', 
+    });
+    await loading.present(); // Muestra el indicador de carga
     this.backSvc.getAllPlayers(orderField, filterField).subscribe((res) => {
-      
+      loading.dismiss(); 
       this.ranking = res.data;
       console.log('ranking:', this.ranking);
     });

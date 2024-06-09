@@ -5,6 +5,7 @@ import { BackTussamService } from 'src/app/services/back-tussam.service';
 import { ResultModalComponent } from '../result-modal/result-modal.component';
 import { ModalController } from '@ionic/angular';
 import { EditMatchComponent } from '../edit-match/edit-match.component';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-match-item',
@@ -25,11 +26,20 @@ export class MatchItemComponent  implements OnInit {
   constructor(
     private backSvc: BackTussamService,
     private modelCtrl: ModalController,
-    private modalController: ModalController 
+    private modalController: ModalController,
+    private utilsSvc: UtilsService
   ) { }
 
   
   ngOnInit() {
+    this.loadData();
+  
+    setInterval(() => {
+      this.loadData();
+    }, 5000); // Recarga cada 5 segundos
+  }
+  
+  loadData() {
     this.getPlayers();
     this.getCourtNameById();
   }
@@ -104,12 +114,14 @@ export class MatchItemComponent  implements OnInit {
   confirmResultTeamA(){
     this.backSvc.confirmResultTeamA(this.match.id, this.jugadorLocal.id).subscribe((res) => {
       console.log(res);
+      this.utilsSvc.presentToast(res.data.toString());
     });
 
   }
   confirmResultTeamB(){
     this.backSvc.confirmResultTeamB(this.match.id, this.jugadorLocal.id).subscribe((res) => {
       console.log(res);
+      this.utilsSvc.presentToast(res.data.toString());
     });
 
   }
@@ -117,12 +129,14 @@ export class MatchItemComponent  implements OnInit {
   leaveGame(){
     this.backSvc.leaveMatch(this.jugadorLocal.id, this.match.id).subscribe((res) => {
       console.log(res);
+      this.utilsSvc.presentToast(res.data.toString());
     });
   }
 
   joinMatch(matchId: number){
     this.backSvc.joinMatch(this.jugadorLocal.id, matchId).subscribe((res) => {
       console.log(res);
+      this.utilsSvc.presentToast(res.data.toString());
     });
     
   }

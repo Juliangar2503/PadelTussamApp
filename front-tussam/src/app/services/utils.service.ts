@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,8 @@ export class UtilsService {
 
   constructor(
     private router: Router,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loadingController: LoadingController
   ) { }
  
   // ---------------- NAVEGACIÓN -------------------- //
@@ -47,5 +48,9 @@ export class UtilsService {
     });
     toast.present();
   }
+
+  
+
+  
  
 }

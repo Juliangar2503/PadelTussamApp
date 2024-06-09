@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
 import { RegisterPlayerComponent } from '../register-player/register-player.component';
@@ -18,7 +18,8 @@ export class PlayerManagementComponent  implements OnInit {
 
    constructor(
      private backSvc: BackTussamService,
-     private modalController: ModalController
+     private modalController: ModalController,
+     private loadingController: LoadingController
    ) {}
  
    ngOnInit() {
@@ -26,9 +27,14 @@ export class PlayerManagementComponent  implements OnInit {
    }
  
    async getPlayers() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando jugadores...', 
+    });
+    await loading.present(); 
      this.backSvc.getAllPlayers(this.orderField,this.filterField).subscribe((res) => {
-       this.players = res.data;
-       console.log(this.players);
+        loading.dismiss();
+        this.players = res.data;
+        console.log(this.players);
      });
    }
 
