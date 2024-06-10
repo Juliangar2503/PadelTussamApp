@@ -39,7 +39,7 @@
       
     </ion-row>
 
-    <ion-row>
+    <ion-row  *ngIf="(!isConfirmResult2() || !isConfirmResult1()) && sameLeague()">
       <ion-col size="12">
         <ion-button expand="full" *ngIf="!isPlayerInMatch()" (click)="joinMatch(match.id)">Unirse al partido</ion-button>
       </ion-col>

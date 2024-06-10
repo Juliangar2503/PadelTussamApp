@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Court } from 'src/app/interfaces/court';
 import { Match } from 'src/app/interfaces/match';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-edit-match',
@@ -16,7 +17,8 @@ export class EditMatchComponent {
 
   constructor(
     private modalController: ModalController,
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private utilSvc: UtilsService
   ) { 
     this.getCourts();
   }
@@ -43,7 +45,7 @@ export class EditMatchComponent {
         if (response.data) {
           this.dismissModal();
         }else{
-          console.log(response.message);
+          this.utilSvc.presentToast(response.message);
         }
       }
     );

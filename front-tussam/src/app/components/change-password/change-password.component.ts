@@ -39,12 +39,11 @@ export class ChangePasswordComponent  implements OnInit {
     }else{
       this.backSvc.changePassword(this.email, this.password).subscribe(
         (response) => {
-          console.log(response);
           this.utilSvc.presentToast(response.message);
           this.dismissModal();
         },
         (error) => {
-          console.log(error);
+          this.utilSvc.presentToast(error.error.message);
         }
       );
     }

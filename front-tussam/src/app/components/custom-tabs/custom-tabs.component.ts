@@ -25,7 +25,6 @@ export class CustomTabsComponent  implements OnInit {
   }
 
   changePage(pageName: string) {
-    console.log('is admin', this.isAdmin());
     this.utilSvc.goToPage(pageName);
   }
 

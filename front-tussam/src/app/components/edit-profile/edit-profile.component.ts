@@ -31,10 +31,7 @@ export class EditProfileComponent{
         if (e.target) {
           let base64String = e.target.result as string;
           base64String = base64String.split(',')[1]; 
-          console.log('Base64 string:', base64String);
-          console.log('PlayerAntes: ', this.player);
           this.player.avatar = base64String;
-          console.log('PlayerDespues: ', this.player);
         }
       };
       reader.readAsDataURL(file);
@@ -44,7 +41,7 @@ export class EditProfileComponent{
   savePlayer() {
     this.backSvc.editPlayer(this.player.email, this.player).subscribe(
       (response) => {
-        console.log(response);
+        this.utilSvc.presentToast(response.message);
         this.dismissModal();
       },
       (error) => {

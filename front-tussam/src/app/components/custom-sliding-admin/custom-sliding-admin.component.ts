@@ -23,7 +23,11 @@ export class CustomSlidingAdminComponent {
   deletePlayer() {
     this.backSvc.deletePlayer(this.player.id).subscribe(
       res => {
-        console.log(res);
+        console.log(res)
+        this.utilSvc.presentToast(res.data.toString());
+      },
+      error => {
+        this.utilSvc.presentToast("No se puede eliminar el jugador, tiene partidos pendientes");
       }
     );
   }

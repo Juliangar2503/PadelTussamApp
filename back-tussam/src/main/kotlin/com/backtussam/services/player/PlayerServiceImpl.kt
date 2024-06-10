@@ -25,7 +25,7 @@ class PlayerServiceImpl : PlayerService {
     override suspend fun getPlayersByLeague(leagueId: Int): List<Player> {
         return dbQuery {
             PlayerTable.select { PlayerTable.leagueId eq leagueId }
-                .orderBy(PlayerTable.points, SortOrder.DESC)
+                .orderBy(PlayerTable.points to SortOrder.DESC, PlayerTable.gameDifference to SortOrder.DESC)
                 .mapNotNull { rowToPlayer(it) }
         }
     }

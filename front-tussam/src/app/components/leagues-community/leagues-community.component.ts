@@ -24,7 +24,6 @@ export class LeaguesCommunityComponent  implements OnInit {
 
   getLeagues(){
     this.backSvc.getLeagues().subscribe((res) => {
-      console.log('leagues:', res.data);
       this.leagues = res.data;
     });
   }
@@ -36,7 +35,6 @@ export class LeaguesCommunityComponent  implements OnInit {
     this.backSvc.getAllPlayers(orderField, filterField).subscribe((res) => {
       
       this.ranking = res.data;
-      console.log('ranking:', this.ranking);
     });
 
   }

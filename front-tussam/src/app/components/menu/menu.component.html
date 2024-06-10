@@ -9,7 +9,7 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-menu-toggle auto-hide="false">
-      <ion-item (click)="changePage('competition')" tab="competition">
+      <ion-item *ngIf="isActive()" (click)="changePage('competition')" tab="competition">
         <ion-icon slot="start" name="trophy"></ion-icon>
         <ion-label>Competition</ion-label>
       </ion-item>

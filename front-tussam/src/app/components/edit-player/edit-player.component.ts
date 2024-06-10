@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { League } from 'src/app/interfaces/league';
 import { Player } from 'src/app/interfaces/player';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-edit-player',
@@ -16,7 +17,8 @@ export class EditPlayerComponent{
 
   constructor(
     private modalController: ModalController,
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private utilSvc: UtilsService
   ) {
     this.getLeagues();
    }
@@ -43,7 +45,7 @@ export class EditPlayerComponent{
         if (response.data) {
           this.dismissModal();
         }else{
-          console.log(response.message);
+          this.utilSvc.presentToast(response.message);
         }
       }
     );
