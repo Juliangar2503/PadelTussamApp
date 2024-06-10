@@ -2,5 +2,5 @@
 
 <ion-list>
   <ion-item *ngFor="let player of players">
-    <ion-label (click)="ViewPlayer(player.id)">{{player.name}}</ion-label>
+    <ion-label (click)="ViewPlayer(player.id)">{{player.name}} {{player.lastName}}</ion-label>
 </ion-item>
