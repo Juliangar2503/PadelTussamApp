@@ -1,9 +1,15 @@
 .gradle
-!back-tussam/build/libs/*.jar
+build/classes
+build/install
+build/kotlin
+build/resources
+build/tmp
+build/scriptsShadow
+build/snapshot
+
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
 
 ### STS ###
 .apt_generated
