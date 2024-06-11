@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UtilsService } from './utils.service';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -9,7 +10,8 @@ import { HttpHeaders } from '@angular/common/http';
 export class AuthService {
 
   constructor(
-    private utilSvc: UtilsService
+    private utilSvc: UtilsService,
+    private http: HttpClient
   ) { }
 
   // ******  OBTENER HEADER  ******
@@ -24,9 +26,20 @@ export class AuthService {
     if (token) {
       headers = headers.set('Authorization', 'Bearer ' + token);
     }
+  
+    // Realiza una solicitud de prueba
+    this.http.get(environment.baseUrl + environment.leagues, { headers }).subscribe({
+      next: (response) => {
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.logout();
+        }
+      }
+    });
+  
     return headers;
   }
-
   isAuthenticated(): boolean {
     return !!this.getToken() && !!localStorage.getItem('Player');
   }

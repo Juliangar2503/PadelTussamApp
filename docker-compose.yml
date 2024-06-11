@@ -45,6 +45,16 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+  
+  # front-tussam:
+  #   build: 
+  #     context: ./front-tussam
+  #   container_name: front-tussam
+  #   restart: always #En caso de fallo reinicia el servidor
+  #   ports:
+  #     - "8100:8100"
+  #   depends_on:
+  #     - api-tussam
 
 
 
