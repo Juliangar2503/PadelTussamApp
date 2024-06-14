@@ -31,7 +31,6 @@ export class LeagueManagementComponent  implements OnInit {
     this.backSvc.getLeagues().subscribe((res) => {
       loading.dismiss();
       this.leagues = res.data;
-      console.log(this.leagues);
     });
   }
 

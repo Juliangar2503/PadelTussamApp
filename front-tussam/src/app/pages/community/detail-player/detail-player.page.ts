@@ -18,7 +18,8 @@ export class DetailPlayerPage implements OnInit {
   id: any;
 
   idNumber: number = 0;
-  player: Player = {} as Player;  
+  player: Player = {} as Player; 
+  playerView: Player = {} as Player; 
   matches: Match[] = [];
   statsPlayer: StatsPlayer = {} as StatsPlayer;
   leagueName: string = '';
@@ -78,6 +79,11 @@ export class DetailPlayerPage implements OnInit {
       this.getLeagueNameById(res.data.leagueId || 0);
     });
     this.getPlayerHistoryStats(this.id)
+
+    //obtener jugador que esta visualizando la pagina
+    this.backSvc.getPlayer(this.utilSvc.getFromLocalStorage("Player").id).subscribe((res) => {
+      this.playerView = res.data;
+    });
   }
 
 

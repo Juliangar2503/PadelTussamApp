@@ -32,7 +32,6 @@ export class CourtManagementComponent  implements OnInit {
     this.backSvc.getAllCourts().subscribe((res) => {
       loading.dismiss();
       this.courts = res.data;
-      console.log(this.courts);
     });
   }
 

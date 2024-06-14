@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { League } from 'src/app/interfaces/league';
 import { BackTussamService } from 'src/app/services/back-tussam.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-edit-league',
@@ -14,7 +15,8 @@ export class EditLeagueComponent{
 
   constructor(
     private modalController: ModalController,
-    private backSvc: BackTussamService
+    private backSvc: BackTussamService,
+    private utilSvc: UtilsService
   ) { }
 
   dismissModal() {
@@ -27,7 +29,7 @@ export class EditLeagueComponent{
         if (response.data) {
           this.dismissModal();
         }else{
-          console.log(response.message);
+          this.utilSvc.presentToast(response.message);
         }
       }
     );

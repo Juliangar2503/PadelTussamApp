@@ -1,5 +1,12 @@
 .gradle
-build/
+build/classes
+build/install
+build/kotlin
+build/resources
+build/tmp
+build/scriptsShadow
+build/snapshot
+
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

@@ -45,6 +45,18 @@ export class MatchItemComponent  implements OnInit {
   }
    /******* COMPROBACIONES DEL PARTIDO ********/
 
+   sameLeague(): boolean {
+    if(this.match.type == 'Competitive'){
+        if(this.match.level == this.jugadorLocal.leagueId ){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return true;
+    }
+}
+
   isOpen(): boolean{
     if(this.match.open){
       return true;
